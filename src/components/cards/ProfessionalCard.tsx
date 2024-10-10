@@ -51,14 +51,13 @@ const ProfessionalCard = ({ result }: CardProps<any>) => {
         )}
         {mainPhone && (
           <section className="flex justify-center md:justify-start font-medium leading-loose items-center text-sm text-secondary">
-            <PhoneIcon className="h-4 w-4" />(
+            <PhoneIcon className="h-4 w-4" />
             <span className="ml-2">
               {mainPhone
                 .replace("+1", "")
                 .replace(/\D+/g, "")
                 .replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")}
             </span>
-            )
           </section>
         )}
         {(c_primaryCTA || c_secondaryCTA) && (

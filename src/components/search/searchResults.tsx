@@ -5,7 +5,6 @@ import {
   Facets,
   Pagination,
   ResultsCount,
-  StandardCard,
   VerticalResults,
   Geolocation,
   SpellCheck,
@@ -14,26 +13,31 @@ import { VerticalConfig } from "../../config/VerticalConfig";
 
 const SearchResults = () => {
   const _state = useSearchState((state) => state);
-  const currentVertical = _state.vertical.verticalKey;
-  const isLoading = _state.searchStatus.isLoading;
-  const resultsCount = _state.vertical.resultsCount ?? -1;
-  const mostRecentSearch = _state.query.mostRecentSearch;
-  const facetsCount = _state.filters?.facets?.length ?? 0;
-  const currCard = VerticalConfig.filter(
-    (item) => item.key === currentVertical
-  )[0].CardType;
-  const currClass = VerticalConfig.filter(
-    (item) => item.key === currentVertical
-  )[0].type;
+  const {
+    vertical: { verticalKey, resultsCount = -1 },
+    searchStatus: { isLoading },
+    query: { mostRecentSearch },
+    filters,
+  } = _state;
 
+  const facetsCount = filters?.facets?.length ?? 0;
+
+  const currentVerticalConfig = VerticalConfig.find(
+    (item) => item.key === verticalKey
+  );
+
+  const currCard = currentVerticalConfig?.cardType;
+  const currClass = currentVerticalConfig?.pageType || "standard";
+
+  // Simplified class assignment
   const getClasses = () => {
-    return currClass === "grid-cols-2"
-      ? "grid grid-cols-2 gap-2"
-      : currClass === "grid-cols-3"
-        ? "grid grid-cols-3 gap-2"
-        : currClass === "grid-cols-4"
-          ? "grid grid-cols-4 gap-2"
-          : "flex flex-col gap-2";
+    const classesMap: { [key: string]: string } = {
+      "grid-cols-2": "grid grid-cols-2 gap-2",
+      "grid-cols-3": "grid grid-cols-3 gap-2",
+      "grid-cols-4": "grid grid-cols-4 gap-2",
+      standard: "flex flex-col gap-2",
+    };
+    return classesMap[currClass];
   };
 
   return (
@@ -42,7 +46,7 @@ const SearchResults = () => {
         <Loader />
       ) : (
         <>
-          {resultsCount > 0 && (
+          {resultsCount > 0 ? (
             <section className="w-full flex">
               <SpellCheck />
               {facetsCount >= 1 && (
@@ -69,15 +73,16 @@ const SearchResults = () => {
                 </footer>
               </div>
             </section>
-          )}
-          {mostRecentSearch && resultsCount === 0 && (
-            <div>
-              <p>
-                The search
-                <span className="mx-1 font-semibold">{mostRecentSearch}</span>
-                did not match any FAQs.
-              </p>
-            </div>
+          ) : (
+            mostRecentSearch && (
+              <div>
+                <p>
+                  The search
+                  <span className="mx-1 font-semibold">{mostRecentSearch}</span>
+                  did not match any FAQs.
+                </p>
+              </div>
+            )
           )}
         </>
       )}

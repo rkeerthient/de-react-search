@@ -4,26 +4,26 @@ import ProfessionalCard from "../components/cards/ProfessionalCard";
 export interface VerticalProps {
   label: string;
   key?: string;
-  type: "grid-cols-2" | "grid-cols-3" | "grid-cols-4" | "standard";
-  CardType?: any;
+  pageType: "grid-cols-2" | "grid-cols-3" | "grid-cols-4" | "standard";
+  cardType?: any;
 }
 
 export const VerticalConfig: VerticalProps[] = [
   {
     label: "All",
-    type: "standard",
+    pageType: "standard",
   },
   {
     label: "FAQs",
     key: "faq",
-    type: "standard",
-    CardType: FAQCard,
+    pageType: "standard",
+    cardType: FAQCard,
   },
   {
     label: "Professionals",
     key: "financial-professional",
-    type: "grid-cols-3",
-    CardType: ProfessionalCard,
+    pageType: "grid-cols-3",
+    cardType: ProfessionalCard,
   },
 ];
 // const PAGE_COMPONENTS: { [key: string]: React.ElementType } = {
