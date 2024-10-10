@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.centered-container {
+  @apply mx-auto px-2 md:px-14 max-w-screen-xl;
+}
+
+.section {
+  @apply mt-8 mb-16;
+}
+
+/*CTA Config*/
+.primaryCta {
+  background: white;
+  color: black;
+  border-color: black;
+  &:hover {
+    color: white;
+    background-color: black;
+    border-color: white;
+  }
+}
+.secondaryCta {
+  background: white;
+  color: black;
+  border-color: black;
+  &:hover {
+    color: white;
+    background-color: black;
+    border-color: white;
+  }
+}
