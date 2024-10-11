@@ -1,10 +1,11 @@
 import FAQCard from "../components/cards/FAQCard";
+import LocationCard from "../components/cards/LocationCard";
 import ProfessionalCard from "../components/cards/ProfessionalCard";
 
 export interface VerticalProps {
   label: string;
   key?: string;
-  pageType: "grid-cols-2" | "grid-cols-3" | "grid-cols-4" | "standard";
+  pageType: "grid-cols-2" | "grid-cols-3" | "grid-cols-4" | "standard" | "map";
   cardType?: any;
 }
 
@@ -22,8 +23,14 @@ export const VerticalConfig: VerticalProps[] = [
   {
     label: "Professionals",
     key: "financial-professional",
-    pageType: "grid-cols-3",
+    pageType: "map",
     cardType: ProfessionalCard,
+  },
+  {
+    label: "Locations",
+    key: "locations",
+    pageType: "map",
+    cardType: LocationCard,
   },
 ];
 // const PAGE_COMPONENTS: { [key: string]: React.ElementType } = {

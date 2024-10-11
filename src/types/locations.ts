@@ -44,7 +44,7 @@ export enum Category {
 	ORDER = "Order (Restaurant)",
 	TAKEOUT = "Takeout - Deprecated",
 	PICKUP = "Pickup (Restaurant)",
-	RESERVE = "Reserve (Restaurant)",
+	RESERVE_REST = "Reserve (Restaurant)",
 	MENU = "Menu",
 	APPOINTMENT = "Appointment - Deprecated",
 	PORTFOLIO = "Portfolio - Deprecated",

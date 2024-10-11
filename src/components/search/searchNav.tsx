@@ -21,10 +21,10 @@ const SearchNav = () => {
   return (
     <nav className="bg-transparent p-4 pb-2  pt-8 border-b border-[#555555]">
       <ul className="flex justify-start w-full">
-        {VerticalConfig.map((item) => (
+        {VerticalConfig.map((item, index) => (
           <li
             onClick={() => handleClick(item)}
-            key={item.key}
+            key={index}
             className={`group hover:cursor-pointer px-5 uppercase font-semibold `}
           >
             <span

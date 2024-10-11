@@ -8,10 +8,25 @@ import {
   VerticalResults,
   Geolocation,
   SpellCheck,
+  MapboxMap,
 } from "@yext/search-ui-react";
 import { VerticalConfig } from "../../config/VerticalConfig";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { createCtx } from "../../utils/ createContext";
+import { useState } from "react";
+import MapPin from "../MapPin";
+
+type MapContextType = {
+  hoveredLocationId: string;
+  setHoveredLocationId: (value: string) => void;
+};
+
+export const [useMapContext, MapContextProvider] = createCtx<MapContextType>(
+  "Attempted to call useMapContext outside of MapContextProvider"
+);
 
 const SearchResults = () => {
+  const [hoveredLocationId, setHoveredLocationId] = useState("");
   const _state = useSearchState((state) => state);
   const {
     vertical: { verticalKey, resultsCount = -1 },
@@ -26,8 +41,8 @@ const SearchResults = () => {
     (item) => item.key === verticalKey
   );
 
-  const currCard = currentVerticalConfig?.cardType;
-  const currClass = currentVerticalConfig?.pageType || "standard";
+  const cardType = currentVerticalConfig?.cardType;
+  const pageType = currentVerticalConfig?.pageType || "standard";
 
   // Simplified class assignment
   const getClasses = () => {
@@ -37,7 +52,7 @@ const SearchResults = () => {
       "grid-cols-4": "grid grid-cols-4 gap-2",
       standard: "flex flex-col gap-2",
     };
-    return classesMap[currClass];
+    return classesMap[pageType];
   };
 
   return (
@@ -47,32 +62,83 @@ const SearchResults = () => {
       ) : (
         <>
           {resultsCount > 0 ? (
-            <section className="w-full flex">
-              <SpellCheck />
-              {facetsCount >= 1 && (
-                <aside className="mr-5 w-56 shrink-0">
-                  <Facets />
-                </aside>
+            <>
+              {pageType === "map" ? (
+                <MapContextProvider
+                  value={{ hoveredLocationId, setHoveredLocationId }}
+                >
+                  <section className="w-full flex h-[calc(100vh-210px)]">
+                    <article className="w-1/3">
+                      <SpellCheck />
+                      {facetsCount >= 1 && (
+                        <aside className="mr-5 w-56 shrink-0">
+                          <Facets />
+                        </aside>
+                      )}
+                      <div className="w-full h-auto overflow-scroll">
+                        <header className="results-header">
+                          <ResultsCount />
+                          <AppliedFilters />
+                        </header>
+                        <VerticalResults
+                          CardComponent={cardType}
+                          customCssClasses={{
+                            verticalResultsContainer: getClasses(),
+                          }}
+                        />
+                        <nav aria-label="Pagination">
+                          <Pagination />
+                        </nav>
+                        <footer aria-label="Geolocation">
+                          <Geolocation />
+                        </footer>
+                      </div>
+                    </article>
+                    <article className="w-2/3">
+                      <MapboxMap
+                        mapboxAccessToken={
+                          import.meta.env.YEXT_PUBLIC_MAP_API_KEY
+                        }
+                        PinComponent={(props) => (
+                          <MapPin
+                            {...props}
+                            hoveredLocationId={hoveredLocationId}
+                            setHoveredLocationId={setHoveredLocationId}
+                          />
+                        )}
+                      />
+                    </article>
+                  </section>
+                </MapContextProvider>
+              ) : (
+                <section className="w-full flex">
+                  <SpellCheck />
+                  {facetsCount >= 1 && (
+                    <aside className="mr-5 w-56 shrink-0">
+                      <Facets />
+                    </aside>
+                  )}
+                  <div className="w-full">
+                    <header className="results-header">
+                      <ResultsCount />
+                      <AppliedFilters />
+                    </header>
+                    <VerticalResults
+                      CardComponent={cardType}
+                      customCssClasses={{
+                        verticalResultsContainer: getClasses(),
+                      }}
+                    />
+                    <nav aria-label="Pagination">
+                      <Pagination />
+                    </nav>
+                    <footer aria-label="Geolocation">
+                      <Geolocation />
+                    </footer>
+                  </div>
+                </section>
               )}
-              <div className="w-full">
-                <header className="results-header">
-                  <ResultsCount />
-                  <AppliedFilters />
-                </header>
-                <VerticalResults
-                  CardComponent={currCard}
-                  customCssClasses={{
-                    verticalResultsContainer: getClasses(),
-                  }}
-                />
-                <nav aria-label="Pagination">
-                  <Pagination />
-                </nav>
-                <footer aria-label="Geolocation">
-                  <Geolocation />
-                </footer>
-              </div>
-            </section>
+            </>
           ) : (
             mostRecentSearch && (
               <div>
