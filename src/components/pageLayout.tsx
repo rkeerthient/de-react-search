@@ -11,8 +11,6 @@ type Props = {
   children?: React.ReactNode;
 };
 const PageLayout = ({ _site, children }: Props) => {
-  console.log(import.meta.env.YEXT_PUBLIC_CHAT_APIKEY);
-
   return (
     <div className="min-h-screen">
       <Header _site={_site} />

@@ -7,7 +7,6 @@ const LocationCard: CardComponent<Location> = ({
 }: CardProps<Location>): JSX.Element => {
   const location = result.rawData;
 
-  // function that takes coordinates and returns a google maps link for directions
   const getGoogleMapsLink = (coordinate: Coordinate): string => {
     return `https://www.google.com/maps/dir/?api=1&destination=${coordinate.latitude},${coordinate.longitude}`;
   };

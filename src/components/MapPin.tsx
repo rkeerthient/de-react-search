@@ -1,9 +1,7 @@
-import * as React from "react";
 import * as ReactDOM from "react-dom/server";
 import { Popup, LngLatLike, Map } from "mapbox-gl";
 import Location, { Coordinate } from "../types/locations";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { GiTacos } from "react-icons/gi";
 import { Result } from "@yext/search-headless-react";
 import { MapPinIcon } from "@heroicons/react/20/solid";
 
@@ -75,6 +73,7 @@ const MapPin = ({
   const removeHoveredLocation = () => {
     setHoveredLocationId("");
   };
+  const pinSize = hoveredLocationId === location.id ? "h-8 w-8" : "h-6 w-6";
 
   return (
     <button
@@ -82,7 +81,7 @@ const MapPin = ({
       onMouseEnter={updateHoveredLocation}
       onMouseLeave={removeHoveredLocation}
     >
-      <MapPinIcon className="text-orange h-6 w-6" />
+      <MapPinIcon className={`text-orange ${pinSize}`} />
     </button>
   );
 };
