@@ -1,9 +1,9 @@
-import * as ReactDOM from "react-dom/server";
 import { Popup, LngLatLike, Map } from "mapbox-gl";
 import Location, { Coordinate } from "../types/locations";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Result } from "@yext/search-headless-react";
 import { MapPinIcon } from "@heroicons/react/20/solid";
+import { renderToString } from "react-dom/server";
 
 const transformToMapboxCoord = (
   coordinate: Coordinate
@@ -24,43 +24,61 @@ const getLocationHTML = (location: Location) => {
       <p>{`${address.city}, ${address.region}, ${address.postalCode}`}</p>
     </div>
   );
-  return ReactDOM.renderToString(html);
+  return renderToString(html);
 };
 
 export interface MapPinProps {
   mapbox: Map;
   result: Result<any>;
+  clickedLocationId: string;
   hoveredLocationId: string;
   setHoveredLocationId: (value: string) => void;
 }
+let currentPopup: Popup | null = null;
 
 const MapPin = ({
   mapbox,
   result,
   hoveredLocationId,
   setHoveredLocationId,
+  clickedLocationId,
 }: MapPinProps) => {
-  console.log(`enterted`);
-
   const location = result.rawData;
   const [active, setActive] = useState(false);
-  const popupRef = useRef(
+
+  const popupRef = useRef<Popup | null>(
     new Popup({ offset: 15 }).on("close", () => setActive(false))
   );
 
+  const pinSize = hoveredLocationId === location.id ? "h-8 w-8" : "h-6 w-6";
+
   useEffect(() => {
-    if (active && location.yextDisplayCoordinate) {
+    if (
+      (active || clickedLocationId === location.id) &&
+      location.yextDisplayCoordinate
+    ) {
       const mapboxCoordinate = transformToMapboxCoord(
         location.yextDisplayCoordinate
       );
       if (mapboxCoordinate) {
-        popupRef.current
-          .setLngLat(mapboxCoordinate)
+        if (currentPopup) {
+          currentPopup.remove();
+        }
+
+        const newPopup = popupRef
+          .current!.setLngLat(mapboxCoordinate)
           .setHTML(getLocationHTML(location))
           .addTo(mapbox);
+
+        currentPopup = newPopup;
+
+        newPopup.on("close", () => {
+          setActive(false);
+          currentPopup = null;
+        });
       }
     }
-  }, [active, mapbox, location]);
+  }, [active, clickedLocationId, mapbox, location]);
 
   const handleClick = useCallback(() => {
     setActive(true);
@@ -73,7 +91,6 @@ const MapPin = ({
   const removeHoveredLocation = () => {
     setHoveredLocationId("");
   };
-  const pinSize = hoveredLocationId === location.id ? "h-8 w-8" : "h-6 w-6";
 
   return (
     <button

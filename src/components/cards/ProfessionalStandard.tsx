@@ -4,7 +4,7 @@ import { CardProps } from "@yext/search-ui-react";
 import HoursText from "../HoursText";
 import Cta from "../cta";
 
-const ProfessionalCard = ({ result }: CardProps<any>) => {
+const ProfessionalStandard = ({ result }: CardProps<any>) => {
   const { name } = result;
   const {
     headshot,
@@ -73,4 +73,4 @@ const ProfessionalCard = ({ result }: CardProps<any>) => {
   );
 };
 
-export default ProfessionalCard;
+export default ProfessionalStandard;

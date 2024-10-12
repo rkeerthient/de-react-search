@@ -1,6 +1,7 @@
-import FAQCard from "../components/cards/FAQCard";
-import LocationCard from "../components/cards/LocationCard";
-import ProfessionalCard from "../components/cards/ProfessionalCard";
+import FAQAccordion from "../components/cards/FAQAccordion";
+import JobStandard from "../components/cards/JobStandard";
+import LocationStandard from "../components/cards/LocationStandard";
+import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 
 export interface VerticalProps {
   label: string;
@@ -18,19 +19,25 @@ export const VerticalConfig: VerticalProps[] = [
     label: "FAQs",
     key: "faq",
     pageType: "standard",
-    cardType: FAQCard,
+    cardType: FAQAccordion,
   },
   {
     label: "Professionals",
     key: "financial-professional",
     pageType: "map",
-    cardType: ProfessionalCard,
+    cardType: ProfessionalStandard,
   },
   {
     label: "Locations",
     key: "locations",
     pageType: "map",
-    cardType: LocationCard,
+    cardType: LocationStandard,
+  },
+  {
+    label: "Jobs",
+    key: "jobs",
+    pageType: "standard",
+    cardType: JobStandard,
   },
 ];
 // const PAGE_COMPONENTS: { [key: string]: React.ElementType } = {

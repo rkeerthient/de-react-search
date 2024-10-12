@@ -14,7 +14,7 @@ type CTAProps = {
 const Cta = ({ cta, ctaType }: CTAProps) => {
   return (
     <Link
-      className={`border-2 w-full px-2 py-1 flex justify-center ${ctaType}`}
+      className={`border-2 w-full p-2 flex justify-center ${ctaType}`}
       cta={{
         link: cta.link,
         label: cta.label,

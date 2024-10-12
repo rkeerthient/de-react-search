@@ -19,6 +19,8 @@ import MapPin from "../MapPin";
 type MapContextType = {
   hoveredLocationId: string;
   setHoveredLocationId: (value: string) => void;
+  clickedLocationId: string;
+  setClickedLocationId: (value: string) => void;
 };
 
 export const [useMapContext, MapContextProvider] = createCtx<MapContextType>(
@@ -27,6 +29,7 @@ export const [useMapContext, MapContextProvider] = createCtx<MapContextType>(
 
 const SearchResults = () => {
   const [hoveredLocationId, setHoveredLocationId] = useState("");
+  const [clickedLocationId, setClickedLocationId] = useState("");
   const _state = useSearchState((state) => state);
   const {
     vertical: { verticalKey, resultsCount = -1 },
@@ -65,7 +68,12 @@ const SearchResults = () => {
             <>
               {pageType === "map" ? (
                 <MapContextProvider
-                  value={{ hoveredLocationId, setHoveredLocationId }}
+                  value={{
+                    hoveredLocationId,
+                    setHoveredLocationId,
+                    clickedLocationId,
+                    setClickedLocationId,
+                  }}
                 >
                   <section className="w-full flex h-[calc(100vh-210px)]">
                     <article className="w-1/3">
@@ -102,6 +110,7 @@ const SearchResults = () => {
                         PinComponent={(props) => (
                           <MapPin
                             {...props}
+                            clickedLocationId={clickedLocationId}
                             hoveredLocationId={hoveredLocationId}
                             setHoveredLocationId={setHoveredLocationId}
                           />

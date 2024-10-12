@@ -2,12 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --yxt-color-borders: #d8d8d8;
+  --yxt-color-error: #940000;
+  --yxt-color-text-primary: #212121;
+  --yxt-color-text-secondary: #757575;
+  --yxt-base-spacing: 20px;
+  --yxt-border-default: 1px solid var(--yxt-color-borders);
+  --yxt-border-radius: 5px;
+  --yxt-font-family: system-ui, sans-serif;
+}
+
+.body {
+  font-family: var(--yxt-font-family);
+}
+
 .centered-container {
   @apply mx-auto px-2 md:px-14 max-w-screen-xl;
 }
 
 .section {
   @apply mt-8 mb-16;
+}
+
+/* Cards Config*/
+.cards {
+  border: var(--yxt-border-default);
+  border-radius: var(--yxt-border-radius);
+  padding: calc(var(--yxt-base-spacing) * 3 / 4) var(--yxt-base-spacing);
+}
+.standardTitle {
+  margin-bottom: 0.5em;
+  color: #000;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.standardSubTitle {
+  color: var(--yxt-color-text-secondary);
+  padding-bottom: 0;
+}
+
+.standardCardDetails {
+  margin-top: calc(var(--yxt-base-spacing) / 2);
 }
 
 /*CTA Config*/

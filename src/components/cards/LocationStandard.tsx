@@ -2,7 +2,7 @@ import { CardComponent, CardProps } from "@yext/search-ui-react";
 import { RiDirectionFill } from "react-icons/ri";
 import { useMapContext } from "../search/searchResults";
 import Location, { Coordinate } from "../../types/locations";
-const LocationCard: CardComponent<Location> = ({
+const LocationStandard: CardComponent<Location> = ({
   result,
 }: CardProps<Location>): JSX.Element => {
   const location = result.rawData;
@@ -11,10 +11,11 @@ const LocationCard: CardComponent<Location> = ({
     return `https://www.google.com/maps/dir/?api=1&destination=${coordinate.latitude},${coordinate.longitude}`;
   };
 
-  const { hoveredLocationId } = useMapContext();
+  const { hoveredLocationId, setClickedLocationId } = useMapContext();
 
   return (
     <div
+      onClick={() => setClickedLocationId(location.id)}
       className={`flex justify-between border-y p-4 ${
         hoveredLocationId === location.id ? "bg-gray-200" : ""
       }`}
@@ -50,4 +51,4 @@ const LocationCard: CardComponent<Location> = ({
   );
 };
 
-export default LocationCard;
+export default LocationStandard;
