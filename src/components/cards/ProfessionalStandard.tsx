@@ -3,6 +3,7 @@ import { Address, Image, Link } from "@yext/pages-components";
 import { CardProps } from "@yext/search-ui-react";
 import HoursText from "../HoursText";
 import Cta from "../cta";
+import { format_phone } from "../../utils/reusableFunctions";
 
 const ProfessionalStandard = ({ result }: CardProps<any>) => {
   const { name } = result;
@@ -52,12 +53,7 @@ const ProfessionalStandard = ({ result }: CardProps<any>) => {
         {mainPhone && (
           <section className="flex justify-center md:justify-start font-medium leading-loose items-center text-sm text-secondary">
             <PhoneIcon className="h-4 w-4" />
-            <span className="ml-2">
-              {mainPhone
-                .replace("+1", "")
-                .replace(/\D+/g, "")
-                .replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")}
-            </span>
+            <span className="ml-2">{format_phone(mainPhone)}</span>
           </section>
         )}
         {(c_primaryCTA || c_secondaryCTA) && (

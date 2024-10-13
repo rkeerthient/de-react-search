@@ -47,7 +47,6 @@ const SearchResults = () => {
   const cardType = currentVerticalConfig?.cardType;
   const pageType = currentVerticalConfig?.pageType || "standard";
 
-  // Simplified class assignment
   const getClasses = () => {
     const classesMap: { [key: string]: string } = {
       "grid-cols-2": "grid grid-cols-2 gap-2",

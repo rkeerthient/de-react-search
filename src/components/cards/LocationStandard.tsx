@@ -25,7 +25,8 @@ const LocationStandard: CardComponent<any> = ({
     return `https://www.google.com/maps/dir/?api=1&destination=${coordinate.latitude},${coordinate.longitude}`;
   };
 
-  const { hoveredLocationId, setClickedLocationId } = useMapContext();
+  const { hoveredLocationId, setClickedLocationId, setHoveredLocationId } =
+    useMapContext();
 
   return (
     <article
@@ -33,6 +34,8 @@ const LocationStandard: CardComponent<any> = ({
       className={`flex flex-col justify-between border-y p-4 cards  ${
         hoveredLocationId === id ? "bg-gray-200" : ""
       }`}
+      onMouseEnter={() => setHoveredLocationId(id)}
+      onMouseLeave={() => setHoveredLocationId("")}
       aria-labelledby={`location-${id}`}
     >
       <section className="flex flex-col">
