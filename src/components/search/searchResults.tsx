@@ -15,6 +15,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { createCtx } from "../../utils/ createContext";
 import { useState } from "react";
 import MapPin from "../MapPin";
+import { concatClassNames } from "../../utils/reusableFunctions";
 
 type MapContextType = {
   hoveredLocationId: string;
@@ -74,7 +75,7 @@ const SearchResults = () => {
                     setClickedLocationId,
                   }}
                 >
-                  <section className="w-full flex h-[calc(100vh-210px)]">
+                  <section className="w-full flex h-[950px]">
                     <article className="w-1/3">
                       <SpellCheck />
                       {facetsCount >= 1 && (
@@ -90,16 +91,19 @@ const SearchResults = () => {
                         <VerticalResults
                           CardComponent={cardType}
                           customCssClasses={{
-                            verticalResultsContainer: getClasses(),
+                            verticalResultsContainer: concatClassNames(
+                              getClasses(),
+                              "overflow-scroll h-[950px]"
+                            ),
                           }}
                         />
-                        <nav aria-label="Pagination">
-                          <Pagination />
-                        </nav>
-                        <footer aria-label="Geolocation">
-                          <Geolocation />
-                        </footer>
                       </div>
+                      <nav aria-label="Pagination mt-16">
+                        <Pagination />
+                      </nav>
+                      <footer aria-label="Geolocation">
+                        <Geolocation />
+                      </footer>
                     </article>
                     <article className="w-2/3">
                       <MapboxMap
@@ -134,7 +138,10 @@ const SearchResults = () => {
                     <VerticalResults
                       CardComponent={cardType}
                       customCssClasses={{
-                        verticalResultsContainer: getClasses(),
+                        verticalResultsContainer: concatClassNames(
+                          getClasses(),
+                          "overflow-y-auto max-h-[950px]"
+                        ),
                       }}
                     />
                     <nav aria-label="Pagination">

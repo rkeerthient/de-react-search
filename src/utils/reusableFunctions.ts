@@ -10,3 +10,9 @@ export const format_phone = (phone: string) => {
         .replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
     : `(610) 363-8020`;
 };
+
+export function concatClassNames(
+  ...args: Array<string | boolean | null | undefined>
+): string {
+  return args.filter((item) => !!item).join(" ");
+}

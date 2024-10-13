@@ -1,5 +1,5 @@
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/20/solid";
-import { Address, Image, Link } from "@yext/pages-components";
+import { Address, AddressType, Image } from "@yext/pages-components";
 import { CardProps } from "@yext/search-ui-react";
 import HoursText from "../HoursText";
 import Cta from "../cta";
@@ -46,7 +46,7 @@ const ProfessionalStandard = ({ result }: CardProps<any>) => {
           <address className="flex justify-center md:justify-start font-medium leading-loose items-start text-sm text-secondary not-italic">
             <MapPinIcon className="h-4 w-4 mt-2" />
             <span className="ml-2">
-              <Address address={address} />
+              <Address address={address as AddressType} />
             </span>
           </address>
         )}

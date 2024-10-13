@@ -1,10 +1,11 @@
 import { CardComponent, CardProps } from "@yext/search-ui-react";
 import { useMapContext } from "../search/searchResults";
 import Location, { Coordinate } from "../../types/locations";
-import { Address, HoursStatus } from "@yext/pages-components";
+import { Address, AddressType, HoursStatus } from "@yext/pages-components";
 import Cta from "../cta";
 import { format_phone } from "../../utils/reusableFunctions";
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/20/solid";
+import { useRef } from "react";
 
 const LocationStandard: CardComponent<any> = ({
   result,
@@ -22,20 +23,25 @@ const LocationStandard: CardComponent<any> = ({
   const { index, distance } = result;
 
   const getGoogleMapsLink = (coordinate: Coordinate): string => {
+    if (!coordinate?.latitude || !coordinate?.longitude) return "#";
     return `https://www.google.com/maps/dir/?api=1&destination=${coordinate.latitude},${coordinate.longitude}`;
   };
 
   const { hoveredLocationId, setClickedLocationId, setHoveredLocationId } =
     useMapContext();
 
+  const locationRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <article
+      id={`location-card-${id}`}
+      ref={locationRef}
       onClick={() => setClickedLocationId(id)}
       className={`flex flex-col justify-between border-y p-4 cards  ${
         hoveredLocationId === id ? "bg-gray-200" : ""
       }`}
-      onMouseEnter={() => setHoveredLocationId(id)}
-      onMouseLeave={() => setHoveredLocationId("")}
+      onMouseEnter={() => (setHoveredLocationId(id), setClickedLocationId(""))}
+      onMouseLeave={() => (setHoveredLocationId(""), setClickedLocationId(""))}
       aria-labelledby={`location-${id}`}
     >
       <section className="flex flex-col">
@@ -73,13 +79,13 @@ const LocationStandard: CardComponent<any> = ({
             <section className="flex gap-2 items-base">
               <MapPinIcon className="h-4 w-4 mt-2" />
               <span className="ml-2">
-                <Address address={address} />
+                <Address address={address as AddressType} />
               </span>
             </section>
           )}
           <section className="flex gap-2 items-center">
             <PhoneIcon className="h-4 w-4" />
-            <a href={`tel:${mainPhone}`} className=" font-medium">
+            <a href={`tel:${mainPhone}`} role="button" className="font-medium">
               {format_phone(mainPhone)}
             </a>
           </section>

@@ -1,6 +1,7 @@
 import FAQAccordion from "../components/cards/FAQAccordion";
 import JobStandard from "../components/cards/JobStandard";
 import LocationStandard from "../components/cards/LocationStandard";
+import ProfessionalLocation from "../components/cards/ProfessionalLocation";
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 
 export interface VerticalProps {
@@ -25,7 +26,7 @@ export const VerticalConfig: VerticalProps[] = [
     label: "Professionals",
     key: "financial-professional",
     pageType: "map",
-    cardType: ProfessionalStandard,
+    cardType: ProfessionalLocation,
   },
   {
     label: "Locations",
