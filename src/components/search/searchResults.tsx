@@ -120,7 +120,7 @@ const SearchResults = () => {
                   </section>
                 </MapContextProvider>
               ) : (
-                <section className="w-full flex">
+                <section className="w-full flex centered-container">
                   <SpellCheck />
                   {facetsCount >= 1 && (
                     <aside className="mr-5 w-56 shrink-0">

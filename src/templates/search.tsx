@@ -40,9 +40,7 @@ const Search: Template<TemplateRenderProps> = () => {
   return (
     <>
       <PageLayout>
-        <div className="centered-container">
-          <SearchPage />
-        </div>
+        <SearchPage />
       </PageLayout>
     </>
   );
