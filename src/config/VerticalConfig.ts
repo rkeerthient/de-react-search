@@ -28,6 +28,12 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "map",
     cardType: ProfessionalLocation,
   },
+  // {
+  //   label: "Professionals-Test",
+  //   key: "financial-professional",
+  //   pageType: "standard",
+  //   cardType: ProfessionalStandard,
+  // },
   {
     label: "Locations",
     key: "locations",

@@ -4,6 +4,7 @@ import { CardProps } from "@yext/search-ui-react";
 import HoursText from "../HoursText";
 import Cta from "../cta";
 import { format_phone } from "../../utils/reusableFunctions";
+import { VerticalConfig } from "../../config/VerticalConfig";
 
 const ProfessionalLocation = ({ result }: CardProps<any>) => {
   const { name } = result;
@@ -17,18 +18,20 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
     c_primaryCTA,
     c_secondaryCTA,
   } = result.rawData;
-
+  const getPageType = VerticalConfig.find(
+    (item) => item.key === "financial-professional"
+  )?.pageType;
   return (
     <article className="border rounded-lg">
       <header className="relative flex flex-col">
         <a
           href={landingPageUrl}
-          className="group aspect-square block w-full overflow-hidden rounded-t-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
+          className={`group aspect-square block   overflow-hidden rounded-t-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 ${getPageType === "map" && `!h-1/4 !w-1/4`}`}
         >
           {headshot && (
             <Image
               image={headshot!}
-              className="pointer-events-none object-cover group-hover:opacity-75"
+              className="pointer-events-none object-cover group-hover:opacity-75 "
             />
           )}
         </a>

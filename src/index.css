@@ -52,7 +52,8 @@
   background: white;
   color: black;
   border-color: black;
-  width: 180px;
+  max-width: 220px;
+  width: 100%;
   &:hover {
     color: white;
     background-color: black;
@@ -63,7 +64,8 @@
   background: white;
   color: black;
   border-color: black;
-  width: 180px;
+  max-width: 220px;
+  width: 100%;
   &:hover {
     color: white;
     background-color: black;
