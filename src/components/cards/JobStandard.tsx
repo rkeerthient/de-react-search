@@ -15,7 +15,7 @@ const JobStandard = ({ result }: CardProps<any>) => {
     c_secondaryCTA,
     keywords,
   } = result.rawData;
-
+  
   return (
     <article
       className="flex flex-col gap-2 cards"

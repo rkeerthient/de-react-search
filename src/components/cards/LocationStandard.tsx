@@ -61,7 +61,7 @@ const LocationStandard: CardComponent<any> = ({
             </span>
             <h2 className="text-lg">{name}</h2>
           </a>
-          <span className="standardSubTitle italic">
+          <span className="standardSubTitle italic whitespace-nowrap">
             {(distance! / 1609.344).toFixed(2)} mi
           </span>
         </header>

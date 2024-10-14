@@ -25,15 +25,9 @@ export const VerticalConfig: VerticalProps[] = [
   {
     label: "Professionals",
     key: "financial-professional",
-    pageType: "map",
+    pageType: "grid-cols-3",
     cardType: ProfessionalLocationAndGrid,
   },
-  // {
-  //   label: "Professionals-Test",
-  //   key: "financial-professional",
-  //   pageType: "standard",
-  //   cardType: ProfessionalStandard,
-  // },
   {
     label: "Locations",
     key: "locations",
