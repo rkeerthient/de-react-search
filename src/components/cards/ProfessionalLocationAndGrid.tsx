@@ -5,7 +5,8 @@ import HoursText from "../HoursText";
 import Cta from "../cta";
 import { format_phone } from "../../utils/reusableFunctions";
 import { VerticalConfig } from "../../config/VerticalConfig";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useMapContext } from "../search/searchResults";
 
 const ProfessionalLocation = ({ result }: CardProps<any>) => {
   const [pageType, setPageType] = useState("");
@@ -21,16 +22,46 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
     c_secondaryCTA,
   } = result.rawData;
 
+  const { hoveredLocationId, setClickedLocationId, setHoveredLocationId } =
+    pageType === "map" ? useMapContext() : {};
+
+  const locationRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     setPageType(
       VerticalConfig.find((item) => item.key === "financial-professional")
         ?.pageType || ""
     );
   }, []);
+  const handleMouseEnter = () => {
+    if (pageType === "map" && setHoveredLocationId && setClickedLocationId) {
+      setHoveredLocationId(id!);
+      setClickedLocationId("");
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (pageType === "map" && setHoveredLocationId && setClickedLocationId) {
+      setHoveredLocationId("");
+      setClickedLocationId("");
+    }
+  };
+
+  const handleClick = () => {
+    if (pageType === "map" && setClickedLocationId) {
+      setClickedLocationId(id!);
+    }
+  };
 
   return (
     <article
-      className={`border rounded-lg ${pageType === "map" && `flex gap-2`}`}
+      id={`location-card-${id}`}
+      ref={locationRef}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`border rounded-lg ${pageType === "map" && `flex gap-2`}  ${
+        hoveredLocationId === id ? "bg-gray-200" : ""
+      }`}
     >
       <header
         className={`relative flex flex-col ${pageType === "map" && `pt-4 !h-1/4 !w-1/4`}`}
