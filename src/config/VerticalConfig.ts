@@ -1,3 +1,4 @@
+import EventStandard from "../components/cards/EventStandard";
 import FAQAccordion from "../components/cards/FAQAccordion";
 import JobStandard from "../components/cards/JobStandard";
 import LocationStandard from "../components/cards/LocationStandard";
@@ -25,7 +26,7 @@ export const VerticalConfig: VerticalProps[] = [
   {
     label: "Professionals",
     key: "financial-professional",
-    pageType: "map",
+    pageType: "grid-cols-3",
     cardType: ProfessionalLocationAndGrid,
   },
   {
@@ -39,6 +40,12 @@ export const VerticalConfig: VerticalProps[] = [
     key: "jobs",
     pageType: "standard",
     cardType: JobStandard,
+  },
+  {
+    label: "Events",
+    key: "events",
+    pageType: "standard",
+    cardType: EventStandard,
   },
 ];
 // const PAGE_COMPONENTS: { [key: string]: React.ElementType } = {

@@ -15,7 +15,7 @@ const JobStandard = ({ result }: CardProps<any>) => {
     c_secondaryCTA,
     keywords,
   } = result.rawData;
-  
+
   return (
     <article
       className="flex flex-col gap-2 cards"
@@ -25,16 +25,19 @@ const JobStandard = ({ result }: CardProps<any>) => {
         <h2 id={`job-title-${result.id}`} className="standardTitle">
           {name}
         </h2>
-        <p className="flex gap-2 standardSubTitle">
+        <p className="flex flex-row gap-2 standardSubTitle w-full flex-wrap-nowrap items-center">
           {datePosted && (
-            <time dateTime={datePosted} aria-label="Date posted">
-              Date Posted : {format_date(datePosted)}
-              {" | "}
-            </time>
+            <>
+              <span className="hidden md:block">Date Posted :</span>
+              <time dateTime={datePosted} aria-label="Date posted">
+                {format_date(datePosted)}
+                {" | "}
+              </time>
+            </>
           )}
           {validThrough && (
             <>
-              <span>Last date to apply:</span>{" "}
+              <span className="hidden md:block">Last date to apply:</span>
               <time dateTime={validThrough} aria-label="Application deadline">
                 {new Date(validThrough).toLocaleDateString()}
                 {" | "}
@@ -42,24 +45,29 @@ const JobStandard = ({ result }: CardProps<any>) => {
             </>
           )}
           {employmentType && (
-            <span>
-              Employment Type : {employmentType} {" | "}
-            </span>
+            <>
+              <span className="hidden md:block">Employment Type :</span>
+              {employmentType}
+              {" | "}
+            </>
           )}
           <span>{workRemote === "Yes" ? "Remote" : "On Site"}</span>
         </p>
       </header>
 
-      <section className="flex justify-between flex-nowrap">
-        <section className="standardCardDetails" aria-label="Job Description">
-          <ResponseComponent response={description} />
+      <section className="flex flex-col md:flex-row justify-between flex-nowrap">
+        <section className="standardCardDetails transition-all duration-500 ease-in-out" aria-label="Job Description">
+          <ResponseComponent response={description} showMore={true} />
           {keywords && (
-            <ul className="flex gap-1 mt-4" aria-label="Job Keywords">
+            <ul
+              className="hidden md:flex flex-col md:flex-row gap-1 mt-4"
+              aria-label="Job Keywords"
+            >
               {keywords.map((item: string, index: number) => (
                 <li key={index} className="flex items-center">
                   <span>{item}</span>
                   {index < keywords.length - 1 && (
-                    <span className="mx-1" aria-hidden="true">
+                    <span className="hidden md:block mx-1" aria-hidden="true">
                       |
                     </span>
                   )}
@@ -71,7 +79,7 @@ const JobStandard = ({ result }: CardProps<any>) => {
 
         {(c_primaryCTA || c_secondaryCTA) && (
           <footer
-            className="flex flex-col items-center justify-center gap-2 pt-4 pb-2 uppercase ml-[calc(var(--yxt-base-spacing)/2)] w-full"
+            className="flex flex-col items-center justify-center gap-2 pt-4 pb-2 uppercase md:ml-[calc(var(--yxt-base-spacing)/2)] w-full"
             aria-label="Call to Actions"
           >
             {c_primaryCTA && (

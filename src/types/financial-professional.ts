@@ -1,32 +1,3 @@
-export interface Interval {
-	start: any,
-	end: any,
-}
-
-export interface DayHour {
-	openIntervals?: Interval[],
-	isClosed?: boolean,
-}
-
-export interface HolidayHours {
-	date: string,
-	openIntervals?: Interval[],
-	isClosed?: boolean,
-	isRegularHours?: boolean,
-}
-
-export interface Hours {
-	monday?: DayHour,
-	tuesday?: DayHour,
-	wednesday?: DayHour,
-	thursday?: DayHour,
-	friday?: DayHour,
-	saturday?: DayHour,
-	sunday?: DayHour,
-	holidayHours?: HolidayHours[],
-	reopenDate?: string,
-}
-
 export enum Category {
 	BOOK_TRAVEL = "Book Travel",
 	CHECK_IN = "Check in",
@@ -118,14 +89,33 @@ export enum BingRelationshipType {
 	WORKS_AT = "Works At",
 }
 
-export enum PickupAndDeliveryServices {
-	IN_STORE_PICKUP = "In-Store Pickup",
-	CURBSIDE_PICKUP = "Curbside Pickup",
-	PICKUP_NOT_OFFERED = "Pickup Not Offered",
-	DELIVERY = "Delivery",
-	SAME_DAY_DELIVERY = "Same Day Delivery",
-	NO_CONTACT_DELIVERY = "No-Contact Delivery",
-	DELIVERY_NOT_OFFERED = "Delivery Not Offered",
+export interface Interval {
+	start: any,
+	end: any,
+}
+
+export interface DayHour {
+	openIntervals?: Interval[],
+	isClosed?: boolean,
+}
+
+export interface HolidayHours {
+	date: string,
+	openIntervals?: Interval[],
+	isClosed?: boolean,
+	isRegularHours?: boolean,
+}
+
+export interface Hours {
+	monday?: DayHour,
+	tuesday?: DayHour,
+	wednesday?: DayHour,
+	thursday?: DayHour,
+	friday?: DayHour,
+	saturday?: DayHour,
+	sunday?: DayHour,
+	holidayHours?: HolidayHours[],
+	reopenDate?: string,
 }
 
 export interface VisualConfigurations {
@@ -158,6 +148,13 @@ export interface Coordinate {
 	longitude?: number,
 }
 
+export interface C_educationDetails {
+	degree?: string,
+	university?: string,
+	year?: number,
+	additionalDetails?: string[],
+}
+
 export enum LinkType {
 	OTHER = "Other",
 	URL = "URL",
@@ -171,24 +168,28 @@ export interface C_primaryCTA {
 	link?: string,
 }
 
+export interface C_professionalRecord {
+	position?: string,
+	organisation?: string,
+	startYear?: number,
+	endYear?: number,
+}
+
 export interface C_secondaryCTA {
 	label?: string,
 	linkType?: LinkType,
 	link?: string,
 }
 
+export interface C_startYourJourney {
+	title?: string,
+	subtitle?: string,
+	backgroundImage?: Image,
+}
+
 export interface FeaturedMessage {
 	description?: string,
 	url?: string,
-}
-
-export enum LocationType {
-	LOCATION = "Location",
-	HEALTHCARE_FACILITY = "Healthcare Facility",
-	HEALTHCARE_PROFESSIONAL = "Healthcare Professional",
-	ATM = "ATM",
-	RESTAURANT = "Restaurant",
-	HOTEL = "Hotel",
 }
 
 export interface MenuUrl {
@@ -303,14 +304,6 @@ export enum PaymentOptions {
 	Überweisung = "Banküberweisung",
 }
 
-export enum PriceRange {
-	UNSPECIFIED = "Unspecified",
-	ONE = "$",
-	TWO = "$$",
-	THREE = "$$$",
-	FOUR = "$$$$",
-}
-
 export interface ReservationUrl {
 	url?: string,
 	displayUrl?: string,
@@ -329,8 +322,7 @@ export interface ComplexVideo {
 	description?: string,
 }
 
-export default interface Location {
-	accessHours?: Hours,
+export default interface FinancialProfessional {
 	appleActionLinks?: AppleActionLinks[],
 	appleBusinessDescription?: string,
 	appleBusinessId?: string,
@@ -338,6 +330,8 @@ export default interface Location {
 	appleCompanyId?: string,
 	appleCompanyIdDqe?: string,
 	appleCoverPhoto?: Image,
+	appointmentOnly?: boolean,
+	awards?: string[],
 	bingAdAccountNumber?: string,
 	bingAdCampaign?: string,
 	bingAdGroup?: string,
@@ -345,40 +339,29 @@ export default interface Location {
 	bingParentLocation?: EntityReference,
 	bingRelationshipType?: BingRelationshipType,
 	bingWebsiteOverride?: string,
-	blackOwnedBusiness?: boolean,
-	brunchHours?: Hours,
-	covid19InformationUrl?: string,
-	covidMessaging?: string,
-	deliveryHours?: Hours,
-	deliveryUrl?: string,
-	dineInHours?: Hours,
-	driveThroughHours?: Hours,
+	disclosureLink?: string,
 	facebookWebsiteOverride?: string,
-	fullyVaccinatedStaff?: boolean,
 	geomodifier?: string,
 	googleAdministratorEmail?: string,
-	happyHours?: Hours,
+	hobbies?: string[],
 	holidayHoursConversationEnabled?: boolean,
-	kitchenHours?: Hours,
+	interests?: string[],
 	landingPageUrl?: string,
 	linkedInUrl?: string,
 	neighborhood?: string,
+	nmlsNumber?: string,
 	nudgeEnabled?: boolean,
 	onlineServiceHours?: Hours,
 	pageLayouts?: EntityReference[],
-	phoneticName?: string,
-	pickupAndDeliveryServices?: PickupAndDeliveryServices[],
-	pickupHours?: Hours,
 	pinterestUrl?: string,
 	primaryConversationContact?: any,
-	proofOfVaccinationRequired?: boolean,
 	reviewResponseConversationEnabled?: boolean,
-	seniorHours?: Hours,
 	slug?: string,
-	takeoutHours?: Hours,
+	teamName?: string,
 	tikTokUrl?: string,
 	visualConfigurations?: VisualConfigurations[],
 	what3WordsAddress?: string,
+	yearsOfExperience?: number,
 	yelpWebsiteOverride?: string,
 	youTubeChannelUrl?: string,
 	additionalHoursText?: string,
@@ -393,42 +376,51 @@ export default interface Location {
 	logo?: ComplexImage,
 	name: string,
 	categories?: any,
+	certifications?: string[],
 	cityCoordinate?: Coordinate,
 	closed?: boolean,
+	c_averageRating?: number,
+	c_backgroundImage?: Image,
+	c_educationDetails?: C_educationDetails[],
+	c_finproatm?: EntityReference[],
+	c_finprofaq?: EntityReference[],
+	c_finprohelparticle?: EntityReference[],
 	c_finproloc?: EntityReference[],
+	c_licensesAndCertifications?: string[],
+	c_numberOfReviews?: number,
 	c_primaryCTA?: C_primaryCTA,
+	c_professionalRecord?: C_professionalRecord[],
+	c_registrationDetails?: string[],
+	c_relatedArticles?: EntityReference[],
 	c_secondaryCTA?: C_secondaryCTA,
+	c_speciality?: EntityReference[],
+	c_startYourJourney?: C_startYourJourney,
 	displayCoordinate?: Coordinate,
 	dropoffCoordinate?: Coordinate,
 	emails?: string[],
-	facebookEmail?: string,
 	facebookPageUrl?: string,
 	fax?: any,
 	featuredMessage?: FeaturedMessage,
 	photoGallery?: ComplexImage[],
 	geocodedCoordinate?: Coordinate,
 	googleWebsiteOverride?: string,
+	headshot?: Image,
 	instagramHandle?: string,
 	iosAppUrl?: string,
 	isoRegionCode?: string,
 	keywords?: string[],
 	languages?: string[],
 	localPhone?: any,
-	locationType?: LocationType,
 	mainPhone?: any,
 	menuUrl?: MenuUrl,
 	mobilePhone?: any,
 	orderUrl?: OrderUrl,
 	paymentOptions?: PaymentOptions[],
-	phones?: any,
 	pickupCoordinate?: Coordinate,
-	priceRange?: PriceRange,
 	products?: string[],
 	reservationUrl?: ReservationUrl,
 	routableCoordinate?: Coordinate,
 	services?: string[],
-	shortName35?: string,
-	shortName64?: string,
 	specialities?: string[],
 	id: string,
 	timezone?: any,
@@ -437,7 +429,6 @@ export default interface Location {
 	twitterHandle?: string,
 	walkableCoordinate?: Coordinate,
 	websiteUrl?: WebsiteUrl,
-	yearEstablished?: number,
 	yextDisplayCoordinate?: Coordinate,
 	yextDropoffCoordinate?: Coordinate,
 	yextPickupCoordinate?: Coordinate,

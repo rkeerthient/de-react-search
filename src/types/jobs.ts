@@ -50,12 +50,23 @@ export interface ComplexImage {
 	clickthroughUrl?: string,
 }
 
-export interface C_jobAddress {
-	line1: string,
-	line2?: string,
-	city: string,
-	region: string,
-	postalCode: string,
+export enum LinkType {
+	OTHER = "Other",
+	URL = "URL",
+	PHONE = "Phone",
+	EMAIL = "Email",
+}
+
+export interface C_primaryCTA {
+	label?: string,
+	linkType?: LinkType,
+	link?: string,
+}
+
+export interface C_secondaryCTA {
+	label?: string,
+	linkType?: LinkType,
+	link?: string,
 }
 
 export default interface Job {
@@ -75,9 +86,9 @@ export default interface Job {
 	description?: string,
 	logo?: ComplexImage,
 	name: string,
-	c_jobAddress?: C_jobAddress,
-	c_locationName?: string,
-	c_richDescription?: string,
+	c_parentEntityType?: string,
+	c_primaryCTA?: C_primaryCTA,
+	c_secondaryCTA?: C_secondaryCTA,
 	displayCoordinate?: Coordinate,
 	keywords?: string[],
 	id: string,

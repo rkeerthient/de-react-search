@@ -50,9 +50,9 @@ const SearchResults = () => {
 
   const getClasses = () => {
     const classesMap: { [key: string]: string } = {
-      "grid-cols-2": "grid grid-cols-2 gap-2",
-      "grid-cols-3": "grid grid-cols-3 gap-2",
-      "grid-cols-4": "grid grid-cols-4 gap-2",
+      "grid-cols-2": "grid  grid-cols-1 md:grid-cols-2 gap-2",
+      "grid-cols-3": "grid  grid-cols-1 md:grid-cols-3 gap-2",
+      "grid-cols-4": "grid grid-cols-1 md:grid-cols-4 gap-2 ",
       standard: "flex flex-col gap-2",
     };
     return classesMap[pageType];
@@ -75,11 +75,11 @@ const SearchResults = () => {
                     setClickedLocationId,
                   }}
                 >
-                  <section className="w-full flex h-[950px]">
-                    <article className="w-1/3">
+                  <section className="w-full flex md:h-[950px]">
+                    <article className="w-full md:w-1/3">
                       <SpellCheck />
                       {facetsCount >= 1 && (
-                        <aside className="mr-5 w-56 shrink-0">
+                        <aside className="hidden md:block mr-5 w-56 shrink-0">
                           <Facets />
                         </aside>
                       )}
@@ -105,7 +105,7 @@ const SearchResults = () => {
                         <Geolocation />
                       </footer>
                     </article>
-                    <article className="w-2/3">
+                    <article className="hidden md:block md:w-2/3">
                       <MapboxMap
                         mapboxAccessToken={
                           import.meta.env.YEXT_PUBLIC_MAP_API_KEY
@@ -126,7 +126,7 @@ const SearchResults = () => {
                 <section className="w-full flex centered-container">
                   <SpellCheck />
                   {facetsCount >= 1 && (
-                    <aside className="mr-5 w-56 shrink-0">
+                    <aside className="hidden md:block  mr-5 w-56 shrink-0">
                       <Facets />
                     </aside>
                   )}
@@ -140,7 +140,7 @@ const SearchResults = () => {
                       customCssClasses={{
                         verticalResultsContainer: concatClassNames(
                           getClasses(),
-                          "overflow-y-auto max-h-[950px]"
+                          "overflow-y-auto md:max-h-[950px]"
                         ),
                       }}
                     />

@@ -9,6 +9,15 @@ export interface Attendance {
 	virtualLocationUrl?: string,
 }
 
+export interface RichTextV2 {
+	json: Record<string, any>,
+}
+
+export interface FrequentlyAskedQuestions {
+	question: string,
+	answer?: string,
+}
+
 export interface AgeRange {
 	minValue?: number,
 	maxValue?: number,
@@ -62,29 +71,6 @@ export interface Coordinate {
 	longitude?: number,
 }
 
-export enum C_EventAudiance {
-	EVERYONE = "Everyone",
-	YOUTH = "Youth",
-	WOMEN = "Women",
-	MEN = "Men",
-	GIRLS__11__ = "Girls (11+)",
-	BOYS__11__ = "Boys (11+)",
-	CHILDREN__3_11_ = "Children (3-11)",
-	SINGLE_ADULTS__18_30_ = "Single Adults (18-30)",
-	SINGLE_ADULTS__31__ = "Single Adults (31+)",
-}
-
-export enum C_eventTypes {
-	CHRISTMAS_PARTY = "Christmas Party",
-	CHURCH_HQ_WORLDWIDE_EVENT = "Church HQ Worldwide Event",
-	DEVOTIONAL___MUSIC = "Devotional & Music",
-	GENERAL_ACTIVITIES = "General Activities",
-	LEADERSHIP_MEETINGS = "Leadership Meetings",
-	SERVICE_PROJECTS = "Service Projects",
-	SPORTING_EVENT = "Sporting Event",
-	SUNDAY_WORSHIP = "Sunday Worship",
-}
-
 export interface ImageThumbnail {
 	url: string,
 	width: number,
@@ -97,39 +83,6 @@ export interface Image {
 	height: number,
 	thumbnails?: ImageThumbnail[],
 	alternateText?: string,
-}
-
-export enum IHaveReadAndAgreeToTheLocalUnitWebpageContentSubmissionAgreementAndTheTermsOfUseHttpslocalunitschurchofjesuschristorglocalunitwebsitecontentsubmissionagreement {
-	Yes = "Yes",
-}
-
-export interface C_legalDisclaimer {
-	iHaveReadAndAgreeToTheLocalUnitWebpageContentSubmissionAgreementAndTheTermsOfUseHttpslocalunitschurchofjesuschristorglocalunitwebsitecontentsubmissionagreement?: IHaveReadAndAgreeToTheLocalUnitWebpageContentSubmissionAgreementAndTheTermsOfUseHttpslocalunitschurchofjesuschristorglocalunitwebsitecontentsubmissionagreement[],
-}
-
-export enum LinkType {
-	OTHER = "Other",
-	URL = "URL",
-	PHONE = "Phone",
-	EMAIL = "Email",
-}
-
-export interface C_primaryCTA {
-	label?: string,
-	linkType?: LinkType,
-	link?: string,
-}
-
-export interface C_secondaryCTA {
-	label?: string,
-	linkType?: LinkType,
-	link?: string,
-}
-
-export interface C_tertiaryCTA {
-	label?: string,
-	linkType?: LinkType,
-	link?: string,
 }
 
 export interface ComplexImage {
@@ -147,6 +100,11 @@ export interface WebsiteUrl {
 
 export default interface Event {
 	attendance?: Attendance,
+	eventCapacity?: number,
+	eventbriteDescription?: RichTextV2,
+	eventbriteOrganizationId?: string,
+	eventbriteOrganizerId?: string,
+	frequentlyAskedQuestions?: FrequentlyAskedQuestions[],
 	landingPageUrl?: string,
 	slug?: string,
 	what3WordsAddress?: string,
@@ -171,23 +129,6 @@ export default interface Event {
 	name: string,
 	categories?: any,
 	cityCoordinate?: Coordinate,
-	c_additionalInfo?: any,
-	c_EventAudiance?: C_EventAudiance[],
-	c_audience?: string,
-	c_event_description_long?: string,
-	c_eventEndDate?: string,
-	c_eventLocation?: string,
-	c_eventStartDate?: string,
-	c_eventTime?: string,
-	c_eventTypes?: C_eventTypes[],
-	c_eventsDescription?: string,
-	c_eventsSubheading?: string,
-	c_heroImage?: Image,
-	c_legalDisclaimer?: C_legalDisclaimer,
-	c_photo?: Image,
-	c_primaryCTA?: C_primaryCTA,
-	c_secondaryCTA?: C_secondaryCTA,
-	c_tertiaryCTA?: C_tertiaryCTA,
 	displayCoordinate?: Coordinate,
 	dropoffCoordinate?: Coordinate,
 	photoGallery?: ComplexImage[],

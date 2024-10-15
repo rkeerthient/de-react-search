@@ -3,7 +3,7 @@ import { useMapContext } from "../search/searchResults";
 import Location, { Coordinate } from "../../types/locations";
 import { Address, AddressType, HoursStatus } from "@yext/pages-components";
 import Cta from "../cta";
-import { format_phone } from "../../utils/reusableFunctions";
+import { format_phone, getGoogleMapsLink } from "../../utils/reusableFunctions";
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/20/solid";
 import { useRef } from "react";
 
@@ -21,11 +21,6 @@ const LocationStandard: CardComponent<any> = ({
     yextDisplayCoordinate,
   } = result.rawData;
   const { index, distance } = result;
-
-  const getGoogleMapsLink = (coordinate: Coordinate): string => {
-    if (!coordinate?.latitude || !coordinate?.longitude) return "#";
-    return `https://www.google.com/maps/dir/?api=1&destination=${coordinate.latitude},${coordinate.longitude}`;
-  };
 
   const { hoveredLocationId, setClickedLocationId, setHoveredLocationId } =
     useMapContext();
@@ -73,7 +68,7 @@ const LocationStandard: CardComponent<any> = ({
         className={"standardSubTitle"}
       />
 
-      <section className="flex  justify-between items-center ">
+      <section className="flex flex-col md:flex-row  justify-between items-center ">
         <address className="not-italic w-full flex gap-2 flex-col mt-4">
           {address && (
             <section className="flex gap-2 items-base">
@@ -93,7 +88,7 @@ const LocationStandard: CardComponent<any> = ({
 
         {(yextDisplayCoordinate || mainPhone) && (
           <footer
-            className="flex flex-col items-end justify-center gap-2 pt-4 pb-2 uppercase w-full"
+            className="flex flex-col items-center md:items-end justify-center gap-2 pt-4 pb-2 uppercase w-full"
             aria-label="Call to Actions"
           >
             {mainPhone && (

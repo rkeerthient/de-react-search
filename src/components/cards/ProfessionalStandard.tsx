@@ -66,10 +66,10 @@ const ProfessionalStandard = ({ result }: CardProps<any>) => {
         )}
         <section className="flex justify-between  gap-8">
           <div>
-            <div className="flex justify-between">
+            <div className="flex md:justify-between">
               <div>
                 {address && (
-                  <address className="flex justify-center md:justify-start font-medium leading-loose items-start   text-secondary not-italic">
+                  <address className="flex  justify-start font-medium leading-loose items-start   text-secondary not-italic">
                     <MapPinIcon className="h-4 w-4 mt-2" />
                     <span className="ml-2">
                       <Address address={address as AddressType} />
@@ -77,7 +77,7 @@ const ProfessionalStandard = ({ result }: CardProps<any>) => {
                   </address>
                 )}
                 {mainPhone && (
-                  <section className="flex justify-center md:justify-start font-medium leading-loose items-center   text-secondary">
+                  <section className="flex  justify-start font-medium leading-loose items-center   text-secondary">
                     <PhoneIcon className="h-4 w-4" />
                     <span className="ml-2">{format_phone(mainPhone)}</span>
                   </section>

@@ -12,15 +12,24 @@ const FAQAccordion = ({ result }: CardProps<any>) => {
 
   return (
     <section className="w-full text-primary">
-      <article className="mx-auto w-full divide-y divide-black/5 rounded-xl bg-black/5">
-        <Disclosure as="section" className="px-6 py-3" defaultOpen={false}>
+      <article className="mx-auto w-full divide-y divide-black/5 rounded-xl border">
+        <Disclosure
+          as="section"
+          className="px-2 md:px-6 py-3"
+          defaultOpen={false}
+        >
           <DisclosureButton className="group flex w-full items-center justify-between">
             <h3 className="text-left text-lg font-medium group-hover:opacity-80">
               {question}
             </h3>
-            <ChevronDownIcon className="size-5 fill-black/60 group-hover:fill-black/50 group-open:rotate-180" />
+            <ChevronDownIcon
+              className={`size-5 fill-black/60 group-hover:fill-black/50 group-data-[open]:rotate-180 `}
+            />
           </DisclosureButton>
-          <DisclosurePanel className="mt-2 text-sm/5 flex flex-col text-secondary">
+          <DisclosurePanel
+            transition
+            className="mt-2 text-sm/5 flex flex-col text-secondary origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0"
+          >
             <ResponseComponent response={answerV2} />
             <section
               className="flex flex-col md:flex-row gap-4 md:gap-8 justify-start md:items-center pt-4 pb-2"
