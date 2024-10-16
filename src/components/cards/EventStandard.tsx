@@ -17,7 +17,6 @@ const EventStandard = ({ result }: CardProps<Event>) => {
     landingPageUrl,
     yextDisplayCoordinate,
   } = result.rawData;
-  console.log(ticketUrl, websiteUrl, landingPageUrl);
 
   const formatDateTimeRange = (start: string, end: string) => {
     const startDate = new Date(start);
@@ -43,7 +42,6 @@ const EventStandard = ({ result }: CardProps<Event>) => {
       hour: "2-digit",
       minute: "2-digit",
     });
-    console.log(new Date(startDate).getMonth());
 
     if (startDateStr === endDateStr) {
       return `${startDateStr} at ${startTimeStr} - ${endTimeStr}`;

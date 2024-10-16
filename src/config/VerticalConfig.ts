@@ -5,7 +5,7 @@ import JobStandard from "../components/cards/JobStandard";
 import LocationStandard from "../components/cards/LocationStandard";
 import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocationAndGrid";
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
-import { UniversalSection } from "./UniversalSection";
+import { UniversalSection } from "../components/UniversalSection";
 
 export interface VerticalProps {
   label: string;

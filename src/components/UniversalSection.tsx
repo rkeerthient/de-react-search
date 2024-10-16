@@ -3,7 +3,7 @@ import {
   SectionProps,
   VerticalConfigMap,
 } from "@yext/search-ui-react";
-import { VerticalConfig } from "./VerticalConfig";
+import { VerticalConfig } from "../config/VerticalConfig";
 
 export const UniversalSection = ({
   results,

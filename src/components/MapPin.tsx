@@ -30,9 +30,9 @@ const getLocationHTML = (location: Location) => {
 export interface MapPinProps {
   mapbox: Map;
   result: Result<any>;
-  clickedLocationId: string;
-  hoveredLocationId: string;
-  setHoveredLocationId: (value: string) => void;
+  clickedId: string;
+  hoveredId: string;
+  setHoveredId: (value: string) => void;
 }
 let currentPopup: Popup | null = null;
 const scrollToLocationCard = (locationId: string) => {
@@ -45,9 +45,9 @@ const scrollToLocationCard = (locationId: string) => {
 const MapPin = ({
   mapbox,
   result,
-  hoveredLocationId,
-  setHoveredLocationId,
-  clickedLocationId,
+  hoveredId,
+  setHoveredId,
+  clickedId,
 }: MapPinProps) => {
   const location = result.rawData;
   const [active, setActive] = useState(false);
@@ -57,13 +57,13 @@ const MapPin = ({
     new Popup({ offset: 15 }).on("close", () => setActive(false))
   );
 
-  const pinSize = hoveredLocationId === location.id ? "h-8 w-8" : "h-6 w-6";
-  const textSize = hoveredLocationId === location.id ? "text-xl" : "text-sm";
+  const pinSize = hoveredId === location.id ? "h-8 w-8" : "h-6 w-6";
+  const textSize = hoveredId === location.id ? "text-xl" : "text-sm";
 
-  const zIndex = hoveredLocationId === location.id ? "z-50" : "z-10";
+  const zIndex = hoveredId === location.id ? "z-50" : "z-10";
 
   useEffect(() => {
-    if (active || clickedLocationId === location.id) {
+    if (active || clickedId === location.id) {
       if (location.yextDisplayCoordinate) {
         scrollToLocationCard(location.id);
         const mapboxCoordinate = transformToMapboxCoord(
@@ -88,18 +88,18 @@ const MapPin = ({
         }
       }
     }
-  }, [active, clickedLocationId, mapbox, location]);
+  }, [active, clickedId, mapbox, location]);
 
   const handleClick = useCallback(() => {
     setActive(true);
   }, []);
 
   const updateHoveredLocation = useCallback(() => {
-    setHoveredLocationId(location.id);
+    setHoveredId(location.id);
   }, [location.id]);
 
   const removeHoveredLocation = useCallback(() => {
-    setHoveredLocationId("");
+    setHoveredId("");
   }, []);
 
   return (

@@ -20,9 +20,8 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
     c_primaryCTA,
     c_secondaryCTA,
   } = result.rawData;
-  console.log(JSON.stringify(result));
 
-  const { hoveredLocationId, setClickedLocationId, setHoveredLocationId } =
+  const { hoveredId, setClickedId, setHoveredId } =
     pageType === "map" ? useMapContext() : {};
 
   const locationRef = useRef<HTMLDivElement | null>(null);
@@ -33,22 +32,22 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
     );
   }, []);
   const handleMouseEnter = () => {
-    if (pageType === "map" && setHoveredLocationId && setClickedLocationId) {
-      setHoveredLocationId(id!);
-      setClickedLocationId("");
+    if (pageType === "map" && setHoveredId && setClickedId) {
+      setHoveredId(id!);
+      setClickedId("");
     }
   };
 
   const handleMouseLeave = () => {
-    if (pageType === "map" && setHoveredLocationId && setClickedLocationId) {
-      setHoveredLocationId("");
-      setClickedLocationId("");
+    if (pageType === "map" && setHoveredId && setClickedId) {
+      setHoveredId("");
+      setClickedId("");
     }
   };
 
   const handleClick = () => {
-    if (pageType === "map" && setClickedLocationId) {
-      setClickedLocationId(id!);
+    if (pageType === "map" && setClickedId) {
+      setClickedId(id!);
     }
   };
 
@@ -60,7 +59,7 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`border rounded-lg ${pageType === "map" && `flex gap-2`}  ${
-        hoveredLocationId === id ? "bg-gray-200" : ""
+        hoveredId === id ? "bg-gray-200" : ""
       }`}
     >
       <header

@@ -22,7 +22,7 @@ const LocationStandard: CardComponent<any> = ({
   } = result.rawData;
   const { index, distance } = result;
 
-  const { hoveredLocationId, setClickedLocationId, setHoveredLocationId } =
+  const { hoveredId, setClickedId, setHoveredId } =
     useMapContext();
 
   const locationRef = useRef<HTMLDivElement | null>(null);
@@ -31,12 +31,12 @@ const LocationStandard: CardComponent<any> = ({
     <article
       id={`location-card-${id}`}
       ref={locationRef}
-      onClick={() => setClickedLocationId(id)}
+      onClick={() => setClickedId(id)}
       className={`flex flex-col justify-between border-y p-4 cards  ${
-        hoveredLocationId === id ? "bg-gray-200" : ""
+        hoveredId === id ? "bg-gray-200" : ""
       }`}
-      onMouseEnter={() => (setHoveredLocationId(id), setClickedLocationId(""))}
-      onMouseLeave={() => (setHoveredLocationId(""), setClickedLocationId(""))}
+      onMouseEnter={() => (setHoveredId(id), setClickedId(""))}
+      onMouseLeave={() => (setHoveredId(""), setClickedId(""))}
       aria-labelledby={`location-${id}`}
     >
       <section className="flex flex-col">

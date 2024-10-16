@@ -19,10 +19,10 @@ import MapPin from "../MapPin";
 import { concatClassNames } from "../../utils/reusableFunctions";
 
 type MapContextType = {
-  hoveredLocationId: string;
-  setHoveredLocationId: (value: string) => void;
-  clickedLocationId: string;
-  setClickedLocationId: (value: string) => void;
+  hoveredId: string;
+  setHoveredId: (value: string) => void;
+  clickedId: string;
+  setClickedId: (value: string) => void;
 };
 
 export const [useMapContext, MapContextProvider] = createCtx<MapContextType>(
@@ -30,8 +30,8 @@ export const [useMapContext, MapContextProvider] = createCtx<MapContextType>(
 );
 
 const SearchResults = () => {
-  const [hoveredLocationId, setHoveredLocationId] = useState("");
-  const [clickedLocationId, setClickedLocationId] = useState("");
+  const [hoveredId, setHoveredId] = useState("");
+  const [clickedId, setClickedId] = useState("");
   const _state = useSearchState((state) => state);
   const {
     vertical: { verticalKey, resultsCount = -1 },
@@ -68,10 +68,10 @@ const SearchResults = () => {
       ) : (
         <MapContextProvider
           value={{
-            hoveredLocationId,
-            setHoveredLocationId,
-            clickedLocationId,
-            setClickedLocationId,
+            hoveredId,
+            setHoveredId,
+            clickedId,
+            setClickedId,
           }}
         >
           {pageType === "universal" ? (
@@ -132,9 +132,9 @@ const SearchResults = () => {
                           PinComponent={(props) => (
                             <MapPin
                               {...props}
-                              clickedLocationId={clickedLocationId}
-                              hoveredLocationId={hoveredLocationId}
-                              setHoveredLocationId={setHoveredLocationId}
+                              clickedId={clickedId}
+                              hoveredId={hoveredId}
+                              setHoveredId={setHoveredId}
                             />
                           )}
                         />
