@@ -11,7 +11,7 @@ const FAQAccordion = ({ result }: CardProps<any>) => {
   const { question, answerV2, c_primaryCTA, c_secondaryCTA } = result.rawData;
 
   return (
-    <section className="w-full text-primary">
+    <section className="w-full ">
       <article className="mx-auto w-full divide-y divide-black/5 rounded-xl border">
         <Disclosure
           as="section"
@@ -19,9 +19,9 @@ const FAQAccordion = ({ result }: CardProps<any>) => {
           defaultOpen={false}
         >
           <DisclosureButton className="group flex w-full items-center justify-between">
-            <h3 className="text-left text-lg font-medium group-hover:opacity-80">
+            <h2 className="text-left text-lg font-medium group-hover:opacity-80">
               {question}
-            </h3>
+            </h2>
             <ChevronDownIcon
               className={`size-5 fill-black/60 group-hover:fill-black/50 group-data-[open]:rotate-180 `}
             />

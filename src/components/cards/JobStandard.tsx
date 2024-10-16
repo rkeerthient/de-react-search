@@ -56,7 +56,10 @@ const JobStandard = ({ result }: CardProps<any>) => {
       </header>
 
       <section className="flex flex-col md:flex-row justify-between flex-nowrap">
-        <section className="standardCardDetails transition-all duration-500 ease-in-out" aria-label="Job Description">
+        <section
+          className="standardCardDetails transition-all duration-500 ease-in-out"
+          aria-label="Job Description"
+        >
           <ResponseComponent response={description} showMore={true} />
           {keywords && (
             <ul

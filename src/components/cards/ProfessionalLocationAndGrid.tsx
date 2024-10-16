@@ -76,7 +76,7 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
             />
           )}
         </a>
-        <h2 className="text-primary text-lg font-bold px-2 mt-4">
+        <h2 className=" text-lg font-bold px-2 mt-4">
           <a href={landingPageUrl}>{name}</a>
         </h2>
       </header>

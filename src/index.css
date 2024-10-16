@@ -25,6 +25,10 @@
   @apply mt-8 mb-16;
 }
 
+h2 {
+  @apply !text-[var(--yxt-color-text-primary)];
+}
+
 /* Cards Config*/
 .cards {
   border: var(--yxt-border-default);
