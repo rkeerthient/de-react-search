@@ -16,14 +16,17 @@ export const UniversalSection = ({
 
   const className = pageType?.includes("grid")
     ? `grid grid-cols-1 md:${pageType} gap-8`
-    : `space-y-8`;
+    : `space-y-0`;
 
   return (
-    <section>
-      <h2 className="font-bold text-base md:text-xl my-4">
+    <section className="border rounded-md">
+      <h2 className="font-bold text-base md:text-lg py-4 pl-4 bg-black !text-white h-full">
         {header?.props.label.toUpperCase()}
       </h2>
-      <div aria-label={`${header} results section`} className={className}>
+      <div
+        aria-label={`${header?.props.label} results section`}
+        className={className}
+      >
         {results.map((r: any, index: number) => (
           <CardComponent key={index} result={r} />
         ))}

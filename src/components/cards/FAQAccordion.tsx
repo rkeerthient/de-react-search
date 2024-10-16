@@ -11,13 +11,9 @@ const FAQAccordion = ({ result }: CardProps<any>) => {
   const { question, answerV2, c_primaryCTA, c_secondaryCTA } = result.rawData;
 
   return (
-    <section className="w-full ">
-      <article className="mx-auto w-full divide-y divide-black/5 rounded-xl border">
-        <Disclosure
-          as="section"
-          className="px-2 md:px-6 py-3"
-          defaultOpen={false}
-        >
+    <section className="w-full cards">
+      <article className="mx-auto w-full divide-y divide-black/5">
+        <Disclosure as="section" className="p-2" defaultOpen={false}>
           <DisclosureButton className="group flex w-full items-center justify-between">
             <h2 className="text-left text-lg font-medium group-hover:opacity-80">
               {question}

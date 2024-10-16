@@ -31,9 +31,12 @@ h2 {
 
 /* Cards Config*/
 .cards {
-  border: var(--yxt-border-default);
-  border-radius: var(--yxt-border-radius);
   padding: calc(var(--yxt-base-spacing) * 3 / 4) var(--yxt-base-spacing);
+}
+
+.cards:not(:last-child) {
+  border: 0px;
+  border-bottom: var(--yxt-border-default);
 }
 .standardTitle {
   margin-bottom: 0.5em;

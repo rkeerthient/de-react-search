@@ -38,7 +38,9 @@ const SearchNav = () => {
     }
     setIsDropdownOpen(false);
   };
-
+  useEffect(() => {
+    handleClick(VerticalConfig[0]);
+  }, []);
   return (
     <>
       <nav className="hidden md:block bg-transparent p-4 pb-2  pt-8 border-b border-[#e5e7eb] uppercase">
@@ -50,7 +52,7 @@ const SearchNav = () => {
               className={`group hover:cursor-pointer px-5 uppercase font-semibold `}
             >
               <span
-                className={`uppercase
+                className={`uppercase text-lg
                 group-hover:text-gray-300
                 ${activeItem === item ? "text-blue-500 border-b-4 border-blue-500 pb-2" : "text-gray-500"}
               `}
