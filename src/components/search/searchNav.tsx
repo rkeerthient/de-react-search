@@ -58,9 +58,11 @@ const SearchNav = () => {
             </button>
           </li>
 
-          <li className="mr-4 text-blue-500 border-b-4 border-blue-500">
-            <button className="pt-2 uppercase">{activeItem?.label}</button>
-          </li>
+          {activeItem?.label !== "All" && (
+            <li className="mr-4 text-blue-500 border-b-4 border-blue-500">
+              <button className="pt-2 uppercase">{activeItem?.label}</button>
+            </li>
+          )}
 
           <li className="relative ml-auto ">
             <button

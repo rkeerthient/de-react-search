@@ -1,21 +1,29 @@
+import { StandardSection, VerticalConfigMap } from "@yext/search-ui-react";
 import EventStandard from "../components/cards/EventStandard";
 import FAQAccordion from "../components/cards/FAQAccordion";
 import JobStandard from "../components/cards/JobStandard";
 import LocationStandard from "../components/cards/LocationStandard";
 import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocationAndGrid";
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
+import { UniversalSection } from "./UniversalSection";
 
 export interface VerticalProps {
   label: string;
   key?: string;
-  pageType: "grid-cols-2" | "grid-cols-3" | "grid-cols-4" | "standard" | "map";
+  pageType:
+    | "grid-cols-2"
+    | "grid-cols-3"
+    | "grid-cols-4"
+    | "standard"
+    | "map"
+    | "universal";
   cardType?: any;
 }
 
 export const VerticalConfig: VerticalProps[] = [
   {
     label: "All",
-    pageType: "standard",
+    pageType: "universal",
   },
   {
     label: "FAQs",
@@ -32,7 +40,7 @@ export const VerticalConfig: VerticalProps[] = [
   {
     label: "Locations",
     key: "locations",
-    pageType: "map",
+    pageType: "standard",
     cardType: LocationStandard,
   },
   {
@@ -48,12 +56,18 @@ export const VerticalConfig: VerticalProps[] = [
     cardType: EventStandard,
   },
 ];
-// const PAGE_COMPONENTS: { [key: string]: React.ElementType } = {
-//   faq: FAQPage,
-//   "financial-professional": ProfessionalPage,
-//   "help-article": HelpArticlesPage,
-//   jobs: JobsPage,
-//   locations: Locator,
-//   product: ProductsPage,
-//   all: UniversalPage,
-// };
+
+const buildUniversalConfigMap = (): VerticalConfigMap => {
+  return VerticalConfig.reduce((configMap, item) => {
+    if (item.key) {
+      configMap[item.key] = {
+        CardComponent: item.cardType,
+        SectionComponent: UniversalSection,
+        label: item.label,
+      };
+    }
+    return configMap;
+  }, {} as VerticalConfigMap);
+};
+
+export const UniversalConfig: VerticalConfigMap = buildUniversalConfigMap();

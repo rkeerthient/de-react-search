@@ -9,8 +9,9 @@ import {
   Geolocation,
   SpellCheck,
   MapboxMap,
+  UniversalResults,
 } from "@yext/search-ui-react";
-import { VerticalConfig } from "../../config/VerticalConfig";
+import { UniversalConfig, VerticalConfig } from "../../config/VerticalConfig";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { createCtx } from "../../utils/ createContext";
 import { useState } from "react";
@@ -37,8 +38,10 @@ const SearchResults = () => {
     searchStatus: { isLoading },
     query: { mostRecentSearch },
     filters,
+    universal,
   } = _state;
-
+  const universalResultsLength =
+    universal?.verticals?.[0]?.results?.length || 0;
   const facetsCount = filters?.facets?.length ?? 0;
 
   const currentVerticalConfig = VerticalConfig.find(
@@ -63,27 +66,89 @@ const SearchResults = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <>
-          {resultsCount > 0 ? (
+        <MapContextProvider
+          value={{
+            hoveredLocationId,
+            setHoveredLocationId,
+            clickedLocationId,
+            setClickedLocationId,
+          }}
+        >
+          {pageType === "universal" ? (
             <>
-              {pageType === "map" ? (
-                <MapContextProvider
-                  value={{
-                    hoveredLocationId,
-                    setHoveredLocationId,
-                    clickedLocationId,
-                    setClickedLocationId,
-                  }}
-                >
-                  <section className="w-full flex md:h-[950px]">
-                    <article className="w-full md:w-1/3">
+              {universalResultsLength >= 1 ? (
+                <>
+                  <UniversalResults
+                    verticalConfigMap={UniversalConfig}
+                    customCssClasses={{
+                      universalResultsContainer: "centered-container",
+                    }}
+                  />
+                </>
+              ) : (
+                <>No Results</>
+              )}
+            </>
+          ) : (
+            <>
+              {resultsCount > 0 ? (
+                <>
+                  {pageType === "map" ? (
+                    <section className="w-full flex md:h-[950px]">
+                      <article className="w-full md:w-1/3">
+                        <SpellCheck />
+                        {facetsCount >= 1 && (
+                          <aside className="hidden md:block mr-5 w-56 shrink-0">
+                            <Facets />
+                          </aside>
+                        )}
+                        <div className="w-full h-auto overflow-scroll">
+                          <header className="results-header">
+                            <ResultsCount />
+                            <AppliedFilters />
+                          </header>
+                          <VerticalResults
+                            CardComponent={cardType}
+                            customCssClasses={{
+                              verticalResultsContainer: concatClassNames(
+                                getClasses(),
+                                "overflow-scroll h-[950px]"
+                              ),
+                            }}
+                          />
+                        </div>
+                        <nav aria-label="Pagination mt-16">
+                          <Pagination />
+                        </nav>
+                        <footer aria-label="Geolocation">
+                          <Geolocation />
+                        </footer>
+                      </article>
+                      <article className="hidden md:block md:w-2/3">
+                        <MapboxMap
+                          mapboxAccessToken={
+                            import.meta.env.YEXT_PUBLIC_MAP_API_KEY
+                          }
+                          PinComponent={(props) => (
+                            <MapPin
+                              {...props}
+                              clickedLocationId={clickedLocationId}
+                              hoveredLocationId={hoveredLocationId}
+                              setHoveredLocationId={setHoveredLocationId}
+                            />
+                          )}
+                        />
+                      </article>
+                    </section>
+                  ) : (
+                    <section className="w-full flex centered-container">
                       <SpellCheck />
                       {facetsCount >= 1 && (
-                        <aside className="hidden md:block mr-5 w-56 shrink-0">
+                        <aside className="hidden md:block  mr-5 w-56 shrink-0">
                           <Facets />
                         </aside>
                       )}
-                      <div className="w-full h-auto overflow-scroll">
+                      <div className="w-full">
                         <header className="results-header">
                           <ResultsCount />
                           <AppliedFilters />
@@ -93,79 +158,36 @@ const SearchResults = () => {
                           customCssClasses={{
                             verticalResultsContainer: concatClassNames(
                               getClasses(),
-                              "overflow-scroll h-[950px]"
+                              "overflow-y-auto md:max-h-[950px]"
                             ),
                           }}
                         />
+                        <nav aria-label="Pagination">
+                          <Pagination />
+                        </nav>
+                        <footer aria-label="Geolocation">
+                          <Geolocation />
+                        </footer>
                       </div>
-                      <nav aria-label="Pagination mt-16">
-                        <Pagination />
-                      </nav>
-                      <footer aria-label="Geolocation">
-                        <Geolocation />
-                      </footer>
-                    </article>
-                    <article className="hidden md:block md:w-2/3">
-                      <MapboxMap
-                        mapboxAccessToken={
-                          import.meta.env.YEXT_PUBLIC_MAP_API_KEY
-                        }
-                        PinComponent={(props) => (
-                          <MapPin
-                            {...props}
-                            clickedLocationId={clickedLocationId}
-                            hoveredLocationId={hoveredLocationId}
-                            setHoveredLocationId={setHoveredLocationId}
-                          />
-                        )}
-                      />
-                    </article>
-                  </section>
-                </MapContextProvider>
-              ) : (
-                <section className="w-full flex centered-container">
-                  <SpellCheck />
-                  {facetsCount >= 1 && (
-                    <aside className="hidden md:block  mr-5 w-56 shrink-0">
-                      <Facets />
-                    </aside>
+                    </section>
                   )}
-                  <div className="w-full">
-                    <header className="results-header">
-                      <ResultsCount />
-                      <AppliedFilters />
-                    </header>
-                    <VerticalResults
-                      CardComponent={cardType}
-                      customCssClasses={{
-                        verticalResultsContainer: concatClassNames(
-                          getClasses(),
-                          "overflow-y-auto md:max-h-[950px]"
-                        ),
-                      }}
-                    />
-                    <nav aria-label="Pagination">
-                      <Pagination />
-                    </nav>
-                    <footer aria-label="Geolocation">
-                      <Geolocation />
-                    </footer>
+                </>
+              ) : (
+                mostRecentSearch && (
+                  <div>
+                    <p>
+                      The search
+                      <span className="mx-1 font-semibold">
+                        {mostRecentSearch}
+                      </span>
+                      did not match any FAQs.
+                    </p>
                   </div>
-                </section>
+                )
               )}
             </>
-          ) : (
-            mostRecentSearch && (
-              <div>
-                <p>
-                  The search
-                  <span className="mx-1 font-semibold">{mostRecentSearch}</span>
-                  did not match any FAQs.
-                </p>
-              </div>
-            )
           )}
-        </>
+        </MapContextProvider>
       )}
     </div>
   );
