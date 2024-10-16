@@ -1,6 +1,6 @@
 import { CardComponent, CardProps } from "@yext/search-ui-react";
 import { useMapContext } from "../search/searchResults";
-import Location, { Coordinate } from "../../types/locations";
+import Location from "../../types/locations";
 import { Address, AddressType, HoursStatus } from "@yext/pages-components";
 import Cta from "../cta";
 import { format_phone, getGoogleMapsLink } from "../../utils/reusableFunctions";

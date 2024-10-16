@@ -1,8 +1,4 @@
-import {
-  DefaultRawDataType,
-  SectionProps,
-  VerticalConfigMap,
-} from "@yext/search-ui-react";
+import { DefaultRawDataType, SectionProps } from "@yext/search-ui-react";
 import { VerticalConfig } from "../config/VerticalConfig";
 
 export const UniversalSection = ({
@@ -23,13 +19,15 @@ export const UniversalSection = ({
     : `space-y-8`;
 
   return (
-    <div>
-      <div>{header}</div>
-      <div className={className}>
+    <section>
+      <h2 className="font-bold text-base md:text-xl my-4">
+        {header?.props.label.toUpperCase()}
+      </h2>
+      <div aria-label={`${header} results section`} className={className}>
         {results.map((r: any, index: number) => (
           <CardComponent key={index} result={r} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };

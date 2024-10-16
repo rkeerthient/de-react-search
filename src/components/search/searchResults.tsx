@@ -82,6 +82,8 @@ const SearchResults = () => {
                     verticalConfigMap={UniversalConfig}
                     customCssClasses={{
                       universalResultsContainer: "centered-container",
+                      sectionHeaderIconContainer: "hidden",
+                      sectionHeaderLabel: "!pl-0",
                     }}
                   />
                 </>

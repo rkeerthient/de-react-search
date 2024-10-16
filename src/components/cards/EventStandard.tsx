@@ -2,9 +2,8 @@ import { CardProps } from "@yext/search-ui-react";
 import Event from "../../types/events";
 import ResponseComponent from "../ResponseComponent";
 import Cta from "../cta";
-import { format_phone, getGoogleMapsLink } from "../../utils/reusableFunctions";
-import { MapPinIcon, PhoneIcon } from "@heroicons/react/20/solid";
-import { Address, AddressType } from "@yext/pages-components";
+import { getGoogleMapsLink } from "../../utils/reusableFunctions";
+import { MapPinIcon } from "@heroicons/react/20/solid";
 const EventStandard = ({ result }: CardProps<Event>) => {
   const { name } = result;
   const {
