@@ -1,7 +1,6 @@
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/20/solid";
-import { Address, Image, Link } from "@yext/pages-components";
+import { Address, HoursStatus, Image } from "@yext/pages-components";
 import { CardProps } from "@yext/search-ui-react";
-import HoursText from "../HoursText";
 import Cta from "../cta";
 import { format_phone } from "../../utils/reusableFunctions";
 import { VerticalConfig } from "../../config/VerticalConfig";
@@ -21,6 +20,7 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
     c_primaryCTA,
     c_secondaryCTA,
   } = result.rawData;
+  console.log(JSON.stringify(result));
 
   const { hoveredLocationId, setClickedLocationId, setHoveredLocationId } =
     pageType === "map" ? useMapContext() : {};
@@ -85,16 +85,23 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
         className={`px-2 space-y-1 ${pageType === "map" && `mt-4 w-3/4`}`}
       >
         <section
-          className={`flex justify-start ${pageType === "map" ? `flex-row` : `flex-col`}`}
+          className={`flex justify-start ${pageType === "map" ? `flex-row` : `flex-col gap-2 mt-2`}`}
         >
           {hours ? (
-            <HoursText timezone={timezone} hours={hours} />
+            <HoursStatus
+              className="font-medium"
+              timezone={timezone}
+              hours={hours}
+              dayOfWeekTemplate={() => <span className=""></span>}
+            />
           ) : (
             <p>Fill in your hours</p>
           )}
-          <span className="standardSubTitle italic mr-4 whitespace-nowrap">
-            {(distance! / 1609.344).toFixed(2)} mi
-          </span>
+          {distance && (
+            <span className="standardSubTitle italic mr-4 whitespace-nowrap">
+              {(distance! / 1609.344).toFixed(2)} mi
+            </span>
+          )}
         </section>
 
         {address && (

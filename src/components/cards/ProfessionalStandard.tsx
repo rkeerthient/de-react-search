@@ -1,8 +1,7 @@
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/20/solid";
-import { Address, AddressType, Image } from "@yext/pages-components";
+import { Address, AddressType, HoursStatus, Image } from "@yext/pages-components";
 import { CardProps } from "@yext/search-ui-react";
-import HoursText from "../HoursText";
-import Cta from "../cta";
+ import Cta from "../cta";
 import { format_phone } from "../../utils/reusableFunctions";
 import ResponseComponent from "../ResponseComponent";
 
@@ -60,7 +59,7 @@ const ProfessionalStandard = ({ result }: CardProps<any>) => {
         </header>
 
         {hours ? (
-          <HoursText timezone={timezone} hours={hours} />
+          <HoursStatus timezone={timezone} hours={hours} />
         ) : (
           <p>Fill in your hours</p>
         )}

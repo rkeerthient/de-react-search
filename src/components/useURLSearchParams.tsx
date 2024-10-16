@@ -4,7 +4,7 @@ const getURLSearchParams = () => {
   if (typeof window !== "undefined") {
     return new URLSearchParams(window.location.search);
   }
-  return new URLSearchParams(); // Return a new instance to avoid undefined errors
+  return new URLSearchParams();
 };
 
 export const useURLSearchParams = () => {

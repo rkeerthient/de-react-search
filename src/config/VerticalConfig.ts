@@ -18,6 +18,7 @@ export interface VerticalProps {
     | "map"
     | "universal";
   cardType?: any;
+  universalLimit?: number;
 }
 
 export const VerticalConfig: VerticalProps[] = [
@@ -30,30 +31,35 @@ export const VerticalConfig: VerticalProps[] = [
     key: "faq",
     pageType: "standard",
     cardType: FAQAccordion,
+    universalLimit: 3,
   },
   {
     label: "Professionals",
     key: "financial-professional",
     pageType: "grid-cols-3",
     cardType: ProfessionalLocationAndGrid,
+    universalLimit: 3,
   },
   {
     label: "Locations",
     key: "locations",
     pageType: "standard",
     cardType: LocationStandard,
+    universalLimit: 3,
   },
   {
     label: "Jobs",
     key: "jobs",
     pageType: "standard",
     cardType: JobStandard,
+    universalLimit: 3,
   },
   {
     label: "Events",
     key: "events",
     pageType: "standard",
     cardType: EventStandard,
+    universalLimit: 3,
   },
 ];
 

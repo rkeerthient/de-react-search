@@ -28,7 +28,7 @@ const FAQAccordion = ({ result }: CardProps<any>) => {
           </DisclosureButton>
           <DisclosurePanel
             transition
-            className="mt-2 text-sm/5 flex flex-col text-secondary origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0"
+            className="mt-2 flex flex-col text-secondary origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0"
           >
             <ResponseComponent response={answerV2} />
             <section

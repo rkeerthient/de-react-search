@@ -1,8 +1,15 @@
 import { useState } from "react";
-import { useSearchActions } from "@yext/search-headless-react";
+import { UniversalLimit, useSearchActions } from "@yext/search-headless-react";
 import { VerticalConfig, VerticalProps } from "../../config/VerticalConfig";
 import { BsThreeDotsVertical } from "react-icons/bs";
-
+const getUniversalLimit = () => {
+  return VerticalConfig.filter(
+    (item) => item.label !== "All" && item.universalLimit !== undefined
+  ).reduce((acc, item) => {
+    acc[String(item.key)] = item.universalLimit as number;
+    return acc;
+  }, {} as UniversalLimit);
+};
 const SearchNav = () => {
   const searchActions = useSearchActions();
   const [activeItem, setActiveItem] = useState<VerticalProps>(
@@ -20,6 +27,7 @@ const SearchNav = () => {
       searchActions.executeVerticalQuery();
     } else {
       searchActions.setUniversal();
+      searchActions.setUniversalLimit(getUniversalLimit());
       searchActions.executeUniversalQuery();
     }
     setIsDropdownOpen(false);
