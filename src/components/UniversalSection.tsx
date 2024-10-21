@@ -6,6 +6,8 @@ import {
 import { VerticalConfig } from "../config/VerticalConfig";
 import MapPin from "./MapPin";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { MapboxMaps, Map } from "@yext/pages-components";
+
 export const UniversalSection = ({
   results,
   header,
@@ -26,22 +28,45 @@ export const UniversalSection = ({
   return (
     <>
       {pageType!.includes("map") ? (
-        <div className="h-96">
-          <MapboxMap
-            mapboxAccessToken={import.meta.env.YEXT_PUBLIC_MAP_API_KEY}
-            PinComponent={(props) => (
-              <MapPin
-                clickedId={""}
-                hoveredId={""}
-                setHoveredId={function (value: string): void {
-                  throw new Error("Function not implemented.");
-                }}
-                {...props}
-                result={props.result}
-              />
-            )}
-          />
-        </div>
+        <section className="border rounded-md">
+          <h2 className="font-bold text-base md:text-lg py-4 pl-4 bg-black !text-white h-full">
+            {header?.props.label.toUpperCase()}
+          </h2>{" "}
+          <article className="hidden md:block md:w-full">
+            <Map
+              apiKey={import.meta.env.YEXT_PUBLIC_MAP_API_KEY}
+              provider={MapboxMaps}
+              padding={{
+                top: 100,
+                bottom: 200,
+                left: 50,
+                right: 50,
+              }}
+              className="h-96"
+            >
+              {results?.map((data, index) => (
+                <MapPin
+                  key={index}
+                  type="universalResults"
+                  result={data}
+                  clickedId={""}
+                  hoveredId={""}
+                  setHoveredId={function (value: string): void {
+                    throw new Error("Function not implemented.");
+                  }}
+                />
+              ))}
+            </Map>
+          </article>
+          <div
+            aria-label={`${header?.props.label} results section`}
+            className={className}
+          >
+            {results.map((r: any, index: number) => (
+              <CardComponent key={index} result={r} />
+            ))}
+          </div>
+        </section>
       ) : (
         <section className="border rounded-md">
           <h2 className="font-bold text-base md:text-lg py-4 pl-4 bg-black !text-white h-full">

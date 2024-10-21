@@ -28,6 +28,7 @@ const getLocationHTML = (location: Location) => {
 };
 
 export interface MapPinProps {
+  type: "verticalResultts" | "universalResults";
   mapbox?: mapboxgl.Map;
   result: Result<any>;
   clickedId: string;
@@ -49,6 +50,7 @@ const MapPin = ({
   hoveredId,
   setHoveredId,
   clickedId,
+  type,
 }: MapPinProps) => {
   const location = result.rawData;
   const [active, setActive] = useState(false);
@@ -59,25 +61,27 @@ const MapPin = ({
   );
   const { id, yextDisplayCoordinate } = location;
   const handleClick = useCallback(() => {
-    scrollToLocationCard(location.id);
-    setActive(true);
-    const mapboxCoordinate = transformToMapboxCoord(
-      location.yextDisplayCoordinate
-    );
-    if (currentPopup) {
-      currentPopup.remove();
-    }
-    if (mapboxCoordinate) {
-      const newPopup = popupRef
-        .current!.setLngLat(mapboxCoordinate)
-        .setHTML(getLocationHTML(location))
-        .addTo(mapbox);
-      currentPopup = newPopup;
+    if (mapbox) {
+      scrollToLocationCard(location.id);
+      setActive(true);
+      const mapboxCoordinate = transformToMapboxCoord(
+        location.yextDisplayCoordinate
+      );
+      if (currentPopup) {
+        currentPopup.remove();
+      }
+      if (mapboxCoordinate) {
+        const newPopup = popupRef
+          .current!.setLngLat(mapboxCoordinate)
+          .setHTML(getLocationHTML(location))
+          .addTo(mapbox);
+        currentPopup = newPopup;
 
-      newPopup.on("close", () => {
-        setActive(false);
-        currentPopup = null;
-      });
+        newPopup.on("close", () => {
+          setActive(false);
+          currentPopup = null;
+        });
+      }
     }
   }, [location, mapbox, map]);
 
@@ -101,12 +105,12 @@ const MapPin = ({
 
   return (
     <Marker
-      onClick={handleClick}
+      onClick={type === "verticalResultts" ? handleClick : undefined}
       coordinate={yextDisplayCoordinate}
       id={id}
-      onHover={updateHoveredLocation}
-      onFocus={removeHoveredLocation}
-      zIndex={hoveredId === id ? 2 : 0}
+      onHover={type === "verticalResultts" ? updateHoveredLocation : undefined}
+      onFocus={type === "verticalResultts" ? removeHoveredLocation : undefined}
+      zIndex={type === "verticalResultts" && hoveredId === id ? 2 : 0}
     >
       <MapPinPin
         backgroundColor="red"
