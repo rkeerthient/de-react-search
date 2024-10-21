@@ -22,7 +22,7 @@ const ClampedContent = ({
   const lineClampClass = showMoreLines ? "line-clamp-3" : "";
 
   return (
-    <section aria-expanded={showMoreLines} className="px-2 ">
+    <section aria-expanded={showMoreLines}>
       <div
         className={concatClassNames(
           "transition-all duration-500 ease-in-out",

@@ -18,6 +18,7 @@ import MapPin from "../MapPin";
 import { concatClassNames } from "../../utils/reusableFunctions";
 import { createCtx } from "../../utils/createContext";
 import { MapboxMaps, Map } from "@yext/pages-components";
+import { IoClose } from "react-icons/io5";
 type MapContextType = {
   hoveredId: string;
   setHoveredId: (value: string) => void;
@@ -30,6 +31,7 @@ export const [useMapContext, MapContextProvider] = createCtx<MapContextType>(
 );
 
 const SearchResults = () => {
+  const [showFacets, setShowFacets] = useState(false);
   const [hoveredId, setHoveredId] = useState("");
   const [clickedId, setClickedId] = useState("");
   const _state = useSearchState((state) => state);
@@ -110,14 +112,47 @@ const SearchResults = () => {
                     <section className="w-full flex md:h-[950px]">
                       <article className="w-full md:w-1/3">
                         <SpellCheck />
-                        {facetsCount >= 1 && (
-                          <aside className="hidden md:block mr-5 w-56 shrink-0">
-                            <Facets />
-                          </aside>
-                        )}
-                        <div className="w-full h-auto overflow-scroll">
+                        <div className="w-full h-auto overflow-scroll relative">
                           <header className="results-header">
-                            <ResultsCount />
+                            <aside className="flex justify-between w-full pr-8 items-center">
+                              <ResultsCount />
+                              {facetsCount >= 1 && (
+                                <div
+                                  className="hover:cursor-pointer font-bold text-standardSubTitle !text-gray-700"
+                                  onClick={(e) => setShowFacets(!showFacets)}
+                                >
+                                  Facets & Filters
+                                </div>
+                              )}
+                            </aside>
+                            {showFacets && (
+                              <div className="absolute inset-0 bg-white h-[95vh] px-4">
+                                <IoClose
+                                  onClick={(e) => setShowFacets(false)}
+                                  className="ml-auto h-8 w-8 mr-4 hover:cursor-pointer hover:border"
+                                />
+                                <Facets
+                                  customCssClasses={{
+                                    facetsContainer: "mr-10 !text-lg",
+                                  }}
+                                  searchOnChange={true}
+                                />
+                                <div className="flex flex-row gap-4 mb-8 items-center text-lg  mt-4 text-xl">
+                                  <div
+                                    className="px-4 py-2 border border-black"
+                                    onClick={(e) => setShowFacets(!showFacets)}
+                                  >
+                                    Apply
+                                  </div>
+                                  <div
+                                    className="hover:cursor-pointer px-4 py-2 text-[#027da5] w-fit hover:underline"
+                                    onClick={(e) => setShowFacets(false)}
+                                  >
+                                    Cancel
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                             <AppliedFilters />
                           </header>
                           <VerticalResults
