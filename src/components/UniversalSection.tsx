@@ -1,8 +1,4 @@
-import {
-  DefaultRawDataType,
-  MapboxMap,
-  SectionProps,
-} from "@yext/search-ui-react";
+import { DefaultRawDataType, SectionProps } from "@yext/search-ui-react";
 import { VerticalConfig } from "../config/VerticalConfig";
 import MapPin from "./MapPin";
 import "mapbox-gl/dist/mapbox-gl.css";
