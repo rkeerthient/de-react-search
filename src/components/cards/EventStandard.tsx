@@ -66,9 +66,11 @@ const EventStandard = ({ result }: CardProps<Event>) => {
         <h2 id={`job-title-${result.id}`} className="standardTitle">
           {name}
         </h2>
-        <p className="standardSubTitle !text-base">
-          {formatDateTimeRange(time.start, time.end)}
-        </p>
+        {time && (time.start || time.end) && (
+          <p className="standardSubTitle !text-base">
+            {formatDateTimeRange(time.start, time.end)}
+          </p>
+        )}
         <address className="not-italic w-full flex gap-2 flex-col  my-2">
           {address && (
             <section className="flex gap-2 items-center text-base">

@@ -54,6 +54,15 @@ h2 {
   margin-top: calc(var(--yxt-base-spacing) / 2);
 }
 
+/* Map pin config */
+.mapPin {
+  fill: black;
+}
+
+.mapPinText {
+  fill: white;
+}
+
 /*CTA Config*/
 .primaryCta {
   background: white;

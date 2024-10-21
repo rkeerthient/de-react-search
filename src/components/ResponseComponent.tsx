@@ -3,77 +3,86 @@ import { useState } from "react";
 import Markdown from "react-markdown";
 import { concatClassNames } from "../utils/reusableFunctions";
 
-type ResponseType =
-  | {
-      json: {
-        root: any;
-      };
-    }
-  | {
-      markdown: string;
-    }
-  | string;
-
 interface ResponseComponentProps {
-  response: ResponseType;
+  response: any;
   showMore?: boolean;
 }
 
-const ResponseComponent = ({ response, showMore }: ResponseComponentProps) => {
-  const [showMoreLines, setShowMoreLines] = useState(showMore);
+const ClampedContent = ({
+  children,
+  showMoreLines,
+  toggleLines,
+  showMore = false,
+}: {
+  children: React.ReactNode;
+  showMoreLines: boolean;
+  toggleLines: () => void;
+  showMore?: boolean;
+}) => {
+  const lineClampClass = showMoreLines ? "line-clamp-3" : "";
+
+  return (
+    <section aria-expanded={showMoreLines} className="px-2 ">
+      <div
+        className={concatClassNames(
+          "transition-all duration-500 ease-in-out",
+          lineClampClass
+        )}
+        style={{ overflow: "hidden" }}
+      >
+        {children}
+      </div>
+      {showMore && (
+        <button
+          onClick={toggleLines}
+          aria-expanded={showMoreLines}
+          aria-controls="response-text"
+          style={{
+            display: "block",
+            marginTop: "10px",
+          }}
+        >
+          {showMoreLines ? "Show More >" : "Show Less >"}
+        </button>
+      )}
+    </section>
+  );
+};
+
+const ResponseComponent = ({
+  response,
+  showMore = false,
+}: ResponseComponentProps) => {
+  const [showMoreLines, setShowMoreLines] = useState<boolean>(showMore);
   const toggleLines = () => {
     setShowMoreLines((prevState) => !prevState);
   };
 
-  if (typeof response === "object" && "json" in response) {
-    return (
-      <section aria-expanded={showMoreLines}>
-        <LexicalRichText serializedAST={JSON.stringify(response.json)} />
-      </section>
-    );
-  }
+  const renderResponse = () => {
+    if (typeof response === "object" && "json" in response) {
+      return <LexicalRichText serializedAST={JSON.stringify(response.json)} />;
+    }
 
-  if (typeof response === "object" && "markdown" in response) {
-    return (
-      <section aria-expanded={showMoreLines}>
-        <Markdown>{response.markdown}</Markdown>
-      </section>
-    );
-  }
+    if (typeof response === "object" && "markdown" in response) {
+      return <Markdown>{response.markdown}</Markdown>;
+    }
 
-  if (typeof response === "string") {
-    return (
-      <section aria-expanded={showMoreLines}>
-        <p
-          className={concatClassNames(
-            "transition-all duration-500 ease-in-out",
-            !showMoreLines && "line-clamp-3"
-          )}
-          style={{
-            overflow: "hidden",
-          }}
-          aria-live="polite"
-        >
-          {response}
-        </p>
-        {showMore && (
-          <button
-            onClick={toggleLines}
-            aria-expanded={showMoreLines}
-            aria-controls="response-text"
-            style={{
-              display: "block",
-              marginTop: "10px",
-            }}
-          >
-            {showMoreLines ? "Show Less >" : "Show More >"}
-          </button>
-        )}
-      </section>
-    );
-  }
+    if (typeof response === "string") {
+      return <p aria-live="polite">{response}</p>;
+    }
 
-  return null;
+    return null;
+  };
+
+  return (
+    <ClampedContent
+      showMoreLines={showMoreLines}
+      toggleLines={toggleLines}
+      showMore={showMore}
+    >
+      {renderResponse()}
+    </ClampedContent>
+  );
 };
 
 export default ResponseComponent;

@@ -8,16 +8,16 @@ import {
   VerticalResults,
   Geolocation,
   SpellCheck,
-  MapboxMap,
   UniversalResults,
+  DirectAnswer,
 } from "@yext/search-ui-react";
 import { UniversalConfig, VerticalConfig } from "../../config/VerticalConfig";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { createCtx } from "../../utils/ createContext";
 import { useState } from "react";
 import MapPin from "../MapPin";
 import { concatClassNames } from "../../utils/reusableFunctions";
-
+import { createCtx } from "../../utils/createContext";
+import { MapboxMaps, Map } from "@yext/pages-components";
 type MapContextType = {
   hoveredId: string;
   setHoveredId: (value: string) => void;
@@ -78,14 +78,25 @@ const SearchResults = () => {
             <>
               {universalResultsLength >= 1 ? (
                 <>
+                  <DirectAnswer></DirectAnswer>
                   <UniversalResults
                     verticalConfigMap={UniversalConfig}
                     customCssClasses={{
-                      universalResultsContainer: "centered-container",
+                      universalResultsContainer: "centered-container my-12",
                       sectionHeaderIconContainer: "hidden",
                       sectionHeaderLabel: "!pl-0",
                     }}
                   />
+                  <nav aria-label="Pagination" className=" text-lg">
+                    <Pagination />
+                  </nav>
+                  <footer aria-label="Geolocation">
+                    <Geolocation
+                      customCssClasses={{
+                        geolocationContainer: "text-lg",
+                      }}
+                    />
+                  </footer>
                 </>
               ) : (
                 <>No Results</>
@@ -119,27 +130,39 @@ const SearchResults = () => {
                             }}
                           />
                         </div>
-                        <nav aria-label="Pagination mt-16">
+                        <nav aria-label="Pagination" className="mt-12 text-lg">
                           <Pagination />
                         </nav>
                         <footer aria-label="Geolocation">
-                          <Geolocation />
+                          <Geolocation
+                            customCssClasses={{
+                              geolocationContainer: "text-lg",
+                            }}
+                          />
                         </footer>
                       </article>
                       <article className="hidden md:block md:w-2/3">
-                        <MapboxMap
-                          mapboxAccessToken={
-                            import.meta.env.YEXT_PUBLIC_MAP_API_KEY
-                          }
-                          PinComponent={(props) => (
+                        <Map
+                          apiKey={import.meta.env.YEXT_PUBLIC_MAP_API_KEY}
+                          provider={MapboxMaps}
+                          padding={{
+                            top: 100,
+                            bottom: 200,
+                            left: 50,
+                            right: 50,
+                          }}
+                          className="h-full"
+                        >
+                          {_state?.vertical?.results?.map((data, index) => (
                             <MapPin
-                              {...props}
+                              key={index}
                               clickedId={clickedId}
                               hoveredId={hoveredId}
                               setHoveredId={setHoveredId}
+                              result={data}
                             />
-                          )}
-                        />
+                          ))}
+                        </Map>
                       </article>
                     </section>
                   ) : (
@@ -158,17 +181,19 @@ const SearchResults = () => {
                         <VerticalResults
                           CardComponent={cardType}
                           customCssClasses={{
-                            verticalResultsContainer: concatClassNames(
-                              getClasses(),
-                              "overflow-y-auto md:max-h-[950px]"
-                            ),
+                            verticalResultsContainer:
+                              concatClassNames(getClasses()),
                           }}
                         />
-                        <nav aria-label="Pagination">
+                        <nav aria-label="Pagination" className="mt-12 text-lg">
                           <Pagination />
                         </nav>
                         <footer aria-label="Geolocation">
-                          <Geolocation />
+                          <Geolocation
+                            customCssClasses={{
+                              geolocationContainer: "text-lg",
+                            }}
+                          />
                         </footer>
                       </div>
                     </section>

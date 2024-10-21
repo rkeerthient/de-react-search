@@ -6,6 +6,7 @@ import LocationStandard from "../components/cards/LocationStandard";
 import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocationAndGrid";
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 import { UniversalSection } from "../components/UniversalSection";
+import ProductProminentImage from "../components/cards/ProductProminentImage";
 
 export interface VerticalProps {
   label: string;
@@ -43,7 +44,7 @@ export const VerticalConfig: VerticalProps[] = [
   {
     label: "Locations",
     key: "locations",
-    pageType: "standard",
+    pageType: "map",
     cardType: LocationStandard,
     universalLimit: 3,
   },
@@ -59,6 +60,13 @@ export const VerticalConfig: VerticalProps[] = [
     key: "events",
     pageType: "standard",
     cardType: EventStandard,
+    universalLimit: 3,
+  },
+  {
+    label: "Products",
+    key: "product",
+    pageType: "grid-cols-3",
+    cardType: ProductProminentImage,
     universalLimit: 3,
   },
 ];

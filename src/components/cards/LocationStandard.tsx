@@ -22,8 +22,7 @@ const LocationStandard: CardComponent<any> = ({
   } = result.rawData;
   const { index, distance } = result;
 
-  const { hoveredId, setClickedId, setHoveredId } =
-    useMapContext();
+  const { hoveredId, setClickedId, setHoveredId } = useMapContext();
 
   const locationRef = useRef<HTMLDivElement | null>(null);
 
@@ -64,11 +63,13 @@ const LocationStandard: CardComponent<any> = ({
         </header>
       </section>
 
-      <HoursStatus
-        hours={hours}
-        timezone={timezone}
-        className={"standardSubTitle"}
-      />
+      {hours && (
+        <HoursStatus
+          hours={hours}
+          timezone={timezone}
+          className={"standardSubTitle"}
+        />
+      )}
 
       <section className="flex flex-col md:flex-row  justify-between items-center ">
         <address className="not-italic w-full flex gap-2 flex-col mt-4">
