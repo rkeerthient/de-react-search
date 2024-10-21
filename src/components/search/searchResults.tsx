@@ -114,11 +114,11 @@ const SearchResults = () => {
                         <SpellCheck />
                         <div className="w-full h-auto overflow-scroll relative">
                           <header className="results-header">
-                            <aside className="flex justify-between w-full pr-8 items-center">
+                            <aside className="hidden md:flex justify-between w-full pr-8 items-center">
                               <ResultsCount />
                               {facetsCount >= 1 && (
                                 <div
-                                  className="hover:cursor-pointer font-bold text-standardSubTitle !text-gray-700"
+                                  className=" hover:cursor-pointer font-bold text-standardSubTitle !text-gray-700"
                                   onClick={(e) => setShowFacets(!showFacets)}
                                 >
                                   Facets & Filters
@@ -126,7 +126,7 @@ const SearchResults = () => {
                               )}
                             </aside>
                             {showFacets && (
-                              <div className="absolute inset-0 bg-white h-[95vh] px-4">
+                              <div className="hidden md:block absolute inset-0 bg-white h-[95vh] px-4">
                                 <IoClose
                                   onClick={(e) => setShowFacets(false)}
                                   className="ml-auto h-8 w-8 mr-4 hover:cursor-pointer hover:border"
