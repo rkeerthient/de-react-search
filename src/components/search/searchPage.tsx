@@ -3,7 +3,9 @@ import SearchNav from "./searchNav";
 import SearchResults from "./searchResults";
 import { FaMicrophone } from "react-icons/fa";
 import { createRoot } from "react-dom/client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useSearchActions } from "@yext/search-headless-react";
+
 declare global {
   interface Window {
     webkitSpeechRecognition: any;
@@ -12,60 +14,78 @@ declare global {
 }
 
 const SearchPage = () => {
-  const [inputValue, setInputValue] = useState("");
+  const searchActions = useSearchActions();
+  const [listening, setListening] = useState(false);
+  const [micRoot, setMicRoot] = useState<ReturnType<typeof createRoot> | null>(
+    null
+  );
 
-  useEffect(() => {
-    const searchDiv = document.getElementsByClassName("search")[0];
-    if (searchDiv) {
-      const input = searchDiv.querySelector("input") as HTMLInputElement;
-      if (input) {
-        const micIcon = document.createElement("span");
-        micIcon.style.cursor = "pointer";
-
-        const root = createRoot(micIcon);
-        root.render(
-          <FaMicrophone
-            size={24}
-            onClick={() => {
-              if (typeof window !== "undefined") {
-                handleSpeechToText(input);
-              }
-            }}
-          />
-        );
-        input.insertAdjacentElement("afterend", micIcon);
-      }
-    }
-  }, []);
-
-  const handleSpeechToText = (input: HTMLInputElement) => {
+  const handleSpeechToText = useCallback(() => {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
-
     if (!SpeechRecognition) {
       console.error("Speech Recognition API not supported in this browser.");
       return;
     }
-
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
     recognition.start();
+    setListening(true);
 
     recognition.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript;
-      console.log(transcript);
-
-      input.value = transcript;
-      setInputValue(transcript);
+      if (transcript) {
+        searchActions.setQuery(transcript);
+      }
+      setListening(false);
     };
 
     recognition.onerror = (event: any) => {
       console.error("Speech recognition error detected: " + event.error);
+      setListening(false);
     };
-  };
+
+    recognition.onend = () => {
+      setListening(false);
+    };
+  }, [searchActions]);
+
+  useEffect(() => {
+    const searchDiv = document.getElementsByClassName("search")[0];
+    if (searchDiv && !micRoot) {
+      const input = searchDiv.querySelector("input") as HTMLInputElement;
+      if (input) {
+        const nextDiv = input.nextSibling as HTMLElement;
+
+        if (nextDiv && nextDiv.tagName === "DIV") {
+          const micIcon = document.createElement("span");
+          micIcon.style.cursor = "pointer";
+
+          const root = createRoot(micIcon);
+          root.render(
+            <FaMicrophone
+              className={listening ? "mr-4 animate-pulse" : "mr-4"}
+              size={24}
+              onClick={handleSpeechToText}
+            />
+          );
+          nextDiv.parentElement?.insertBefore(micIcon, nextDiv); // Insert the mic before the next div
+          setMicRoot(root);
+        }
+      }
+    } else if (micRoot) {
+      micRoot.render(
+        <FaMicrophone
+          className={listening ? "mr-4 animate-pulse" : "mr-4"}
+          size={24}
+          onClick={handleSpeechToText}
+        />
+      );
+    }
+  }, [listening, micRoot, handleSpeechToText]);
 
   return (
     <main className="flex flex-col gap-2">
