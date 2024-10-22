@@ -18,7 +18,7 @@ const transformToMapboxCoord = (
 const getLocationHTML = (location: Location) => {
   const address = location.address;
   const html = (
-    <div>
+    <div className="popover">
       <p className="font-bold">{location.name || "unknown location"}</p>
       <p>{location.address.line1}</p>
       <p>{`${address.city}, ${address.region}, ${address.postalCode}`}</p>
@@ -37,7 +37,7 @@ export interface MapPinProps {
 }
 let currentPopup: Popup | null = null;
 
-const scrollToLocationCard = (locationId: string) => {
+const scrollToCard = (locationId: string) => {
   const locationCard = document.getElementById(`location-card-${locationId}`);
   if (locationCard) {
     locationCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -60,30 +60,33 @@ const MapPin = ({
     new Popup({ offset: 15 }).on("close", () => setActive(false))
   );
   const { id, yextDisplayCoordinate } = location;
-  const handleClick = useCallback(() => {
-    if (mapbox) {
-      scrollToLocationCard(location.id);
-      setActive(true);
-      const mapboxCoordinate = transformToMapboxCoord(
-        location.yextDisplayCoordinate
-      );
-      if (currentPopup) {
-        currentPopup.remove();
-      }
-      if (mapboxCoordinate) {
-        const newPopup = popupRef
-          .current!.setLngLat(mapboxCoordinate)
-          .setHTML(getLocationHTML(location))
-          .addTo(mapbox);
-        currentPopup = newPopup;
+  const handleClick = useCallback(
+    (id: string) => {
+      if (type === "verticalResultts") {
+        scrollToCard(location.id);
+        setActive(true);
+        const mapboxCoordinate = transformToMapboxCoord(
+          location.yextDisplayCoordinate
+        );
+        if (currentPopup) {
+          currentPopup.remove();
+        }
+        if (mapboxCoordinate && mapbox) {
+          const newPopup = popupRef
+            .current!.setLngLat(mapboxCoordinate)
+            .setHTML(getLocationHTML(location))
+            .addTo(mapbox);
+          currentPopup = newPopup;
 
-        newPopup.on("close", () => {
-          setActive(false);
-          currentPopup = null;
-        });
+          newPopup.on("close", () => {
+            setActive(false);
+            currentPopup = null;
+          });
+        }
       }
-    }
-  }, [location, mapbox, map]);
+    },
+    [location, mapbox, map]
+  );
 
   useEffect(() => {
     if (clickedId === id) {
@@ -105,7 +108,7 @@ const MapPin = ({
 
   return (
     <Marker
-      onClick={type === "verticalResultts" ? handleClick : undefined}
+      onClick={(id) => handleClick(id)}
       coordinate={yextDisplayCoordinate}
       id={id}
       onHover={type === "verticalResultts" ? updateHoveredLocation : undefined}
