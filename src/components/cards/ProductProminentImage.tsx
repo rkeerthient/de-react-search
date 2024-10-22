@@ -15,8 +15,6 @@ const product = {
 };
 
 const ProductProminentImage = ({ result }: CardProps<Product>) => {
-  console.log(JSON.stringify(result.rawData.richTextDescriptionV2));
-
   const {
     id,
     price,
