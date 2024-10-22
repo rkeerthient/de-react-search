@@ -137,7 +137,7 @@ const SearchResults = () => {
                                   }}
                                   searchOnChange={true}
                                 />
-                                <div className="flex flex-row gap-4 mb-8 items-center text-lg  mt-4 text-xl">
+                                <div className="flex flex-row gap-4 mb-8 items-center mt-4 text-xl">
                                   <div
                                     className="px-4 py-2 border border-black"
                                     onClick={(e) => setShowFacets(!showFacets)}
@@ -194,6 +194,7 @@ const SearchResults = () => {
                               clickedId={clickedId}
                               hoveredId={hoveredId}
                               setHoveredId={setHoveredId}
+                              setClickedId={setClickedId}
                               result={data}
                               type="verticalResults"
                             />
