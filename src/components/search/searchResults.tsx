@@ -195,7 +195,7 @@ const SearchResults = () => {
                               hoveredId={hoveredId}
                               setHoveredId={setHoveredId}
                               result={data}
-                              type="verticalResultts"
+                              type="verticalResults"
                             />
                           ))}
                         </Map>

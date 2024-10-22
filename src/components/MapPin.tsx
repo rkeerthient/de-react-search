@@ -28,7 +28,7 @@ const getLocationHTML = (location: Location) => {
 };
 
 export interface MapPinProps {
-  type: "verticalResultts" | "universalResults";
+  type: "verticalResults" | "universalResults";
   mapbox?: mapboxgl.Map;
   result: Result<any>;
   clickedId: string;
@@ -62,7 +62,7 @@ const MapPin = ({
   const { id, yextDisplayCoordinate } = location;
   const handleClick = useCallback(
     (id: string) => {
-      if (type === "verticalResultts") {
+      if (type === "verticalResults") {
         scrollToCard(location.id);
         setActive(true);
         const mapboxCoordinate = transformToMapboxCoord(
@@ -111,9 +111,9 @@ const MapPin = ({
       onClick={(id) => handleClick(id)}
       coordinate={yextDisplayCoordinate}
       id={id}
-      onHover={type === "verticalResultts" ? updateHoveredLocation : undefined}
-      onFocus={type === "verticalResultts" ? removeHoveredLocation : undefined}
-      zIndex={type === "verticalResultts" && hoveredId === id ? 2 : 0}
+      onHover={type === "verticalResults" ? updateHoveredLocation : undefined}
+      onFocus={type === "verticalResults" ? removeHoveredLocation : undefined}
+      zIndex={type === "verticalResults" && hoveredId === id ? 2 : 0}
     >
       <MapPinPin
         backgroundColor="red"
