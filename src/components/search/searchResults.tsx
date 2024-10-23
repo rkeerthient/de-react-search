@@ -66,7 +66,7 @@ const SearchResults = () => {
   };
 
   return (
-    <div className="px-4 centered-container my-12">
+    <div className="px-4 ">
       {isLoading ? (
         <Loader />
       ) : (
@@ -81,7 +81,7 @@ const SearchResults = () => {
           {pageType === "universal" ? (
             <>
               {universalResultsLength >= 1 ? (
-                <>
+                <article className="centered-container my-12">
                   <SpellCheck />
                   <DirectAnswer
                     customCssClasses={{
@@ -105,9 +105,11 @@ const SearchResults = () => {
                       }}
                     />
                   </footer>
-                </>
+                </article>
               ) : (
-                <>No Results</>
+                <article className="centered-container my-12">
+                  No Results
+                </article>
               )}
             </>
           ) : (
@@ -255,7 +257,7 @@ const SearchResults = () => {
                 </>
               ) : (
                 mostRecentSearch && (
-                  <div>
+                  <article className="centered-container my-12">
                     <p>
                       The search
                       <span className="mx-1 font-semibold">
@@ -263,7 +265,7 @@ const SearchResults = () => {
                       </span>
                       did not match any FAQs.
                     </p>
-                  </div>
+                  </article>
                 )
               )}
             </>
