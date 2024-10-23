@@ -1,4 +1,8 @@
-import { StandardSection, VerticalConfigMap } from "@yext/search-ui-react";
+import {
+  DefaultRawDataType,
+  StandardSection,
+  VerticalConfigMap,
+} from "@yext/search-ui-react";
 import EventStandard from "../components/cards/EventStandard";
 import FAQAccordion from "../components/cards/FAQAccordion";
 import JobStandard from "../components/cards/JobStandard";
@@ -90,9 +94,13 @@ export const VerticalConfig: VerticalProps[] = [
     ],
   },
 ];
-
-const buildUniversalConfigMap = (): VerticalConfigMap => {
-  return VerticalConfig.reduce((configMap, item) => {
+export const IsChatEnabled: boolean = false; // Change to true if you want to show chat
+export const locale: string | undefined = undefined; //Replace undefined with your locale. for eg. "en_GB" or "ja"
+export const IsGenerativeDirectAnswerEnabled: boolean = false; // Change to true if you want to show Generative Direct Answer
+export const UniversalConfig: VerticalConfigMap<
+  Record<string, DefaultRawDataType>
+> = VerticalConfig.reduce(
+  (configMap, item) => {
     if (item.key) {
       configMap[item.key] = {
         CardComponent: item.cardType,
@@ -101,9 +109,26 @@ const buildUniversalConfigMap = (): VerticalConfigMap => {
       };
     }
     return configMap;
-  }, {} as VerticalConfigMap);
-};
+  },
+  {} as VerticalConfigMap<Record<string, DefaultRawDataType>>
+);
 
-export const UniversalConfig: VerticalConfigMap = buildUniversalConfigMap();
-
-export const locale: string | undefined = undefined;
+/** Sample Sort options */
+// sortByOptions: [
+//   {
+//     label: "Name: A-Z",
+//     sortBy: {
+//       field: "name",
+//       direction: Direction.Ascending,
+//       type: SortType.Field,
+//     },
+//   },
+//   {
+//     label: "Name: Z-A",
+//     sortBy: {
+//       field: "name",
+//       direction: Direction.Descending,
+//       type: SortType.Field,
+//     },
+//   },
+// ],
