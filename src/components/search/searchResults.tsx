@@ -232,11 +232,16 @@ const SearchResults = () => {
                       )}
                       <div className="w-full">
                         <header className="results-header">
-                          <ResultsCount />
+                          <article className="flex justify-between w-full items-center">
+                            <ResultsCount />
+                            <div className="flex justify-start gap-2 mb-4">
+                              {sortOptions && sortOptions.length >= 1 && (
+                                <SortDropdown sortOptions={sortOptions} />
+                              )}
+                            </div>
+                          </article>
+
                           <AppliedFilters />
-                          {sortOptions && sortOptions.length >= 1 && (
-                            <SortDropdown sortOptions={sortOptions} />
-                          )}
                         </header>
                         <VerticalResults
                           CardComponent={cardType}
