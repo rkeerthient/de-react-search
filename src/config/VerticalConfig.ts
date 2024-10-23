@@ -85,3 +85,5 @@ const buildUniversalConfigMap = (): VerticalConfigMap => {
 };
 
 export const UniversalConfig: VerticalConfigMap = buildUniversalConfigMap();
+
+export const locale: string | undefined = undefined;

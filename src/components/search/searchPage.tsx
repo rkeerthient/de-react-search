@@ -1,4 +1,4 @@
-import { onSearchFunc, SearchBar } from "@yext/search-ui-react";
+import { SearchBar } from "@yext/search-ui-react";
 import SearchNav from "./searchNav";
 import SearchResults from "./searchResults";
 import { FaMicrophone } from "react-icons/fa";
