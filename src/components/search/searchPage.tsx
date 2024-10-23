@@ -6,6 +6,7 @@ import { createRoot } from "react-dom/client";
 import { useEffect, useState, useCallback } from "react";
 import { useSearchActions, useSearchState } from "@yext/search-headless-react";
 import { SearchUtils } from "../searchUItil";
+import { useTypingEffect } from "../useTypeEffect";
 
 declare global {
   interface Window {
@@ -16,6 +17,8 @@ declare global {
 
 const SearchPage = () => {
   const searchActions = useSearchActions();
+  const { queryPrompts } = useTypingEffect();
+
   const [listening, setListening] = useState(false);
   const verticalKey = useSearchState((state) => state.vertical.verticalKey);
 
@@ -103,8 +106,10 @@ const SearchPage = () => {
       <header className="w-full centered-container">
         <SearchBar
           onSearch={handleSearch}
-          placeholder="Enter your search term"
-          customCssClasses={{ searchBarContainer: "search" }}
+          customCssClasses={{
+            searchBarContainer: "search",
+            inputElement: queryPrompts.length >= 1 ? "demo" : undefined,
+          }}
         />
         <SearchNav />
       </header>
