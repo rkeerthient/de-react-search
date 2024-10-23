@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchActions } from "@yext/search-headless-react";
 import { VerticalConfig, VerticalProps } from "../../config/VerticalConfig";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { SearchUtils } from "../searchUItil";
+import { SearchUtils } from "./searchUItil";
 
 const SearchNav = () => {
   const searchActions = useSearchActions();
@@ -18,12 +18,12 @@ const SearchNav = () => {
     (item) => item !== activeItem && item.label !== "All"
   );
 
-  const handleClick = (item: VerticalProps) => {
+  const handleClick = (item: VerticalProps, query?: string) => {
     setActiveItem(item || null);
     prevClickRef.current = activeItem;
     SearchUtils({
       vertical: item.key,
-      query: "",
+      query: query || "",
       searchActions,
     });
     setIsDropdownOpen(false);
@@ -31,6 +31,19 @@ const SearchNav = () => {
   useEffect(() => {
     handleClick(VerticalConfig[0]);
   }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const vertical = urlSearchParams.get("vertical") || "";
+      const query = urlSearchParams.get("query") || "";
+      // handleClick(
+      //   VerticalConfig.find((item) => item.key === vertical),
+      //   query
+      // );
+    }
+  }, []);
+
   return (
     <>
       <nav className="hidden md:block bg-transparent p-4 pb-2  pt-8 border-b border-[#e5e7eb] uppercase">

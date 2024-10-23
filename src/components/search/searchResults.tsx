@@ -10,7 +10,6 @@ import {
   SpellCheck,
   UniversalResults,
   DirectAnswer,
-  AlternativeVerticals,
 } from "@yext/search-ui-react";
 import { UniversalConfig, VerticalConfig } from "../../config/VerticalConfig";
 import "mapbox-gl/dist/mapbox-gl.css";

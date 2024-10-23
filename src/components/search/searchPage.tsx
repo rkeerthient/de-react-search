@@ -5,7 +5,7 @@ import { FaMicrophone } from "react-icons/fa";
 import { createRoot } from "react-dom/client";
 import { useEffect, useState, useCallback } from "react";
 import { useSearchActions, useSearchState } from "@yext/search-headless-react";
-import { SearchUtils } from "../searchUItil";
+import { SearchUtils } from "./searchUItil";
 import { useTypingEffect } from "../useTypeEffect";
 
 declare global {

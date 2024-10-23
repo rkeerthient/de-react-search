@@ -1,5 +1,5 @@
 import { useSearchActions, UniversalLimit } from "@yext/search-headless-react";
-import { VerticalConfig } from "../config/VerticalConfig";
+import { VerticalConfig } from "../../config/VerticalConfig";
 
 type SearchUtilProps = {
   query?: string | undefined;
