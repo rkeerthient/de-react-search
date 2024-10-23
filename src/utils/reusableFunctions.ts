@@ -26,3 +26,19 @@ export const getGoogleMapsLink = (coordinate: Coordinate): string => {
   if (!coordinate?.latitude || !coordinate?.longitude) return "#";
   return `https://www.google.com/maps/dir/?api=1&destination=${coordinate.latitude},${coordinate.longitude}`;
 };
+
+export const setQueryParams = (query?: string, vertical?: string) => {
+  const queryParams = new URLSearchParams(window.location.search);
+  if (vertical) {
+    queryParams.set("vertical", vertical);
+  } else {
+    queryParams.delete("vertical");
+  }
+
+  if (query) {
+    queryParams.set("query", query);
+  } else {
+    queryParams.delete("query");
+  }
+  history.pushState(null, "", "?" + queryParams.toString());
+};

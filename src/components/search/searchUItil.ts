@@ -23,7 +23,7 @@ const getUniversalLimit = () => {
 
 export const SearchUtils = ({
   vertical = undefined,
-  query = undefined,
+  query = "",
   searchActions,
   sortOptions,
 }: SearchUtilProps) => {

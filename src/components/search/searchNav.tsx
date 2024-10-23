@@ -3,6 +3,7 @@ import { useSearchActions } from "@yext/search-headless-react";
 import { VerticalConfig, VerticalProps } from "../../config/VerticalConfig";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { SearchUtils } from "./searchUItil";
+import { setQueryParams } from "../../utils/reusableFunctions";
 
 const SearchNav = () => {
   const searchActions = useSearchActions();
@@ -21,6 +22,7 @@ const SearchNav = () => {
   const handleClick = (item: VerticalProps, query?: string) => {
     setActiveItem(item || null);
     prevClickRef.current = activeItem;
+    setQueryParams(query, item.key);
     SearchUtils({
       vertical: item.key,
       query: query || "",
@@ -28,19 +30,22 @@ const SearchNav = () => {
     });
     setIsDropdownOpen(false);
   };
-  useEffect(() => {
-    handleClick(VerticalConfig[0]);
-  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const urlSearchParams = new URLSearchParams(window.location.search);
-      const vertical = urlSearchParams.get("vertical") || "";
       const query = urlSearchParams.get("query") || "";
-      // handleClick(
-      //   VerticalConfig.find((item) => item.key === vertical),
-      //   query
-      // );
+      const vertical = urlSearchParams.get("vertical") || "";
+
+      if (vertical) {
+        const selectedVertical = VerticalConfig.find(
+          (item) => item.key === vertical
+        );
+
+        if (selectedVertical) {
+          handleClick(selectedVertical || VerticalConfig[0], query);
+        }
+      }
     }
   }, []);
 
