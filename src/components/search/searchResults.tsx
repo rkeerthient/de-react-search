@@ -17,8 +17,9 @@ import { useState } from "react";
 import MapPin from "../MapPin";
 import { concatClassNames } from "../../utils/reusableFunctions";
 import { createCtx } from "../../utils/createContext";
-import { MapboxMaps, Map } from "@yext/pages-components";
+import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
 import { IoClose } from "react-icons/io5";
+import { defaultCoordinates } from "../UniversalSection";
 type MapContextType = {
   hoveredId: string;
   setHoveredId: (value: string) => void;
@@ -181,6 +182,17 @@ const SearchResults = () => {
                         <Map
                           apiKey={import.meta.env.YEXT_PUBLIC_MAP_API_KEY}
                           provider={MapboxMaps}
+                          bounds={
+                            _state.vertical.results
+                              ? _state.vertical.results
+                                  .map(
+                                    (data) => data.rawData.yextDisplayCoordinate
+                                  )
+                                  .filter(
+                                    (coord): coord is Coordinate => !!coord
+                                  )
+                              : [defaultCoordinates]
+                          }
                           padding={{
                             top: 100,
                             bottom: 200,
