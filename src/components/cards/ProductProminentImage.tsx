@@ -3,16 +3,6 @@ import Product from "../../types/product";
 import { Image } from "@yext/pages-components";
 import Cta from "../cta";
 import ResponseComponent from "../ResponseComponent";
-const product = {
-  id: 1,
-  name: "Basic Tee",
-  href: "#",
-  imageSrc:
-    "https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg",
-  imageAlt: "Front of men's Basic Tee in black.",
-  price: "$35",
-  color: "Black",
-};
 
 const ProductProminentImage = ({ result }: CardProps<Product>) => {
   const {
@@ -35,7 +25,7 @@ const ProductProminentImage = ({ result }: CardProps<Product>) => {
           {primaryPhoto && (
             <Image
               image={primaryPhoto!}
-              className="pointer-events-none object-cover group-hover:opacity-75 "
+              className="pointer-events-none object-cover group-hover:opacity-75 !w-full"
             />
           )}
         </a>
