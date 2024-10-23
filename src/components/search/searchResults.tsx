@@ -10,6 +10,7 @@ import {
   SpellCheck,
   UniversalResults,
   DirectAnswer,
+  AlternativeVerticals,
 } from "@yext/search-ui-react";
 import { UniversalConfig, VerticalConfig } from "../../config/VerticalConfig";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -65,7 +66,7 @@ const SearchResults = () => {
   };
 
   return (
-    <div className="px-4">
+    <div className="px-4 centered-container my-12">
       {isLoading ? (
         <Loader />
       ) : (
@@ -82,11 +83,14 @@ const SearchResults = () => {
               {universalResultsLength >= 1 ? (
                 <>
                   <SpellCheck />
-                  <DirectAnswer />
+                  <DirectAnswer
+                    customCssClasses={{
+                      directAnswerContainer: "mb-8",
+                    }}
+                  />
                   <UniversalResults
                     verticalConfigMap={UniversalConfig}
                     customCssClasses={{
-                      universalResultsContainer: "centered-container my-12",
                       sectionHeaderIconContainer: "hidden",
                       sectionHeaderLabel: "!pl-0",
                     }}
