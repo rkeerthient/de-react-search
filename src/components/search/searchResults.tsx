@@ -20,6 +20,7 @@ import { createCtx } from "../../utils/createContext";
 import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
 import { IoClose } from "react-icons/io5";
 import { defaultCoordinates } from "../UniversalSection";
+import SortDropdown from "../SortDropdown";
 type MapContextType = {
   hoveredId: string;
   setHoveredId: (value: string) => void;
@@ -53,6 +54,7 @@ const SearchResults = () => {
 
   const cardType = currentVerticalConfig?.cardType;
   const pageType = currentVerticalConfig?.pageType || "standard";
+  const sortOptions = currentVerticalConfig?.sortByOptions;
 
   const getClasses = () => {
     const classesMap: { [key: string]: string } = {
@@ -232,6 +234,9 @@ const SearchResults = () => {
                         <header className="results-header">
                           <ResultsCount />
                           <AppliedFilters />
+                          {sortOptions && sortOptions.length >= 1 && (
+                            <SortDropdown sortOptions={sortOptions} />
+                          )}
                         </header>
                         <VerticalResults
                           CardComponent={cardType}

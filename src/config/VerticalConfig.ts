@@ -7,6 +7,7 @@ import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocatio
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 import { UniversalSection } from "../components/UniversalSection";
 import ProductProminentImage from "../components/cards/ProductProminentImage";
+import { Direction, SortBy, SortType } from "@yext/search-headless-react";
 
 export interface VerticalProps {
   label: string;
@@ -20,6 +21,7 @@ export interface VerticalProps {
     | "universal";
   cardType?: any;
   universalLimit?: number;
+  sortByOptions?: { label: string; sortBy: SortBy }[];
 }
 
 export const VerticalConfig: VerticalProps[] = [
@@ -68,6 +70,24 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
+    sortByOptions: [
+      {
+        label: "Name: A-Z",
+        sortBy: {
+          field: "name",
+          direction: Direction.Ascending,
+          type: SortType.Field,
+        },
+      },
+      {
+        label: "Name: Z-A",
+        sortBy: {
+          field: "name",
+          direction: Direction.Descending,
+          type: SortType.Field,
+        },
+      },
+    ],
   },
 ];
 
