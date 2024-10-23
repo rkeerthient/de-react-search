@@ -80,7 +80,8 @@ const SearchResults = () => {
             <>
               {universalResultsLength >= 1 ? (
                 <>
-                  <DirectAnswer></DirectAnswer>
+                  <SpellCheck />
+                  <DirectAnswer />
                   <UniversalResults
                     verticalConfigMap={UniversalConfig}
                     customCssClasses={{

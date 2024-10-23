@@ -1,10 +1,11 @@
-import { SearchBar } from "@yext/search-ui-react";
+import { onSearchFunc, SearchBar } from "@yext/search-ui-react";
 import SearchNav from "./searchNav";
 import SearchResults from "./searchResults";
 import { FaMicrophone } from "react-icons/fa";
 import { createRoot } from "react-dom/client";
 import { useEffect, useState, useCallback } from "react";
-import { useSearchActions } from "@yext/search-headless-react";
+import { useSearchActions, useSearchState } from "@yext/search-headless-react";
+import { SearchUtils } from "../searchUItil";
 
 declare global {
   interface Window {
@@ -16,6 +17,8 @@ declare global {
 const SearchPage = () => {
   const searchActions = useSearchActions();
   const [listening, setListening] = useState(false);
+  const verticalKey = useSearchState((state) => state.vertical.verticalKey);
+
   const [micRoot, setMicRoot] = useState<ReturnType<typeof createRoot> | null>(
     null
   );
@@ -38,7 +41,7 @@ const SearchPage = () => {
     recognition.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript;
       if (transcript) {
-        searchActions.setQuery(transcript);
+        handleSearch({ query: transcript });
       }
       setListening(false);
     };
@@ -72,7 +75,7 @@ const SearchPage = () => {
               onClick={handleSpeechToText}
             />
           );
-          nextDiv.parentElement?.insertBefore(micIcon, nextDiv); // Insert the mic before the next div
+          nextDiv.parentElement?.insertBefore(micIcon, nextDiv);
           setMicRoot(root);
         }
       }
@@ -87,10 +90,19 @@ const SearchPage = () => {
     }
   }, [listening, micRoot, handleSpeechToText]);
 
+  const handleSearch = ({ query }: { query?: string | undefined }) => {
+    SearchUtils({
+      vertical: verticalKey,
+      query: query,
+      searchActions,
+    });
+  };
+
   return (
     <main className="flex flex-col gap-2">
       <header className="w-full centered-container">
         <SearchBar
+          onSearch={handleSearch}
           placeholder="Enter your search term"
           customCssClasses={{ searchBarContainer: "search" }}
         />
