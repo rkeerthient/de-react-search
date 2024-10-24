@@ -41,10 +41,8 @@ const SearchNav = () => {
         const selectedVertical = VerticalConfig.find(
           (item) => item.key === vertical
         );
-
-        if (selectedVertical) {
-          handleClick(selectedVertical || VerticalConfig[0], query);
-        }
+        console.log(selectedVertical);
+        handleClick(selectedVertical || VerticalConfig[0], query);
       }
     }
   }, []);
