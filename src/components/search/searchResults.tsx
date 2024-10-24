@@ -180,7 +180,7 @@ const SearchResults = () => {
                 <>
                   {pageType === "map" ? (
                     <section className="w-full flex md:h-[950px]">
-                      <article className="w-full md:w-1/3">
+                      <article className="w-full md:w-2/5">
                         <SpellCheck />
                         <div className="w-full h-auto overflow-scroll relative">
                           <header className="results-header">
@@ -246,7 +246,7 @@ const SearchResults = () => {
                           />
                         </footer>
                       </article>
-                      <article className="hidden md:block md:w-2/3">
+                      <article className="hidden md:block md:w-3/5">
                         <Map
                           apiKey={import.meta.env.YEXT_PUBLIC_MAP_API_KEY}
                           provider={MapboxMaps}
