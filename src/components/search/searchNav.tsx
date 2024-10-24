@@ -1,15 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { UniversalLimit, useSearchActions } from "@yext/search-headless-react";
+import { useSearchActions } from "@yext/search-headless-react";
 import { VerticalConfig, VerticalProps } from "../../config/VerticalConfig";
 import { BsThreeDotsVertical } from "react-icons/bs";
-const getUniversalLimit = () => {
-  return VerticalConfig.filter(
-    (item) => item.label !== "All" && item.universalLimit !== undefined
-  ).reduce((acc, item) => {
-    acc[String(item.key)] = item.universalLimit as number;
-    return acc;
-  }, {} as UniversalLimit);
-};
+import { SearchUtils } from "./searchUItil";
+import { setQueryParams } from "../../utils/reusableFunctions";
 
 const SearchNav = () => {
   const searchActions = useSearchActions();
@@ -25,22 +19,34 @@ const SearchNav = () => {
     (item) => item !== activeItem && item.label !== "All"
   );
 
-  const handleClick = (item: VerticalProps) => {
+  const handleClick = (item: VerticalProps, query?: string) => {
     setActiveItem(item || null);
     prevClickRef.current = activeItem;
-    if (item.key) {
-      searchActions.setVertical(item.key);
-      searchActions.executeVerticalQuery();
-    } else {
-      searchActions.setUniversal();
-      searchActions.setUniversalLimit(getUniversalLimit());
-      searchActions.executeUniversalQuery();
-    }
+    setQueryParams(query, item.key);
+    SearchUtils({
+      vertical: item.key,
+      query: query || "",
+      searchActions,
+    });
     setIsDropdownOpen(false);
   };
+
   useEffect(() => {
-    handleClick(VerticalConfig[0]);
+    if (typeof window !== "undefined") {
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const query = urlSearchParams.get("query") || "";
+      const vertical = urlSearchParams.get("vertical") || "";
+
+      if (vertical) {
+        const selectedVertical = VerticalConfig.find(
+          (item) => item.key === vertical
+        );
+        console.log(selectedVertical);
+        handleClick(selectedVertical || VerticalConfig[0], query);
+      }
+    }
   }, []);
+
   return (
     <>
       <nav className="hidden md:block bg-transparent p-4 pb-2  pt-8 border-b border-[#e5e7eb] uppercase">

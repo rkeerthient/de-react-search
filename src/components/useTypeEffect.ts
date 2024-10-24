@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-export const useTypingEffect = (apiKey: string, expKey: string) => {
+export const useTypingEffect = () => {
   const [queryPrompts, setQueryPrompts] = useState<string[]>([]);
   const timerRef = useRef<number | null>(null);
   const indexRef = useRef(0);
@@ -36,7 +36,7 @@ export const useTypingEffect = (apiKey: string, expKey: string) => {
   };
 
   const fetchUnivPrompts = async () => {
-    const url = `https://cdn.yextapis.com/v2/accounts/me/search/autocomplete?v=20190101&api_key=${apiKey}&sessionTrackingEnabled=false&experienceKey=${expKey}&input=`;
+    const url = `https://cdn.yextapis.com/v2/accounts/me/search/autocomplete?v=20190101&api_key=${import.meta.env.YEXT_PUBLIC_API_KEY}&sessionTrackingEnabled=false&experienceKey=${import.meta.env.YEXT_PUBLIC_EXP_KEY}&input=`;
 
     try {
       const res = await fetch(url);

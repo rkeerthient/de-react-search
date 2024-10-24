@@ -1,4 +1,8 @@
-import { StandardSection, VerticalConfigMap } from "@yext/search-ui-react";
+import {
+  DefaultRawDataType,
+  StandardSection,
+  VerticalConfigMap,
+} from "@yext/search-ui-react";
 import EventStandard from "../components/cards/EventStandard";
 import FAQAccordion from "../components/cards/FAQAccordion";
 import JobStandard from "../components/cards/JobStandard";
@@ -7,6 +11,7 @@ import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocatio
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 import { UniversalSection } from "../components/UniversalSection";
 import ProductProminentImage from "../components/cards/ProductProminentImage";
+import { Direction, SortBy, SortType } from "@yext/search-headless-react";
 
 export interface VerticalProps {
   label: string;
@@ -20,6 +25,7 @@ export interface VerticalProps {
     | "universal";
   cardType?: any;
   universalLimit?: number;
+  sortByOptions?: { label: string; sortBy: SortBy }[];
 }
 
 export const VerticalConfig: VerticalProps[] = [
@@ -68,11 +74,33 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
+    sortByOptions: [
+      {
+        label: "Name: A-Z",
+        sortBy: {
+          field: "name",
+          direction: Direction.Ascending,
+          type: SortType.Field,
+        },
+      },
+      {
+        label: "Name: Z-A",
+        sortBy: {
+          field: "name",
+          direction: Direction.Descending,
+          type: SortType.Field,
+        },
+      },
+    ],
   },
 ];
-
-const buildUniversalConfigMap = (): VerticalConfigMap => {
-  return VerticalConfig.reduce((configMap, item) => {
+export const IsChatEnabled: boolean = false; // Change to true if you want to show chat
+export const locale: string | undefined = undefined; //Replace undefined with your locale. for eg. "en_GB" or "ja"
+export const IsGenerativeDirectAnswerEnabled: boolean = false; // Change to true if you want to show Generative Direct Answer
+export const UniversalConfig: VerticalConfigMap<
+  Record<string, DefaultRawDataType>
+> = VerticalConfig.reduce(
+  (configMap, item) => {
     if (item.key) {
       configMap[item.key] = {
         CardComponent: item.cardType,
@@ -81,7 +109,26 @@ const buildUniversalConfigMap = (): VerticalConfigMap => {
       };
     }
     return configMap;
-  }, {} as VerticalConfigMap);
-};
+  },
+  {} as VerticalConfigMap<Record<string, DefaultRawDataType>>
+);
 
-export const UniversalConfig: VerticalConfigMap = buildUniversalConfigMap();
+/** Sample Sort options */
+// sortByOptions: [
+//   {
+//     label: "Name: A-Z",
+//     sortBy: {
+//       field: "name",
+//       direction: Direction.Ascending,
+//       type: SortType.Field,
+//     },
+//   },
+//   {
+//     label: "Name: Z-A",
+//     sortBy: {
+//       field: "name",
+//       direction: Direction.Descending,
+//       type: SortType.Field,
+//     },
+//   },
+// ],

@@ -10,15 +10,22 @@ import {
   SpellCheck,
   UniversalResults,
   DirectAnswer,
+  GenerativeDirectAnswer,
 } from "@yext/search-ui-react";
-import { UniversalConfig, VerticalConfig } from "../../config/VerticalConfig";
+import {
+  IsGenerativeDirectAnswerEnabled,
+  UniversalConfig,
+  VerticalConfig,
+} from "../../config/VerticalConfig";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useState } from "react";
 import MapPin from "../MapPin";
 import { concatClassNames } from "../../utils/reusableFunctions";
 import { createCtx } from "../../utils/createContext";
-import { MapboxMaps, Map } from "@yext/pages-components";
+import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
 import { IoClose } from "react-icons/io5";
+import { defaultCoordinates } from "../UniversalSection";
+import SortDropdown from "../SortDropdown";
 type MapContextType = {
   hoveredId: string;
   setHoveredId: (value: string) => void;
@@ -52,6 +59,7 @@ const SearchResults = () => {
 
   const cardType = currentVerticalConfig?.cardType;
   const pageType = currentVerticalConfig?.pageType || "standard";
+  const sortOptions = currentVerticalConfig?.sortByOptions;
 
   const getClasses = () => {
     const classesMap: { [key: string]: string } = {
@@ -63,8 +71,60 @@ const SearchResults = () => {
     return classesMap[pageType];
   };
 
+  const renderGenDirectAnswer = () => {
+    const isGenALoading = useSearchState(
+      (state) => state.generativeDirectAnswer.isLoading
+    );
+    return (
+      <>
+        {isGenALoading ? (
+          <section
+            className="p-6 border border-gray-200 rounded-lg shadow-sm centered-container"
+            aria-busy="true"
+            aria-label="Loading content"
+          >
+            <div className="animate-pulse flex space-x-4">
+              <div className="flex-1 space-y-6 py-1">
+                <div
+                  className="h-4 bg-slate-700 rounded w-1/4"
+                  aria-hidden="true"
+                ></div>
+                <div className="space-y-3">
+                  <div className="grid grid-cols-3 gap-4">
+                    <div
+                      className="h-2 bg-slate-700 rounded col-span-3"
+                      aria-hidden="true"
+                    ></div>
+                    <div
+                      className="h-2 bg-slate-700 rounded col-span-3"
+                      aria-hidden="true"
+                    ></div>
+                  </div>
+                  <div
+                    className="h-2 bg-slate-700 rounded"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    className="h-2 bg-slate-700 rounded"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    className="h-2 bg-slate-700 rounded"
+                    aria-hidden="true"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        ) : (
+          <GenerativeDirectAnswer />
+        )}
+      </>
+    );
+  };
+
   return (
-    <div className="px-4">
+    <div className="px-4 ">
       {isLoading ? (
         <Loader />
       ) : (
@@ -79,12 +139,20 @@ const SearchResults = () => {
           {pageType === "universal" ? (
             <>
               {universalResultsLength >= 1 ? (
-                <>
-                  <DirectAnswer></DirectAnswer>
+                <article className="centered-container my-12">
+                  <SpellCheck />
+                  {IsGenerativeDirectAnswerEnabled ? (
+                    renderGenDirectAnswer()
+                  ) : (
+                    <DirectAnswer
+                      customCssClasses={{
+                        directAnswerContainer: "mb-8",
+                      }}
+                    />
+                  )}
                   <UniversalResults
                     verticalConfigMap={UniversalConfig}
                     customCssClasses={{
-                      universalResultsContainer: "centered-container my-12",
                       sectionHeaderIconContainer: "hidden",
                       sectionHeaderLabel: "!pl-0",
                     }}
@@ -99,9 +167,11 @@ const SearchResults = () => {
                       }}
                     />
                   </footer>
-                </>
+                </article>
               ) : (
-                <>No Results</>
+                <article className="centered-container my-12">
+                  No Results
+                </article>
               )}
             </>
           ) : (
@@ -180,6 +250,17 @@ const SearchResults = () => {
                         <Map
                           apiKey={import.meta.env.YEXT_PUBLIC_MAP_API_KEY}
                           provider={MapboxMaps}
+                          bounds={
+                            _state.vertical.results
+                              ? _state.vertical.results
+                                  .map(
+                                    (data) => data.rawData.yextDisplayCoordinate
+                                  )
+                                  .filter(
+                                    (coord): coord is Coordinate => !!coord
+                                  )
+                              : [defaultCoordinates]
+                          }
                           padding={{
                             top: 100,
                             bottom: 200,
@@ -212,7 +293,15 @@ const SearchResults = () => {
                       )}
                       <div className="w-full">
                         <header className="results-header">
-                          <ResultsCount />
+                          <article className="flex justify-between w-full items-center">
+                            <ResultsCount />
+                            <div className="flex justify-start gap-2 mb-4">
+                              {sortOptions && sortOptions.length >= 1 && (
+                                <SortDropdown sortOptions={sortOptions} />
+                              )}
+                            </div>
+                          </article>
+
                           <AppliedFilters />
                         </header>
                         <VerticalResults
@@ -238,7 +327,7 @@ const SearchResults = () => {
                 </>
               ) : (
                 mostRecentSearch && (
-                  <div>
+                  <article className="centered-container my-12">
                     <p>
                       The search
                       <span className="mx-1 font-semibold">
@@ -246,7 +335,7 @@ const SearchResults = () => {
                       </span>
                       did not match any FAQs.
                     </p>
-                  </div>
+                  </article>
                 )
               )}
             </>
