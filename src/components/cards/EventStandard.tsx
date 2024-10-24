@@ -4,7 +4,7 @@ import ResponseComponent from "../ResponseComponent";
 import Cta from "../cta";
 import { getGoogleMapsLink } from "../../utils/reusableFunctions";
 import { MapPinIcon } from "@heroicons/react/20/solid";
-const EventStandard = ({ result }: CardProps<Event>) => {
+const EventStandard = ({ result }: CardProps<any>) => {
   const { name } = result;
   const {
     description,

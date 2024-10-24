@@ -4,7 +4,7 @@ import { Image } from "@yext/pages-components";
 import Cta from "../cta";
 import ResponseComponent from "../ResponseComponent";
 
-const ProductProminentImage = ({ result }: CardProps<Product>) => {
+const ProductProminentImage = ({ result }: CardProps<any>) => {
   const {
     id,
     price,

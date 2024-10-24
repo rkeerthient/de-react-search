@@ -1,6 +1,6 @@
 import {
+  CardComponent,
   DefaultRawDataType,
-  StandardSection,
   VerticalConfigMap,
 } from "@yext/search-ui-react";
 import EventStandard from "../components/cards/EventStandard";
@@ -23,9 +23,9 @@ export interface VerticalProps {
     | "standard"
     | "map"
     | "universal";
-  cardType?: any;
   universalLimit?: number;
   sortByOptions?: { label: string; sortBy: SortBy }[];
+  cardType?: CardComponent;
 }
 
 export const VerticalConfig: VerticalProps[] = [
