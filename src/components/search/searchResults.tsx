@@ -226,7 +226,7 @@ const SearchResults = () => {
                             <AppliedFilters />
                           </header>
                           <VerticalResults
-                            CardComponent={cardType}
+                            CardComponent={cardType!}
                             customCssClasses={{
                               verticalResultsContainer: concatClassNames(
                                 getClasses(),
@@ -305,7 +305,7 @@ const SearchResults = () => {
                           <AppliedFilters />
                         </header>
                         <VerticalResults
-                          CardComponent={cardType}
+                          CardComponent={cardType!}
                           customCssClasses={{
                             verticalResultsContainer:
                               concatClassNames(getClasses()),

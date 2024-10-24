@@ -7,6 +7,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useSearchActions, useSearchState } from "@yext/search-headless-react";
 import { SearchUtils } from "./searchUItil";
 import { useTypingEffect } from "../useTypeEffect";
+import { setQueryParams } from "../../utils/reusableFunctions";
 
 declare global {
   interface Window {
@@ -94,6 +95,7 @@ const SearchPage = () => {
   }, [listening, micRoot, handleSpeechToText]);
 
   const handleSearch = ({ query }: { query?: string | undefined }) => {
+    setQueryParams(query, verticalKey);
     SearchUtils({
       vertical: verticalKey,
       query: query,
