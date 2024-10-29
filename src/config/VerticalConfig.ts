@@ -12,6 +12,7 @@ import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 import ProductProminentImage from "../components/cards/ProductProminentImage";
 import { Direction, SortBy, SortType } from "@yext/search-headless-react";
 import { UniversalSection } from "../components/search/UniversalSection";
+import ProductProminentVideo from "../components/cards/ProductProminentVideo";
 
 export interface VerticalProps {
   label: string;
