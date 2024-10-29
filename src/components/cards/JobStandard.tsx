@@ -79,28 +79,25 @@ const JobStandard = ({ result }: CardProps<any>) => {
             </ul>
           )}
         </section>
-
-        {(c_primaryCTA || c_secondaryCTA) && (
-          <footer
-            className="flex flex-col items-center justify-center gap-2 pt-4 pb-2 uppercase md:ml-[calc(var(--yxt-base-spacing)/2)] w-full"
-            aria-label="Call to Actions"
-          >
-            {c_primaryCTA && (
-              <Cta
-                cta={c_primaryCTA}
-                ctaType="primaryCta"
-                aria-label="Primary call to action"
-              />
-            )}
-            {c_secondaryCTA && (
-              <Cta
-                cta={c_secondaryCTA}
-                ctaType="secondaryCta"
-                aria-label="Secondary call to action"
-              />
-            )}
-          </footer>
-        )}
+        <footer
+          className="flex flex-col items-center justify-center gap-2 pt-4 pb-2 uppercase md:ml-[calc(var(--yxt-base-spacing)/2)] w-full"
+          aria-label="Call to Actions"
+        >
+          {c_primaryCTA && (
+            <Cta
+              cta={c_primaryCTA}
+              ctaType="primaryCta"
+              aria-label="Primary call to action"
+            />
+          )}
+          {c_secondaryCTA && (
+            <Cta
+              cta={c_secondaryCTA}
+              ctaType="secondaryCta"
+              aria-label="Secondary call to action"
+            />
+          )}
+        </footer>
       </section>
     </article>
   );

@@ -6,6 +6,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { CardProps } from "@yext/search-ui-react";
 import ResponseComponent from "../ResponseComponent";
+import Cta from "../cta";
 
 const FAQAccordion = ({ result }: CardProps<any>) => {
   const { question, answerV2, c_primaryCTA, c_secondaryCTA } = result.rawData;
@@ -32,14 +33,10 @@ const FAQAccordion = ({ result }: CardProps<any>) => {
               aria-label="Call to Actions"
             >
               {c_primaryCTA && (
-                <a className="cta" href={c_primaryCTA.link}>
-                  {c_primaryCTA.label}
-                </a>
+                <Cta cta={c_primaryCTA} ctaType="secondaryCta" />
               )}
               {c_secondaryCTA && (
-                <a className="cta" href={c_secondaryCTA.link}>
-                  {c_secondaryCTA.label}
-                </a>
+                <Cta cta={c_secondaryCTA} ctaType="secondaryCta" />
               )}
             </section>
           </DisclosurePanel>

@@ -117,16 +117,14 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
             <span className="ml-2">{format_phone(mainPhone)}</span>
           </section>
         )}
-        {(c_primaryCTA || c_secondaryCTA) && (
-          <footer
-            className={`flex gap-2 justify-center pt-4 pb-2 items-center uppercase ${pageType === "map" ? `flex-row` : `flex-col`}`}
-          >
-            {c_primaryCTA && <Cta cta={c_primaryCTA} ctaType="primaryCta" />}
-            {c_secondaryCTA && (
-              <Cta cta={c_secondaryCTA} ctaType="secondaryCta" />
-            )}
-          </footer>
-        )}
+        <footer
+          className={`flex gap-2 justify-center pt-4 pb-2 items-center uppercase ${pageType === "map" ? `flex-row` : `flex-col`}`}
+        >
+          {c_primaryCTA && <Cta cta={c_primaryCTA} ctaType="primaryCta" />}
+          {c_secondaryCTA && (
+            <Cta cta={c_secondaryCTA} ctaType="secondaryCta" />
+          )}
+        </footer>
       </section>
     </article>
   );

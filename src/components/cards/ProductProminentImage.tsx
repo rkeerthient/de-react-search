@@ -38,16 +38,14 @@ const ProductProminentImage = ({ result }: CardProps<any>) => {
         <ResponseComponent response={richTextDescriptionV2} showMore={true} />
       )}
       <section className={`px-2 space-y-1 `}>
-        {(c_primaryCTA || c_secondaryCTA) && (
-          <footer
-            className={`flex gap-2 justify-center pt-4 pb-2 items-center uppercase flex-col`}
-          >
-            {c_primaryCTA && <Cta cta={c_primaryCTA} ctaType="primaryCta" />}
-            {c_secondaryCTA && (
-              <Cta cta={c_secondaryCTA} ctaType="secondaryCta" />
-            )}
-          </footer>
-        )}
+        <footer
+          className={`flex gap-2 justify-center pt-4 pb-2 items-center uppercase flex-col`}
+        >
+          {c_primaryCTA && <Cta cta={c_primaryCTA} ctaType="primaryCta" />}
+          {c_secondaryCTA && (
+            <Cta cta={c_secondaryCTA} ctaType="secondaryCta" />
+          )}
+        </footer>
       </section>
     </article>
   );
