@@ -1,8 +1,8 @@
 import { DefaultRawDataType, SectionProps } from "@yext/search-ui-react";
-import { VerticalConfig } from "../config/VerticalConfig";
-import MapPin from "./MapPin";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
+import { VerticalConfig } from "../../config/VerticalConfig";
+import MapPin from "../MapPin";
 export const defaultCoordinates: Coordinate = { latitude: 125, longitude: 125 };
 export const UniversalSection = ({
   results,

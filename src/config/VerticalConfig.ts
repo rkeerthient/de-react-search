@@ -9,9 +9,9 @@ import JobStandard from "../components/cards/JobStandard";
 import LocationStandard from "../components/cards/LocationStandard";
 import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocationAndGrid";
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
-import { UniversalSection } from "../components/UniversalSection";
 import ProductProminentImage from "../components/cards/ProductProminentImage";
 import { Direction, SortBy, SortType } from "@yext/search-headless-react";
+import { UniversalSection } from "../components/search/UniversalSection";
 
 export interface VerticalProps {
   label: string;
