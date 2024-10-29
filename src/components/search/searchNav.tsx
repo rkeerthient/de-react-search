@@ -7,25 +7,38 @@ import { setQueryParams } from "../../utils/reusableFunctions";
 
 const SearchNav = () => {
   const searchActions = useSearchActions();
-  const [activeItem, setActiveItem] = useState<VerticalProps | null>(null);
-  const prevClickRef = useRef<VerticalProps>({
-    label: "All",
-    pageType: "universal",
-  });
+  const [activeItem, setActiveItem] = useState<VerticalProps | null>(
+    VerticalConfig[0]
+  );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const queryString = useSearchState((state) => state.query.input);
+
+  const initialPrevItem = VerticalConfig.find(
+    (item) => item.label === "FAQs"
+  ) || {
+    label: "FAQs",
+    pageType: "grid-cols-2",
+  };
+  const prevClickRef = useRef<VerticalProps>(initialPrevItem);
+
+  const dropdownRef = useRef<HTMLLIElement>(null);
+
   const moreItems = VerticalConfig.filter(
     (item) => item !== activeItem && item.label !== "All"
   );
-  const queryString = useSearchState((state) => state.query.input);
 
   const handleClick = (item: VerticalProps, query?: string) => {
     if (!item) return;
-    setActiveItem(item);
-    prevClickRef.current = activeItem || VerticalConfig[0];
 
-    setQueryParams(query || queryString, item.key);
+    if (activeItem && activeItem?.label !== "All") {
+      prevClickRef.current = activeItem;
+    }
+
+    setActiveItem(item);
+
+    setQueryParams(query || queryString, item.verticalKey);
     SearchUtils({
-      vertical: item.key,
+      vertical: item.verticalKey,
       query: query || "",
       searchActions,
     });
@@ -38,10 +51,25 @@ const SearchNav = () => {
       const query = urlSearchParams.get("query") || queryString || "";
       const vertical = urlSearchParams.get("vertical");
       const selectedVertical = VerticalConfig.find(
-        (item) => item.key === vertical
+        (item) => item.verticalKey === vertical
       );
       handleClick(selectedVertical || VerticalConfig[0], query);
     }
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   return (
@@ -98,7 +126,7 @@ const SearchNav = () => {
                 className="pt-2 uppercase text-black border-b-4 border-transparent"
                 onClick={() => {
                   const foundItem = VerticalConfig.find(
-                    (item) => item!.label === prevClickRef.current.label
+                    (item) => item.label === prevClickRef.current.label
                   );
                   if (foundItem) handleClick(foundItem);
                 }}
@@ -108,7 +136,7 @@ const SearchNav = () => {
             </li>
           )}
 
-          <li className="relative ml-auto">
+          <li className="relative ml-auto" ref={dropdownRef}>
             <button
               className="text-black font-semibold uppercase flex items-center"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}

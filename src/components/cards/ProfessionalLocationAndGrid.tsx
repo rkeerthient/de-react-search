@@ -27,8 +27,9 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
   const locationRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     setPageType(
-      VerticalConfig.find((item) => item.key === "financial-professional")
-        ?.pageType || ""
+      VerticalConfig.find(
+        (item) => item.verticalKey === "financial-professional"
+      )?.pageType || ""
     );
   }, []);
   const handleMouseEnter = () => {

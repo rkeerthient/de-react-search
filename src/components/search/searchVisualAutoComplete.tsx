@@ -13,13 +13,13 @@ export const entityPreviewSearcher = provideHeadless({
 });
 export const includedVerticalKeys =
   VerticalConfig.filter((item) => item.visualTypeHead)
-    .map((item) => item.key)
+    .map((item) => item.verticalKey)
     .filter((key): key is string => key !== undefined) || undefined;
 export const universalLimit = VerticalConfig.filter(
   (item) => item.visualTypeHead
 ).reduce((acc: UniversalLimit, item) => {
-  if (item.key) {
-    acc[item.key] = item.universalLimit || 0;
+  if (item.verticalKey) {
+    acc[item.verticalKey] = item.universalLimit || 0;
   }
   return acc;
 }, {} as UniversalLimit);
@@ -64,13 +64,14 @@ export const renderEntityPreviews = (
   return includedVerticals.length > 0 ? (
     <>
       {includedVerticals.map((item, index: number) => {
-        if (!item.key || !(item.key in verticalKeyToResults)) return null;
-        const results = verticalKeyToResults[item.key]?.results?.map(
+        if (!item.verticalKey || !(item.verticalKey in verticalKeyToResults))
+          return null;
+        const results = verticalKeyToResults[item.verticalKey]?.results?.map(
           (result) => result.rawData
         ) as any[] | undefined;
 
         return results && results.length > 0 ? (
-          <div key={item.key} className="flex flex-col gap-2 px-8">
+          <div key={item.verticalKey} className="flex flex-col gap-2 px-8">
             {index !== 0 && <hr />}
             <div className="font-bold">{item.label}</div>
             <div

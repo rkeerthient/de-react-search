@@ -1,5 +1,4 @@
 import Cta from "../components/cta";
-import ProfessionalsOnlyPage from "./pages/ProfessionalsOnlyPage";
 
 type Link = {
   label: string;

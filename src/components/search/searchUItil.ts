@@ -16,7 +16,7 @@ const getUniversalLimit = () => {
   return VerticalConfig.filter(
     (item) => item.label !== "All" && item.universalLimit !== undefined
   ).reduce((acc, item) => {
-    acc[String(item.key)] = item.universalLimit as number;
+    acc[String(item.verticalKey)] = item.universalLimit as number;
     return acc;
   }, {} as UniversalLimit);
 };

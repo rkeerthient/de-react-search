@@ -54,7 +54,7 @@ const SearchResults = () => {
   const facetsCount = filters?.facets?.length ?? 0;
 
   const currentVerticalConfig = VerticalConfig.find(
-    (item) => item.key === verticalKey
+    (item) => item.verticalKey === verticalKey
   );
 
   const cardType = currentVerticalConfig?.cardType;

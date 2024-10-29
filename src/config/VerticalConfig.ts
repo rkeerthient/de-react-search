@@ -15,7 +15,7 @@ import { Direction, SortBy, SortType } from "@yext/search-headless-react";
 
 export interface VerticalProps {
   label: string;
-  key?: string;
+  verticalKey?: string;
   pageType:
     | "grid-cols-2"
     | "grid-cols-3"
@@ -36,14 +36,14 @@ export const VerticalConfig: VerticalProps[] = [
   },
   {
     label: "FAQs",
-    key: "faq",
+    verticalKey: "faq",
     pageType: "standard",
     cardType: FAQAccordion,
     universalLimit: 3,
   },
   {
     label: "Professionals",
-    key: "financial-professional",
+    verticalKey: "financial-professional",
     pageType: "grid-cols-3",
     cardType: ProfessionalLocationAndGrid,
     universalLimit: 3,
@@ -51,28 +51,28 @@ export const VerticalConfig: VerticalProps[] = [
   },
   {
     label: "Locations",
-    key: "locations",
+    verticalKey: "locations",
     pageType: "map",
     cardType: LocationStandard,
     universalLimit: 3,
   },
   {
     label: "Jobs",
-    key: "jobs",
+    verticalKey: "jobs",
     pageType: "standard",
     cardType: JobStandard,
     universalLimit: 3,
   },
   {
     label: "Events",
-    key: "events",
+    verticalKey: "events",
     pageType: "standard",
     cardType: EventStandard,
     universalLimit: 3,
   },
   {
     label: "Products",
-    key: "product",
+    verticalKey: "product",
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
@@ -104,8 +104,8 @@ export const UniversalConfig: VerticalConfigMap<
   Record<string, DefaultRawDataType>
 > = VerticalConfig.reduce(
   (configMap, item) => {
-    if (item.key) {
-      configMap[item.key] = {
+    if (item.verticalKey) {
+      configMap[item.verticalKey] = {
         CardComponent: item.cardType,
         SectionComponent: UniversalSection,
         label: item.label,
