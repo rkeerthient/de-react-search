@@ -11,6 +11,7 @@ import { setQueryParams } from "../../utils/reusableFunctions";
 import {
   entityPreviewSearcher,
   includedVerticalKeys,
+  includedVerticals,
   renderEntityPreviews,
   universalLimit,
 } from "./searchVisualAutoComplete";
@@ -111,21 +112,32 @@ const SearchPage = () => {
   return (
     <main className="flex flex-col gap-2">
       <header className="w-full centered-container">
-        <SearchBar
-          visualAutocompleteConfig={{
-            entityPreviewSearcher: entityPreviewSearcher,
-            includedVerticals: includedVerticalKeys || undefined,
-            renderEntityPreviews: renderEntityPreviews,
-            universalLimit: universalLimit,
-            entityPreviewsDebouncingTime: 300,
-          }}
-          placeholder=""
-          onSearch={handleSearch}
-          customCssClasses={{
-            searchBarContainer: "search",
-            inputElement: queryPrompts.length >= 1 ? "demo" : undefined,
-          }}
-        />
+        {includedVerticals.length >= 1 ? (
+          <SearchBar
+            visualAutocompleteConfig={{
+              entityPreviewSearcher: entityPreviewSearcher,
+              includedVerticals: includedVerticalKeys || undefined,
+              renderEntityPreviews: renderEntityPreviews,
+              universalLimit: universalLimit,
+              entityPreviewsDebouncingTime: 300,
+            }}
+            placeholder=""
+            onSearch={handleSearch}
+            customCssClasses={{
+              searchBarContainer: "search",
+              inputElement: queryPrompts.length >= 1 ? "demo" : undefined,
+            }}
+          />
+        ) : (
+          <SearchBar
+            placeholder=""
+            onSearch={handleSearch}
+            customCssClasses={{
+              searchBarContainer: "search",
+              inputElement: queryPrompts.length >= 1 ? "demo" : undefined,
+            }}
+          />
+        )}
         <SearchNav />
       </header>
       <section aria-label="Search Results">
