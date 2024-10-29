@@ -21,7 +21,7 @@ export const getHeadConfig: GetHeadConfig<
   TemplateRenderProps
 > = (): HeadConfig => {
   return {
-    title: "Capital Fins Bank  | Search",
+    title: "Search",
     charset: "UTF-8",
     viewport: "width=device-width, initial-scale=1",
     tags: [
@@ -29,7 +29,7 @@ export const getHeadConfig: GetHeadConfig<
         type: "meta",
         attributes: {
           name: "description",
-          content: "Capital fins Search",
+          content: "Search",
         },
       },
     ],

@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "pages dev",
     "prod": "pages prod",
-    "build:local": "pages build",
+    "build": "pages build",
     "clean": "rm -rf .artifact-output .yext/ dist/ localData sites-rendered-output",
     "features": "pages generate features"
   },
