@@ -16,6 +16,14 @@ import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocatio
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 import ProductProminentImage from "../components/cards/ProductProminentImage";
 
+// Define properties for each section type shown in the search interface.
+// - label: Display name for the section.
+// - verticalKey: Optional key that uniquely identifies each type of content (e.g., 'faq', 'jobs').
+// - pageType: Defines layout style, e.g., "grid-cols-2" (two-column grid), "map" (map view).
+// - universalLimit: Limits the number of items shown in universal search.
+// - sortByOptions: Custom sorting options for items.
+// - cardType: Specifies how each item in the section is displayed (using different card components).
+// - visualTypeHead: Boolean to enable special header visuals (optional).
 export interface VerticalProps {
   label: string;
   verticalKey?: string;
@@ -50,7 +58,6 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProfessionalLocationAndGrid,
     universalLimit: 3,
-    visualTypeHead: true,
   },
   {
     label: "Locations",
@@ -79,7 +86,6 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
-    visualTypeHead: true,
     sortByOptions: [
       {
         label: "Name: A-Z",
@@ -100,6 +106,9 @@ export const VerticalConfig: VerticalProps[] = [
     ],
   },
 ];
+
+// Configuration options for enabling or disabling features
+
 export const IsChatEnabled: boolean = false; // Change to true if you want to show chat
 export const locale: string | undefined = undefined; //Replace undefined with your locale. for eg. "en_GB" or "ja"
 export const IsGenerativeDirectAnswerEnabled: boolean = false; // Change to true if you want to show Generative Direct Answer
