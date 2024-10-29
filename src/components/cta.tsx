@@ -16,7 +16,7 @@ const Cta = ({ cta, ctaType }: CTAProps) => {
     <>
       {cta.link && (
         <Link
-          className={`border-2 text-sm md:text-base p-2 flex justify-center md:w-[220px] ${ctaType}`}
+          className={`border-2 text-sm md:text-base p-2 flex justify-center w-full md:w-[220px] ${ctaType}`}
           cta={{
             link: cta.link,
             label: cta.label,

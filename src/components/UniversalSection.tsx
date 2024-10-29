@@ -18,7 +18,7 @@ export const UniversalSection = ({
   )?.pageType;
 
   const className = pageType?.includes("grid")
-    ? `grid grid-cols-1 md:${pageType} gap-8`
+    ? `grid grid-cols-1 md:${pageType} md:gap-8`
     : `space-y-0`;
 
   return (
