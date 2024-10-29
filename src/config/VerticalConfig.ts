@@ -3,6 +3,11 @@ import {
   DefaultRawDataType,
   VerticalConfigMap,
 } from "@yext/search-ui-react";
+
+import { Direction, SortBy, SortType } from "@yext/search-headless-react";
+import { UniversalSection } from "../components/search/UniversalSection";
+import ProductProminentVideo from "../components/cards/ProductProminentVideo";
+import FileStandard from "../components/cards/FileStandard";
 import EventStandard from "../components/cards/EventStandard";
 import FAQAccordion from "../components/cards/FAQAccordion";
 import JobStandard from "../components/cards/JobStandard";
@@ -10,9 +15,6 @@ import LocationStandard from "../components/cards/LocationStandard";
 import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocationAndGrid";
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 import ProductProminentImage from "../components/cards/ProductProminentImage";
-import { Direction, SortBy, SortType } from "@yext/search-headless-react";
-import { UniversalSection } from "../components/search/UniversalSection";
-import ProductProminentVideo from "../components/cards/ProductProminentVideo";
 
 export interface VerticalProps {
   label: string;

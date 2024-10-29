@@ -27,7 +27,7 @@ const ProductProminentVideo = ({ result }: CardProps<any>) => {
             className="border-0 w-full h-full"
           />
         </a>
-        <h2 className=" text-lg font-bold px-2 mt-4">
+        <h2 className="text-lg font-bold px-2 mt-4">
           <a href={youtube_videoURL}>{name}</a>
         </h2>
       </header>
