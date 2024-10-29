@@ -184,11 +184,11 @@ const SearchResults = () => {
                         <SpellCheck />
                         <div className="w-full h-auto overflow-scroll relative">
                           <header className="results-header">
-                            <aside className="hidden md:flex justify-between w-full pr-8 items-center">
+                            <aside className="flex justify-between w-full md:pr-8 items-center">
                               <ResultsCount />
                               {facetsCount >= 1 && (
                                 <div
-                                  className=" hover:cursor-pointer font-bold text-standardSubTitle !text-gray-700"
+                                  className=" hover:cursor-pointer  text-standardSubTitle !text-gray-700 font-semibold text-neutral mb-4 py-2 md:mr-2.5"
                                   onClick={(e) => setShowFacets(!showFacets)}
                                 >
                                   Facets & Filters
@@ -196,10 +196,10 @@ const SearchResults = () => {
                               )}
                             </aside>
                             {showFacets && (
-                              <div className="hidden md:block absolute inset-0 bg-white h-[95vh] px-4">
+                              <div className="w-full block absolute inset-0 bg-white h-full md:h-[95vh] px-4">
                                 <IoClose
                                   onClick={(e) => setShowFacets(false)}
-                                  className="ml-auto h-8 w-8 mr-4 hover:cursor-pointer hover:border"
+                                  className="ml-auto h-6 w-6 md:h-8 md:w-8 md:mr-4 hover:cursor-pointer hover:border"
                                 />
                                 <Facets
                                   customCssClasses={{
@@ -291,17 +291,54 @@ const SearchResults = () => {
                           <Facets />
                         </aside>
                       )}
-                      <div className="w-full">
-                        <header className="results-header">
-                          <article className="flex justify-between w-full items-center">
+                      <div className="relative w-full">
+                        <header className="results-header ">
+                          <article className="hidden md:flex justify-between w-full items-center">
                             <ResultsCount />
-                            <div className="flex justify-start gap-2 mb-4">
-                              {sortOptions && sortOptions.length >= 1 && (
+                            {sortOptions && sortOptions.length >= 1 && (
+                              <div className="flex justify-start gap-2 md:mb-4">
                                 <SortDropdown sortOptions={sortOptions} />
-                              )}
+                              </div>
+                            )}
+                          </article>
+                          <article className="md:hidden flex items-center justify-between text-standardSubTitle !text-gray-700 font-semibold text-neutral  md:mr-2.5">
+                            <ResultsCount />
+                            <div
+                              onClick={() => setShowFacets(true)}
+                              className="font-semibold text-neutral mb-4 py-2 mr-2.5 whitespace-nowrap"
+                            >
+                              Facets & Filters
                             </div>
                           </article>
-
+                          {showFacets && (
+                            <div className="h-full w-full z-40  absolute inset-0 bg-white px-4">
+                              <IoClose
+                                onClick={(e) => setShowFacets(false)}
+                                className="ml-auto h-6 w-6 mb-4 hover:cursor-pointer hover:border"
+                              />
+                              {sortOptions && sortOptions.length >= 1 && (
+                                <div className="flex justify-start gap-2 md:mb-4">
+                                  <SortDropdown sortOptions={sortOptions} />
+                                </div>
+                              )}
+                              <Facets searchOnChange={true} />
+                              <div className="flex flex-row gap-4 mb-8 items-center mt-4 text-xl">
+                                <div
+                                  className="px-4 py-2 border border-black"
+                                  onClick={(e) => setShowFacets(!showFacets)}
+                                >
+                                  Apply
+                                </div>
+                                <div
+                                  className="hover:cursor-pointer px-4 py-2 text-[#027da5] w-fit hover:underline"
+                                  onClick={(e) => setShowFacets(false)}
+                                >
+                                  Cancel
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          <hr className="mb-8 w-full block md:hidden" />
                           <AppliedFilters />
                         </header>
                         <VerticalResults
