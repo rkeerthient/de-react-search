@@ -1,7 +1,12 @@
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/20/solid";
-import { Address, AddressType, HoursStatus, Image } from "@yext/pages-components";
+import {
+  Address,
+  AddressType,
+  HoursStatus,
+  Image,
+} from "@yext/pages-components";
 import { CardProps } from "@yext/search-ui-react";
- import Cta from "../cta";
+import Cta from "../cta";
 import { format_phone } from "../../utils/reusableFunctions";
 import ResponseComponent from "../ResponseComponent";
 
@@ -82,16 +87,14 @@ const ProfessionalStandard = ({ result }: CardProps<any>) => {
                   </section>
                 )}
               </div>
-              {(c_primaryCTA || c_secondaryCTA) && (
-                <footer className="flex flex-col   gap-2 justify-center pt-4 pb-2 items-center uppercase my-auto">
-                  {c_primaryCTA && (
-                    <Cta cta={c_primaryCTA} ctaType="primaryCta" />
-                  )}
-                  {c_secondaryCTA && (
-                    <Cta cta={c_secondaryCTA} ctaType="secondaryCta" />
-                  )}
-                </footer>
-              )}
+              <footer className="flex flex-col   gap-2 justify-center pt-4 pb-2 items-center uppercase my-auto">
+                {c_primaryCTA && (
+                  <Cta cta={c_primaryCTA} ctaType="primaryCta" />
+                )}
+                {c_secondaryCTA && (
+                  <Cta cta={c_secondaryCTA} ctaType="secondaryCta" />
+                )}
+              </footer>
             </div>
             <ResponseComponent response={description} showMore={true} />
           </div>

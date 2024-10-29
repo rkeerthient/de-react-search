@@ -24,8 +24,8 @@ import { concatClassNames } from "../../utils/reusableFunctions";
 import { createCtx } from "../../utils/createContext";
 import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
 import { IoClose } from "react-icons/io5";
-import { defaultCoordinates } from "../UniversalSection";
 import SortDropdown from "../SortDropdown";
+import { defaultCoordinates } from "./UniversalSection";
 type MapContextType = {
   hoveredId: string;
   setHoveredId: (value: string) => void;
@@ -54,7 +54,7 @@ const SearchResults = () => {
   const facetsCount = filters?.facets?.length ?? 0;
 
   const currentVerticalConfig = VerticalConfig.find(
-    (item) => item.key === verticalKey
+    (item) => item.verticalKey === verticalKey
   );
 
   const cardType = currentVerticalConfig?.cardType;

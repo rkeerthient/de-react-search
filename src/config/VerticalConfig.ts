@@ -9,13 +9,13 @@ import JobStandard from "../components/cards/JobStandard";
 import LocationStandard from "../components/cards/LocationStandard";
 import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocationAndGrid";
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
-import { UniversalSection } from "../components/UniversalSection";
 import ProductProminentImage from "../components/cards/ProductProminentImage";
 import { Direction, SortBy, SortType } from "@yext/search-headless-react";
+import { UniversalSection } from "../components/search/UniversalSection";
 
 export interface VerticalProps {
   label: string;
-  key?: string;
+  verticalKey?: string;
   pageType:
     | "grid-cols-2"
     | "grid-cols-3"
@@ -26,6 +26,7 @@ export interface VerticalProps {
   universalLimit?: number;
   sortByOptions?: { label: string; sortBy: SortBy }[];
   cardType?: CardComponent;
+  visualTypeHead?: boolean;
 }
 
 export const VerticalConfig: VerticalProps[] = [
@@ -35,45 +36,47 @@ export const VerticalConfig: VerticalProps[] = [
   },
   {
     label: "FAQs",
-    key: "faq",
+    verticalKey: "faq",
     pageType: "standard",
     cardType: FAQAccordion,
     universalLimit: 3,
   },
   {
     label: "Professionals",
-    key: "financial-professional",
+    verticalKey: "financial-professional",
     pageType: "grid-cols-3",
     cardType: ProfessionalLocationAndGrid,
     universalLimit: 3,
+    visualTypeHead: true,
   },
   {
     label: "Locations",
-    key: "locations",
+    verticalKey: "locations",
     pageType: "map",
     cardType: LocationStandard,
     universalLimit: 3,
   },
   {
     label: "Jobs",
-    key: "jobs",
+    verticalKey: "jobs",
     pageType: "standard",
     cardType: JobStandard,
     universalLimit: 3,
   },
   {
     label: "Events",
-    key: "events",
+    verticalKey: "events",
     pageType: "standard",
     cardType: EventStandard,
     universalLimit: 3,
   },
   {
     label: "Products",
-    key: "product",
+    verticalKey: "product",
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
+    visualTypeHead: true,
     sortByOptions: [
       {
         label: "Name: A-Z",
@@ -101,8 +104,8 @@ export const UniversalConfig: VerticalConfigMap<
   Record<string, DefaultRawDataType>
 > = VerticalConfig.reduce(
   (configMap, item) => {
-    if (item.key) {
-      configMap[item.key] = {
+    if (item.verticalKey) {
+      configMap[item.verticalKey] = {
         CardComponent: item.cardType,
         SectionComponent: UniversalSection,
         label: item.label,

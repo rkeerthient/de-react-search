@@ -1,8 +1,8 @@
 import { DefaultRawDataType, SectionProps } from "@yext/search-ui-react";
-import { VerticalConfig } from "../config/VerticalConfig";
-import MapPin from "./MapPin";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
+import { VerticalConfig } from "../../config/VerticalConfig";
+import MapPin from "../MapPin";
 export const defaultCoordinates: Coordinate = { latitude: 125, longitude: 125 };
 export const UniversalSection = ({
   results,
@@ -18,7 +18,7 @@ export const UniversalSection = ({
   )?.pageType;
 
   const className = pageType?.includes("grid")
-    ? `grid grid-cols-1 md:${pageType} gap-8`
+    ? `grid grid-cols-1 md:${pageType} md:gap-8`
     : `space-y-0`;
 
   return (

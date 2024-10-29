@@ -8,6 +8,13 @@ import { useSearchActions, useSearchState } from "@yext/search-headless-react";
 import { SearchUtils } from "./searchUItil";
 import { useTypingEffect } from "../useTypeEffect";
 import { setQueryParams } from "../../utils/reusableFunctions";
+import {
+  entityPreviewSearcher,
+  includedVerticalKeys,
+  includedVerticals,
+  renderEntityPreviews,
+  universalLimit,
+} from "./searchVisualAutoComplete";
 
 declare global {
   interface Window {
@@ -19,7 +26,6 @@ declare global {
 const SearchPage = () => {
   const searchActions = useSearchActions();
   const { queryPrompts } = useTypingEffect();
-
   const [listening, setListening] = useState(false);
   const verticalKey = useSearchState((state) => state.vertical.verticalKey);
 
@@ -106,13 +112,32 @@ const SearchPage = () => {
   return (
     <main className="flex flex-col gap-2">
       <header className="w-full centered-container">
-        <SearchBar
-          onSearch={handleSearch}
-          customCssClasses={{
-            searchBarContainer: "search",
-            inputElement: queryPrompts.length >= 1 ? "demo" : undefined,
-          }}
-        />
+        {includedVerticals.length >= 1 ? (
+          <SearchBar
+            visualAutocompleteConfig={{
+              entityPreviewSearcher: entityPreviewSearcher,
+              includedVerticals: includedVerticalKeys || undefined,
+              renderEntityPreviews: renderEntityPreviews,
+              universalLimit: universalLimit,
+              entityPreviewsDebouncingTime: 300,
+            }}
+            placeholder=""
+            onSearch={handleSearch}
+            customCssClasses={{
+              searchBarContainer: "search",
+              inputElement: queryPrompts.length >= 1 ? "demo" : undefined,
+            }}
+          />
+        ) : (
+          <SearchBar
+            placeholder=""
+            onSearch={handleSearch}
+            customCssClasses={{
+              searchBarContainer: "search",
+              inputElement: queryPrompts.length >= 1 ? "demo" : undefined,
+            }}
+          />
+        )}
         <SearchNav />
       </header>
       <section aria-label="Search Results">

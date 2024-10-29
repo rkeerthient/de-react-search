@@ -27,8 +27,9 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
   const locationRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     setPageType(
-      VerticalConfig.find((item) => item.key === "financial-professional")
-        ?.pageType || ""
+      VerticalConfig.find(
+        (item) => item.verticalKey === "financial-professional"
+      )?.pageType || ""
     );
   }, []);
   const handleMouseEnter = () => {
@@ -58,7 +59,7 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`border rounded-lg ${pageType === "map" && `flex gap-2`}  ${
+      className={`  border  ${pageType === "map" && `flex gap-2`}  ${
         hoveredId === id ? "bg-gray-200" : ""
       }`}
     >
@@ -67,7 +68,7 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
       >
         <a
           href={landingPageUrl}
-          className={`group aspect-square block   overflow-hidden rounded-t-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 `}
+          className={`group aspect-square block overflow-hidden  bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 `}
         >
           {headshot && (
             <Image
@@ -117,16 +118,14 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
             <span className="ml-2">{format_phone(mainPhone)}</span>
           </section>
         )}
-        {(c_primaryCTA || c_secondaryCTA) && (
-          <footer
-            className={`flex gap-2 justify-center pt-4 pb-2 items-center uppercase ${pageType === "map" ? `flex-row` : `flex-col`}`}
-          >
-            {c_primaryCTA && <Cta cta={c_primaryCTA} ctaType="primaryCta" />}
-            {c_secondaryCTA && (
-              <Cta cta={c_secondaryCTA} ctaType="secondaryCta" />
-            )}
-          </footer>
-        )}
+        <footer
+          className={`flex gap-2 justify-center pt-4 pb-2 items-center uppercase ${pageType === "map" ? `flex-row` : `flex-col`}`}
+        >
+          {c_primaryCTA && <Cta cta={c_primaryCTA} ctaType="primaryCta" />}
+          {c_secondaryCTA && (
+            <Cta cta={c_secondaryCTA} ctaType="secondaryCta" />
+          )}
+        </footer>
       </section>
     </article>
   );
