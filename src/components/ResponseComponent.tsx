@@ -59,8 +59,25 @@ const ResponseComponent = ({
   };
 
   const renderResponse = () => {
-    if (typeof response === "object" && "json" in response) {
-      return <LexicalRichText serializedAST={JSON.stringify(response.json)} />;
+    if (
+      typeof response === "object" &&
+      ("json" in response || "html" in response)
+    ) {
+      console.log(`eneted`);
+
+      return (
+        <>
+          {response.json ? (
+            <LexicalRichText serializedAST={JSON.stringify(response.json)} />
+          ) : (
+            <p
+              dangerouslySetInnerHTML={{
+                __html: response.html,
+              }}
+            ></p>
+          )}
+        </>
+      );
     }
 
     if (typeof response === "object" && "markdown" in response) {

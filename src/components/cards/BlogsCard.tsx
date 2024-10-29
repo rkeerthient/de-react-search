@@ -4,13 +4,13 @@ import { Image } from "@yext/pages-components";
 import Cta from "../cta";
 import ResponseComponent from "../ResponseComponent";
 
-const ProductProminentImage = ({ result }: CardProps<any>) => {
+const BlogsCard = ({ result }: CardProps<any>) => {
   const {
     id,
     price,
     name,
     c_primaryCTA,
-    richTextDescriptionV2,
+    bodyV2,
     landingPageUrl,
     primaryPhoto,
     c_secondaryCTA,
@@ -36,9 +36,7 @@ const ProductProminentImage = ({ result }: CardProps<any>) => {
         {price && <p className="standardSubTitle ">${price.value}</p>}
       </header>
       <article className=" px-2 ">
-        {richTextDescriptionV2 && (
-          <ResponseComponent response={richTextDescriptionV2} showMore={true} />
-        )}
+        {bodyV2 && <ResponseComponent response={bodyV2} showMore={true} />}
         <section className={`px-2 space-y-1 `}>
           <footer
             className={`flex gap-2 justify-center pt-4 pb-2 items-center uppercase flex-col`}
@@ -54,4 +52,4 @@ const ProductProminentImage = ({ result }: CardProps<any>) => {
   );
 };
 
-export default ProductProminentImage;
+export default BlogsCard;

@@ -15,15 +15,47 @@ import LocationStandard from "../components/cards/LocationStandard";
 import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocationAndGrid";
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 import ProductProminentImage from "../components/cards/ProductProminentImage";
+import BlogsCard from "../components/cards/BlogsCard";
 
-// Define properties for each section type shown in the search interface.
-// - label: Display name for the section.
-// - verticalKey: Optional key that uniquely identifies each type of content (e.g., 'faq', 'jobs').
-// - pageType: Defines layout style, e.g., "grid-cols-2" (two-column grid), "map" (map view).
-// - universalLimit: Limits the number of items shown in universal search.
-// - sortByOptions: Custom sorting options for items.
-// - cardType: Specifies how each item in the section is displayed (using different card components).
-// - visualTypeHead: Boolean to enable special header visuals (optional).
+/**
+ * 
+ * Define properties for each section type shown in the search interface.
+ * label: Display name for the section.
+ * verticalKey: Optional key that uniquely identifies each type of content (e.g., 'faq', 'jobs').
+ * pageType: Defines layout style, e.g., "grid-cols-2" (two-column grid), "map" (map view).
+ * universalLimit: Limits the number of items shown in universal search.
+ * sortByOptions: Custom sorting options for items.
+ * cardType: Specifies how each item in the section is displayed (using different card components).
+ * visualTypeHead: Boolean to enable special header visuals (optional).
+ * 
+ * 
+ * Recommendation 
+ * gridPageType - ProductProminentVideo, LocationStandard, ProfessionalLocationAndGrid, ProductProminentImage
+ * 
+ * 
+ * Sample sorting format
+ * 
+ sortByOptions: [
+  {
+    label: "Name: A-Z",
+    sortBy: {
+      field: "name",
+      direction: Direction.Ascending,
+      type: SortType.Field,
+    },
+  },
+  {
+    label: "Name: Z-A",
+    sortBy: {
+      field: "name",
+      direction: Direction.Descending,
+      type: SortType.Field,
+    },
+  },
+],
+ * 
+ */
+
 export interface VerticalProps {
   label: string;
   verticalKey?: string;
@@ -81,29 +113,18 @@ export const VerticalConfig: VerticalProps[] = [
     universalLimit: 3,
   },
   {
+    label: "Blogs",
+    verticalKey: "blogs",
+    pageType: "grid-cols-3",
+    cardType: BlogsCard,
+    universalLimit: 3,
+  },
+  {
     label: "Products",
     verticalKey: "product",
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
-    sortByOptions: [
-      {
-        label: "Name: A-Z",
-        sortBy: {
-          field: "name",
-          direction: Direction.Ascending,
-          type: SortType.Field,
-        },
-      },
-      {
-        label: "Name: Z-A",
-        sortBy: {
-          field: "name",
-          direction: Direction.Descending,
-          type: SortType.Field,
-        },
-      },
-    ],
   },
 ];
 
@@ -127,23 +148,3 @@ export const UniversalConfig: VerticalConfigMap<
   },
   {} as VerticalConfigMap<Record<string, DefaultRawDataType>>
 );
-
-/** Sample Sort options */
-// sortByOptions: [
-//   {
-//     label: "Name: A-Z",
-//     sortBy: {
-//       field: "name",
-//       direction: Direction.Ascending,
-//       type: SortType.Field,
-//     },
-//   },
-//   {
-//     label: "Name: Z-A",
-//     sortBy: {
-//       field: "name",
-//       direction: Direction.Descending,
-//       type: SortType.Field,
-//     },
-//   },
-// ],
