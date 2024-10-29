@@ -26,6 +26,7 @@ export interface VerticalProps {
   universalLimit?: number;
   sortByOptions?: { label: string; sortBy: SortBy }[];
   cardType?: CardComponent;
+  visualTypeHead?: boolean;
 }
 
 export const VerticalConfig: VerticalProps[] = [
@@ -46,6 +47,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProfessionalLocationAndGrid,
     universalLimit: 3,
+    visualTypeHead: true,
   },
   {
     label: "Locations",
@@ -74,6 +76,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
+    visualTypeHead: true,
     sortByOptions: [
       {
         label: "Name: A-Z",

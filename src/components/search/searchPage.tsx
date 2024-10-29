@@ -8,6 +8,12 @@ import { useSearchActions, useSearchState } from "@yext/search-headless-react";
 import { SearchUtils } from "./searchUItil";
 import { useTypingEffect } from "../useTypeEffect";
 import { setQueryParams } from "../../utils/reusableFunctions";
+import {
+  entityPreviewSearcher,
+  includedVerticalKeys,
+  renderEntityPreviews,
+  universalLimit,
+} from "./searchVisualAutoComplete";
 
 declare global {
   interface Window {
@@ -19,7 +25,6 @@ declare global {
 const SearchPage = () => {
   const searchActions = useSearchActions();
   const { queryPrompts } = useTypingEffect();
-
   const [listening, setListening] = useState(false);
   const verticalKey = useSearchState((state) => state.vertical.verticalKey);
 
@@ -107,6 +112,14 @@ const SearchPage = () => {
     <main className="flex flex-col gap-2">
       <header className="w-full centered-container">
         <SearchBar
+          visualAutocompleteConfig={{
+            entityPreviewSearcher: entityPreviewSearcher,
+            includedVerticals: includedVerticalKeys || undefined,
+            renderEntityPreviews: renderEntityPreviews,
+            universalLimit: universalLimit,
+            entityPreviewsDebouncingTime: 300,
+          }}
+          placeholder=""
           onSearch={handleSearch}
           customCssClasses={{
             searchBarContainer: "search",
