@@ -288,7 +288,12 @@ const SearchResults = () => {
                       <SpellCheck />
                       {facetsCount >= 1 && (
                         <aside className="hidden md:block  mr-5 w-56 shrink-0">
-                          <Facets />
+                          <Facets
+                            customCssClasses={{
+                              facetsContainer: "py-4",
+                              titleLabel: "text-lg",
+                            }}
+                          />
                         </aside>
                       )}
                       <div className="relative w-full">
