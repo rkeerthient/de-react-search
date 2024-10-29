@@ -43,7 +43,7 @@ const MapPin = ({
   const { index } = result;
   const map = useMapContext();
   const { id, yextDisplayCoordinate } = location;
-  
+
   const handleClick = useCallback(() => {
     if (type === "verticalResults") {
       setClickedId(id);
@@ -79,11 +79,12 @@ const MapPin = ({
       zIndex={type === "verticalResults" && hoveredId === id ? 2 : 0}
     >
       <div
-        className={`border bg-white p-1  ${clickedId !== "" && clickedId === id ? `flex` : `hidden`}`}
+        className={`absolute -top-10 left-0 border bg-white p-1 shadow-lg w-44 ${clickedId !== "" && clickedId === id ? `flex` : `hidden`}`}
+        style={{ transform: "translateX(-50%)" }}
       >
-        {getLocationHTML(location)}{" "}
+        {getLocationHTML(location)}
         <IoClose
-          className="h-4 w-4"
+          className="h-4 w-4 absolute top-1 right-1 cursor-pointer"
           onClick={(e) => {
             e.stopPropagation();
             setClickedId("");
