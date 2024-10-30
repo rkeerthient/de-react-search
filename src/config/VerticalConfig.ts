@@ -3,6 +3,8 @@ import {
   DefaultRawDataType,
   VerticalConfigMap,
 } from "@yext/search-ui-react";
+
+import { Direction, SortBy, SortType } from "@yext/search-headless-react";
 import { UniversalSection } from "../components/search/UniversalSection";
 import ProductProminentVideo from "../components/cards/ProductProminentVideo";
 import FileStandard from "../components/cards/FileStandard";
@@ -65,8 +67,7 @@ export interface VerticalProps {
     | "map"
     | "universal";
   universalLimit?: number;
-  verticalLimit?: number;
-  sortingFields?: string[];
+  sortByOptions?: { label: string; sortBy: SortBy }[];
   cardType?: CardComponent;
   visualTypeHead?: boolean;
 }
@@ -124,7 +125,6 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
-    sortingFields: ["name"],
   },
 ];
 
@@ -133,8 +133,6 @@ export const VerticalConfig: VerticalProps[] = [
 export const IsChatEnabled: boolean = false; // Change to true if you want to show chat
 export const locale: string | undefined = undefined; //Replace undefined with your locale. for eg. "en_GB" or "ja"
 export const IsGenerativeDirectAnswerEnabled: boolean = false; // Change to true if you want to show Generative Direct Answer
-
-/** Do not touch this section */
 export const UniversalConfig: VerticalConfigMap<
   Record<string, DefaultRawDataType>
 > = VerticalConfig.reduce(

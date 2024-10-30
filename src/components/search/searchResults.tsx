@@ -24,8 +24,8 @@ import { concatClassNames } from "../../utils/reusableFunctions";
 import { createCtx } from "../../utils/createContext";
 import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
 import { IoClose } from "react-icons/io5";
-import SortDropdown from "../SortDropdown";
 import { defaultCoordinates } from "./UniversalSection";
+import SortDropdown from "../SortDropdown";
 type MapContextType = {
   hoveredId: string;
   setHoveredId: (value: string) => void;
