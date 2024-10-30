@@ -63,8 +63,6 @@ const ResponseComponent = ({
       typeof response === "object" &&
       ("json" in response || "html" in response)
     ) {
-      console.log(`eneted`);
-
       return (
         <>
           {response.json ? (
