@@ -22,6 +22,7 @@ const SortDropdown = ({ sortOptions }: SortDropdownProps) => {
   const searchActions = useSearchActions();
   const verticalKey = useSearchState((state) => state.vertical.verticalKey);
   const query = useSearchState((state) => state.query.input);
+  console.log(JSON.stringify(sortOptions));
 
   const [selectedItem, setSelectedItem] = useState<string>("");
 

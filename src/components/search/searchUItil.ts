@@ -55,7 +55,7 @@ export interface SortTypeProps {
   label: string;
   sortBy: {
     field: string;
-    direction: "ASC" | "DESC";
+    direction: Direction;
     type: SortType;
   };
 }
