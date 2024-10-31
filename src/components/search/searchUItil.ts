@@ -6,6 +6,7 @@ import {
   Direction,
 } from "@yext/search-headless-react";
 import { VerticalConfig } from "../../config/VerticalConfig";
+import { toTitleCaseWithRules } from "../../utils/reusableFunctions";
 
 type SearchUtilProps = {
   query?: string | undefined;
@@ -57,11 +58,11 @@ export const buildSortOptions = (fields: string[]) => {
     const [field, ascendingLabel, descendingLabel] = item.split(",");
     return [
       {
-        label: ascendingLabel || `${field.toUpperCase} - Ascending`,
+        label: ascendingLabel || `${toTitleCaseWithRules(field)} - Ascending`,
         sortBy: { field, direction: Direction.Ascending, type: SortType.Field },
       },
       {
-        label: descendingLabel || `${field.toUpperCase} - Descending`,
+        label: descendingLabel || `${toTitleCaseWithRules(field)} - Descending`,
         sortBy: {
           field,
           direction: Direction.Descending,

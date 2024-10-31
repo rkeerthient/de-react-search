@@ -117,7 +117,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
-    sortFields: ["name, Name A-Z, Name Z-A"],
+    sortFields: ["name"],
   },
 ];
 
