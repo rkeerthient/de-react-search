@@ -285,20 +285,23 @@ const SearchResults = () => {
                       </article>
                     </section>
                   ) : (
-                    <section className="w-full flex centered-container">
-                      <SpellCheck />
-                      {facetsCount >= 1 && (
-                        <aside className="hidden md:block  mr-5 w-56 shrink-0">
+                    <section className="w-full flex md:max-w-full md:px-14 mx-auto">
+                      <aside className="hidden md:block w-[200px] mr-12">
+                        {facetsCount >= 1 && (
                           <Facets
                             customCssClasses={{
-                              facetsContainer: "py-4",
+                              facetsContainer: "py-4 w-full",
                               titleLabel: "text-lg",
                             }}
                           />
-                        </aside>
-                      )}
-                      <div className="relative w-full">
+                        )}
+                      </aside>
+
+                      <div className="relative md:centered-container w-full md:!ml-0 md:!mr-auto">
                         <header className="results-header ">
+                          <SpellCheck
+                            customCssClasses={{ spellCheckContainer: "pt-4" }}
+                          />
                           <article className="hidden md:flex justify-between w-full items-center">
                             <ResultsCount />
                             {sortOptions && sortOptions.length >= 1 && (
