@@ -26,6 +26,7 @@ import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
 import { IoClose } from "react-icons/io5";
 import { defaultCoordinates } from "./UniversalSection";
 import SortDropdown from "../SortDropdown";
+import { buildSortOptions } from "./searchUItil";
 type MapContextType = {
   hoveredId: string;
   setHoveredId: (value: string) => void;
@@ -59,7 +60,7 @@ const SearchResults = () => {
 
   const cardType = currentVerticalConfig?.cardType;
   const pageType = currentVerticalConfig?.pageType || "standard";
-  const sortOptions = currentVerticalConfig?.sortByOptions;
+  const sortOptions = currentVerticalConfig?.sortFields;
 
   const getClasses = () => {
     const classesMap: { [key: string]: string } = {
@@ -302,7 +303,9 @@ const SearchResults = () => {
                             <ResultsCount />
                             {sortOptions && sortOptions.length >= 1 && (
                               <div className="flex justify-start gap-2 md:mb-4">
-                                <SortDropdown sortOptions={sortOptions} />
+                                <SortDropdown
+                                  sortOptions={buildSortOptions(sortOptions)}
+                                />
                               </div>
                             )}
                           </article>
@@ -323,7 +326,9 @@ const SearchResults = () => {
                               />
                               {sortOptions && sortOptions.length >= 1 && (
                                 <div className="flex justify-start gap-2 md:mb-4">
-                                  <SortDropdown sortOptions={sortOptions} />
+                                  <SortDropdown
+                                    sortOptions={buildSortOptions(sortOptions)}
+                                  />
                                 </div>
                               )}
                               <Facets searchOnChange={true} />

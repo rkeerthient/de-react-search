@@ -2,6 +2,8 @@ import {
   useSearchActions,
   UniversalLimit,
   SortBy,
+  SortType,
+  Direction,
 } from "@yext/search-headless-react";
 import { VerticalConfig } from "../../config/VerticalConfig";
 
@@ -38,4 +40,51 @@ export const SearchUtils = ({
     searchActions.setUniversalLimit(getUniversalLimit());
     searchActions.executeUniversalQuery();
   }
+};
+
+export interface SortTypeProps {
+  label: string;
+  sortBy: {
+    field: string;
+    direction: "ASC" | "DESC";
+    type: SortType;
+  };
+}
+
+export const buildSortOptions = (fields: string[]) => {
+  const retData = fields.flatMap((item) => {
+    item = item.replaceAll(", ", ",");
+    const [field, ascendingLabel, descendingLabel] = item.split(",");
+    return [
+      {
+        label: ascendingLabel || `${field.toUpperCase} - Ascending`,
+        sortBy: { field, direction: Direction.Ascending, type: SortType.Field },
+      },
+      {
+        label: descendingLabel || `${field.toUpperCase} - Descending`,
+        sortBy: {
+          field,
+          direction: Direction.Descending,
+          type: SortType.Field,
+        },
+      },
+    ];
+  });
+  return retData;
+};
+
+export const setQueryParams = (query?: string, vertical?: string) => {
+  const queryParams = new URLSearchParams(window.location.search);
+  if (vertical) {
+    queryParams.set("vertical", vertical);
+  } else {
+    queryParams.delete("vertical");
+  }
+
+  if (query) {
+    queryParams.set("query", query);
+  } else {
+    queryParams.delete("query");
+  }
+  history.pushState(null, "", "?" + queryParams.toString());
 };
