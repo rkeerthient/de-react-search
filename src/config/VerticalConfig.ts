@@ -15,7 +15,6 @@ import LocationStandard from "../components/cards/LocationStandard";
 import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocationAndGrid";
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 import ProductProminentImage from "../components/cards/ProductProminentImage";
-import BlogsCard from "../components/cards/BlogsCard";
 
 /**
  * 
@@ -110,13 +109,6 @@ export const VerticalConfig: VerticalProps[] = [
     verticalKey: "events",
     pageType: "standard",
     cardType: EventStandard,
-    universalLimit: 3,
-  },
-  {
-    label: "Blogs",
-    verticalKey: "blogs",
-    pageType: "grid-cols-3",
-    cardType: BlogsCard,
     universalLimit: 3,
   },
   {
