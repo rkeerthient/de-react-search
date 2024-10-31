@@ -9,30 +9,38 @@ import { VerticalConfig } from "../../config/VerticalConfig";
 import { toTitleCaseWithRules } from "../../utils/reusableFunctions";
 
 type SearchUtilProps = {
-  query?: string | undefined;
-  vertical?: string | undefined;
+  query?: string;
+  vertical?: string;
   searchActions: ReturnType<typeof useSearchActions>;
   sortOptions?: SortBy;
 };
 
-const getUniversalLimit = () => {
-  return VerticalConfig.filter(
+const getUniversalLimit = (): UniversalLimit =>
+  VerticalConfig.filter(
     (item) => item.label !== "All" && item.universalLimit !== undefined
-  ).reduce((acc, item) => {
+  ).reduce<UniversalLimit>((acc, item) => {
     acc[String(item.verticalKey)] = item.universalLimit as number;
     return acc;
-  }, {} as UniversalLimit);
-};
+  }, {});
+
+const getVerticalLimit = (currVertical: string): number | undefined =>
+  VerticalConfig.find(
+    (item) => item.label !== "All" && item.verticalKey === currVertical
+  )?.verticalLimit;
 
 export const SearchUtils = ({
-  vertical = undefined,
+  vertical,
   query = "",
   searchActions,
   sortOptions,
-}: SearchUtilProps) => {
+}: SearchUtilProps): void => {
   if (query) searchActions.setQuery(query);
   if (vertical && vertical !== "universal") {
     searchActions.setVertical(vertical);
+    const verticalLimit = getVerticalLimit(vertical);
+    if (verticalLimit !== undefined && verticalLimit >= 1) {
+      searchActions.setVerticalLimit(verticalLimit);
+    }
     if (sortOptions) searchActions.setSortBys([sortOptions]);
     searchActions.executeVerticalQuery();
   } else {
@@ -52,40 +60,40 @@ export interface SortTypeProps {
   };
 }
 
-export const buildSortOptions = (fields: string[]) => {
-  const retData = fields.flatMap((item) => {
-    item = item.replaceAll(", ", ",");
-    const [field, ascendingLabel, descendingLabel] = item.split(",");
+export const buildSortOptions = (fields: string[]): SortTypeProps[] =>
+  fields.flatMap((field) => {
+    const [rawField, ascendingLabel, descendingLabel] = field
+      .replaceAll(", ", ",")
+      .split(",");
+
+    const formattedField = toTitleCaseWithRules(rawField);
     return [
       {
-        label: ascendingLabel || `${toTitleCaseWithRules(field)} - Ascending`,
-        sortBy: { field, direction: Direction.Ascending, type: SortType.Field },
+        label: ascendingLabel || `${formattedField} - Ascending`,
+        sortBy: {
+          field: rawField,
+          direction: Direction.Ascending,
+          type: SortType.Field,
+        },
       },
       {
-        label: descendingLabel || `${toTitleCaseWithRules(field)} - Descending`,
+        label: descendingLabel || `${formattedField} - Descending`,
         sortBy: {
-          field,
+          field: rawField,
           direction: Direction.Descending,
           type: SortType.Field,
         },
       },
     ];
   });
-  return retData;
-};
 
-export const setQueryParams = (query?: string, vertical?: string) => {
+export const setQueryParams = (query?: string, vertical?: string): void => {
   const queryParams = new URLSearchParams(window.location.search);
-  if (vertical) {
-    queryParams.set("vertical", vertical);
-  } else {
-    queryParams.delete("vertical");
-  }
 
-  if (query) {
-    queryParams.set("query", query);
-  } else {
-    queryParams.delete("query");
-  }
-  history.pushState(null, "", "?" + queryParams.toString());
+  vertical
+    ? queryParams.set("vertical", vertical)
+    : queryParams.delete("vertical");
+  query ? queryParams.set("query", query) : queryParams.delete("query");
+
+  history.pushState(null, "", `?${queryParams.toString()}`);
 };

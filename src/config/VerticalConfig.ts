@@ -66,6 +66,7 @@ export interface VerticalProps {
     | "map"
     | "universal";
   universalLimit?: number;
+  verticalLimit?: number;
   sortFields?: string[];
   cardType?: CardComponent;
   visualTypeHead?: boolean;
@@ -82,6 +83,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "standard",
     cardType: FAQAccordion,
     universalLimit: 3,
+    verticalLimit: 5,
   },
   {
     label: "Professionals",
@@ -89,6 +91,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProfessionalLocationAndGrid,
     universalLimit: 3,
+    verticalLimit: 5,
   },
   {
     label: "Locations",
@@ -96,6 +99,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "map",
     cardType: LocationStandard,
     universalLimit: 3,
+    verticalLimit: 5,
   },
   {
     label: "Jobs",
@@ -103,6 +107,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "standard",
     cardType: JobStandard,
     universalLimit: 3,
+    verticalLimit: 5,
   },
   {
     label: "Events",
@@ -110,6 +115,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "standard",
     cardType: EventStandard,
     universalLimit: 3,
+    verticalLimit: 5,
   },
   {
     label: "Products",
@@ -117,6 +123,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
+    verticalLimit: 5,
     sortFields: ["name"],
   },
 ];
