@@ -285,8 +285,8 @@ const SearchResults = () => {
                       </article>
                     </section>
                   ) : (
-                    <section className="w-full flex md:max-w-full md:px-14 mx-auto">
-                      <aside className="hidden md:block w-[200px] mr-12">
+                    <section className="w-full flex max-w-full md:px-14 mx-auto">
+                      <aside className="hidden md:block w-[200px]">
                         {facetsCount >= 1 && (
                           <Facets
                             customCssClasses={{
@@ -297,7 +297,7 @@ const SearchResults = () => {
                         )}
                       </aside>
 
-                      <div className="relative centered-container w-full md:!ml-0 md:!mr-auto">
+                      <div className="relative md:px-14 md:max-w-screen-2xl w-full !mx-auto md:!pl-24 md:!pr-72">
                         <header className="results-header ">
                           <SpellCheck
                             customCssClasses={{ spellCheckContainer: "pt-4" }}
