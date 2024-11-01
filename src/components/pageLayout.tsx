@@ -2,7 +2,7 @@ import {
   SearchHeadlessProvider,
   provideHeadless,
 } from "@yext/search-headless-react";
-import { chatConfig, searchConfig } from "./config";
+import { chatConfig, searchConfig } from "./search/config";
 import Footer from "./footer";
 import Header from "./header";
 import { ChatHeadlessProvider } from "@yext/chat-headless-react";

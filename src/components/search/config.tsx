@@ -3,18 +3,22 @@ import {
   Environment,
   SearchConfig,
 } from "@yext/search-headless-react";
-import { GlobalConfig } from "../config/VerticalConfig";
+import { GlobalConfig } from "../../config/VerticalConfig";
 import {
   ChatConfig,
   Region,
   Environment as ChatEnv,
 } from "@yext/chat-headless-react";
 
+console.log(GlobalConfig.searchExperienceVersion.toUpperCase());
+
 export const searchConfig: SearchConfig = {
   apiKey: import.meta.env.YEXT_PUBLIC_API_KEY,
   experienceKey: import.meta.env.YEXT_PUBLIC_EXP_KEY,
   locale: GlobalConfig.locale,
-  experienceVersion: GlobalConfig.searchExperienceVersion.toUpperCase(),
+  experienceVersion: GlobalConfig.searchExperienceVersion
+    .toUpperCase()
+    .toString(),
   cloudRegion: GlobalConfig.region === "US" ? CloudRegion.US : CloudRegion.EU,
   environment:
     GlobalConfig.accountEnv === "Production"

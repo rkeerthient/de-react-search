@@ -27,7 +27,7 @@ export interface GlobalConfigProps {
 
 export const GlobalConfig: GlobalConfigProps = {
   accountEnv: "Production", //Production or Sandbox
-  searchExperienceVersion: "Production", // Production or Staging
+  searchExperienceVersion: "Staging", // Production or Staging
   chatExperienceVersion: "Production", // Production or Staging
   isChatEnabled: false, //true or false
   locale: "en", // your locale eg: en_GB

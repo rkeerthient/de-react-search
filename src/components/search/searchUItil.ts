@@ -12,7 +12,6 @@ type SearchUtilProps = {
   query?: string;
   vertical?: string;
   searchActions: ReturnType<typeof useSearchActions>;
-  sortOptions?: SortBy;
 };
 
 const getUniversalLimit = (): UniversalLimit =>
@@ -32,7 +31,6 @@ export const SearchUtils = ({
   vertical,
   query = "",
   searchActions,
-  sortOptions,
 }: SearchUtilProps): void => {
   if (query) searchActions.setQuery(query);
   if (vertical && vertical !== "universal") {
@@ -41,11 +39,9 @@ export const SearchUtils = ({
     if (verticalLimit !== undefined && verticalLimit >= 1) {
       searchActions.setVerticalLimit(verticalLimit);
     }
-    if (sortOptions) searchActions.setSortBys([sortOptions]);
     searchActions.executeVerticalQuery();
   } else {
     searchActions.setUniversal();
-    if (sortOptions) searchActions.setSortBys([sortOptions]);
     searchActions.setUniversalLimit(getUniversalLimit());
     searchActions.executeUniversalQuery();
   }
