@@ -2,12 +2,12 @@ import {
   SearchHeadlessProvider,
   provideHeadless,
 } from "@yext/search-headless-react";
-import { chatConfig, searchConfig } from "./config";
+import { chatConfig, searchConfig } from "./search/config";
 import Footer from "./footer";
 import Header from "./header";
-import { IsChatEnabled } from "../config/VerticalConfig";
 import { ChatHeadlessProvider } from "@yext/chat-headless-react";
 import { ChatPopUp } from "@yext/chat-ui-react";
+import { GlobalConfig } from "../config/VerticalConfig";
 
 type Props = {
   _site?: any;
@@ -22,7 +22,7 @@ const PageLayout = ({ _site, children }: Props) => {
           {children}
         </SearchHeadlessProvider>
       </div>
-      {IsChatEnabled &&
+      {GlobalConfig.isChatEnabled &&
         typeof window !== "undefined" &&
         import.meta.env.YEXT_PUBLIC_CHAT_APIKEY &&
         import.meta.env.YEXT_PUBLIC_CHAT_BOTID && (

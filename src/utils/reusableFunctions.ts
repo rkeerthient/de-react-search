@@ -27,18 +27,43 @@ export const getGoogleMapsLink = (coordinate: Coordinate): string => {
   return `https://www.google.com/maps/dir/?api=1&destination=${coordinate.latitude},${coordinate.longitude}`;
 };
 
-export const setQueryParams = (query?: string, vertical?: string) => {
-  const queryParams = new URLSearchParams(window.location.search);
-  if (vertical) {
-    queryParams.set("vertical", vertical);
-  } else {
-    queryParams.delete("vertical");
-  }
+export const toTitleCaseWithRules = (str: string) => {
+  const minorWords = [
+    "a",
+    "an",
+    "the",
+    "and",
+    "but",
+    "or",
+    "nor",
+    "for",
+    "so",
+    "yet",
+    "at",
+    "by",
+    "for",
+    "in",
+    "of",
+    "off",
+    "on",
+    "out",
+    "over",
+    "to",
+    "up",
+    "with",
+  ];
 
-  if (query) {
-    queryParams.set("query", query);
-  } else {
-    queryParams.delete("query");
-  }
-  history.pushState(null, "", "?" + queryParams.toString());
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word, index, arr) => {
+      if (index === 0 || index === arr.length - 1) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }
+      if (!minorWords.includes(word)) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }
+      return word;
+    })
+    .join(" ");
 };

@@ -4,7 +4,6 @@ import {
   VerticalConfigMap,
 } from "@yext/search-ui-react";
 
-import { Direction, SortBy, SortType } from "@yext/search-headless-react";
 import { UniversalSection } from "../components/search/UniversalSection";
 import ProductProminentVideo from "../components/cards/ProductProminentVideo";
 import FileStandard from "../components/cards/FileStandard";
@@ -16,6 +15,25 @@ import ProfessionalLocationAndGrid from "../components/cards/ProfessionalLocatio
 import ProfessionalStandard from "../components/cards/ProfessionalStandard";
 import ProductProminentImage from "../components/cards/ProductProminentImage";
 
+export interface GlobalConfigProps {
+  accountEnv: "Production" | "Sandbox";
+  searchExperienceVersion: "Production" | "Staging";
+  chatExperienceVersion: "Production" | "Staging";
+  isChatEnabled: boolean;
+  locale: string;
+  isGenerativeDirectAnswerEnabled: boolean;
+  region: "US" | "EU";
+}
+
+export const GlobalConfig: GlobalConfigProps = {
+  accountEnv: "Production", //Production or Sandbox
+  searchExperienceVersion: "Staging", // Production or Staging
+  chatExperienceVersion: "Production", // Production or Staging
+  isChatEnabled: false, //true or false
+  locale: "en", // your locale eg: en_GB
+  isGenerativeDirectAnswerEnabled: false, //true or false
+  region: "US", //US or EU
+};
 /**
  * 
  * Define properties for each section type shown in the search interface.
@@ -66,7 +84,8 @@ export interface VerticalProps {
     | "map"
     | "universal";
   universalLimit?: number;
-  sortByOptions?: { label: string; sortBy: SortBy }[];
+  verticalLimit?: number;
+  sortFields?: string[];
   cardType?: CardComponent;
   visualTypeHead?: boolean;
 }
@@ -82,6 +101,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "standard",
     cardType: FAQAccordion,
     universalLimit: 3,
+    verticalLimit: 5,
   },
   {
     label: "Professionals",
@@ -89,6 +109,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProfessionalLocationAndGrid,
     universalLimit: 3,
+    verticalLimit: 5,
   },
   {
     label: "Locations",
@@ -96,6 +117,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "map",
     cardType: LocationStandard,
     universalLimit: 3,
+    verticalLimit: 5,
   },
   {
     label: "Jobs",
@@ -103,6 +125,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "standard",
     cardType: JobStandard,
     universalLimit: 3,
+    verticalLimit: 5,
   },
   {
     label: "Events",
@@ -110,6 +133,7 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "standard",
     cardType: EventStandard,
     universalLimit: 3,
+    verticalLimit: 5,
   },
   {
     label: "Products",
@@ -117,14 +141,13 @@ export const VerticalConfig: VerticalProps[] = [
     pageType: "grid-cols-3",
     cardType: ProductProminentImage,
     universalLimit: 3,
+    verticalLimit: 5,
+    sortFields: ["name"],
   },
 ];
 
 // Configuration options for enabling or disabling features
 
-export const IsChatEnabled: boolean = false; // Change to true if you want to show chat
-export const locale: string | undefined = undefined; //Replace undefined with your locale. for eg. "en_GB" or "ja"
-export const IsGenerativeDirectAnswerEnabled: boolean = false; // Change to true if you want to show Generative Direct Answer
 export const UniversalConfig: VerticalConfigMap<
   Record<string, DefaultRawDataType>
 > = VerticalConfig.reduce(

@@ -26,7 +26,7 @@ const ProductProminentImage = ({ result }: CardProps<any>) => {
           {primaryPhoto && (
             <Image
               image={primaryPhoto!}
-              className="pointer-events-none object-cover group-hover:opacity-75 !w-full !h-full"
+              className="pointer-events-none object-cover group-hover:opacity-75 !w-full !h-full !max-w-none"
             />
           )}
         </a>

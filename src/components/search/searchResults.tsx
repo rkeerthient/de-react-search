@@ -13,7 +13,7 @@ import {
   GenerativeDirectAnswer,
 } from "@yext/search-ui-react";
 import {
-  IsGenerativeDirectAnswerEnabled,
+  GlobalConfig,
   UniversalConfig,
   VerticalConfig,
 } from "../../config/VerticalConfig";
@@ -26,6 +26,7 @@ import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
 import { IoClose } from "react-icons/io5";
 import { defaultCoordinates } from "./UniversalSection";
 import SortDropdown from "../SortDropdown";
+import { buildSortOptions } from "./searchUItil";
 type MapContextType = {
   hoveredId: string;
   setHoveredId: (value: string) => void;
@@ -59,7 +60,7 @@ const SearchResults = () => {
 
   const cardType = currentVerticalConfig?.cardType;
   const pageType = currentVerticalConfig?.pageType || "standard";
-  const sortOptions = currentVerticalConfig?.sortByOptions;
+  const sortOptions = currentVerticalConfig?.sortFields;
 
   const getClasses = () => {
     const classesMap: { [key: string]: string } = {
@@ -141,7 +142,7 @@ const SearchResults = () => {
               {universalResultsLength >= 1 ? (
                 <article className="centered-container my-12">
                   <SpellCheck />
-                  {IsGenerativeDirectAnswerEnabled ? (
+                  {GlobalConfig.isGenerativeDirectAnswerEnabled ? (
                     renderGenDirectAnswer()
                   ) : (
                     <DirectAnswer
@@ -284,25 +285,30 @@ const SearchResults = () => {
                       </article>
                     </section>
                   ) : (
-                    <section className="w-full flex centered-container">
-                      <SpellCheck />
-                      {facetsCount >= 1 && (
-                        <aside className="hidden md:block  mr-5 w-56 shrink-0">
+                    <section className="w-full flex max-w-full md:px-14 mx-auto">
+                      <aside className="hidden md:block w-[200px]">
+                        {facetsCount >= 1 && (
                           <Facets
                             customCssClasses={{
-                              facetsContainer: "py-4",
+                              facetsContainer: "py-4 w-full",
                               titleLabel: "text-lg",
                             }}
                           />
-                        </aside>
-                      )}
-                      <div className="relative w-full">
+                        )}
+                      </aside>
+
+                      <div className="relative md:px-14 md:max-w-screen-2xl w-full !mx-auto md:!pl-24 md:!pr-72">
                         <header className="results-header ">
+                          <SpellCheck
+                            customCssClasses={{ spellCheckContainer: "pt-4" }}
+                          />
                           <article className="hidden md:flex justify-between w-full items-center">
                             <ResultsCount />
                             {sortOptions && sortOptions.length >= 1 && (
                               <div className="flex justify-start gap-2 md:mb-4">
-                                <SortDropdown sortOptions={sortOptions} />
+                                <SortDropdown
+                                  sortOptions={buildSortOptions(sortOptions)}
+                                />
                               </div>
                             )}
                           </article>
@@ -323,7 +329,9 @@ const SearchResults = () => {
                               />
                               {sortOptions && sortOptions.length >= 1 && (
                                 <div className="flex justify-start gap-2 md:mb-4">
-                                  <SortDropdown sortOptions={sortOptions} />
+                                  <SortDropdown
+                                    sortOptions={buildSortOptions(sortOptions)}
+                                  />
                                 </div>
                               )}
                               <Facets searchOnChange={true} />

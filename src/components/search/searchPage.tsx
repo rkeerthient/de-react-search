@@ -5,9 +5,8 @@ import { FaMicrophone } from "react-icons/fa";
 import { createRoot } from "react-dom/client";
 import { useEffect, useState, useCallback } from "react";
 import { useSearchActions, useSearchState } from "@yext/search-headless-react";
-import { SearchUtils } from "./searchUItil";
+import { SearchUtils, setQueryParams } from "./searchUItil";
 import { useTypingEffect } from "../useTypeEffect";
-import { setQueryParams } from "../../utils/reusableFunctions";
 import {
   entityPreviewSearcher,
   includedVerticalKeys,

@@ -73,7 +73,7 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
           {headshot && (
             <Image
               image={headshot!}
-              className="pointer-events-none object-cover group-hover:opacity-75 "
+              className="pointer-events-none object-cover group-hover:opacity-75 !h-full !w-full !max-w-none"
             />
           )}
         </a>

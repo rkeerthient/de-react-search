@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchActions, useSearchState } from "@yext/search-headless-react";
 import { VerticalConfig, VerticalProps } from "../../config/VerticalConfig";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { SearchUtils } from "./searchUItil";
-import { setQueryParams } from "../../utils/reusableFunctions";
+import { SearchUtils, setQueryParams } from "./searchUItil";
 
 const SearchNav = () => {
   const searchActions = useSearchActions();
