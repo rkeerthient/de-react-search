@@ -297,7 +297,7 @@ const SearchResults = () => {
                         )}
                       </aside>
 
-                      <div className="relative md:centered-container w-full md:!ml-0 md:!mr-auto">
+                      <div className="relative centered-container w-full md:!ml-0 md:!mr-auto">
                         <header className="results-header ">
                           <SpellCheck
                             customCssClasses={{ spellCheckContainer: "pt-4" }}
