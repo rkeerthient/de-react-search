@@ -13,7 +13,7 @@ import {
   GenerativeDirectAnswer,
 } from "@yext/search-ui-react";
 import {
-  IsGenerativeDirectAnswerEnabled,
+  GlobalConfig,
   UniversalConfig,
   VerticalConfig,
 } from "../../config/VerticalConfig";
@@ -142,7 +142,7 @@ const SearchResults = () => {
               {universalResultsLength >= 1 ? (
                 <article className="centered-container my-12">
                   <SpellCheck />
-                  {IsGenerativeDirectAnswerEnabled ? (
+                  {GlobalConfig.isGenerativeDirectAnswerEnabled ? (
                     renderGenDirectAnswer()
                   ) : (
                     <DirectAnswer
