@@ -29,7 +29,7 @@ export const chatConfig: ChatConfig = {
   apiKey: import.meta.env.YEXT_PUBLIC_CHAT_APIKEY,
   botId: import.meta.env.YEXT_PUBLIC_CHAT_BOTID,
   region: GlobalConfig.region === "US" ? Region.US : Region.EU,
-  version: GlobalConfig.chatExperienceVersion.toUpperCase(),
+  version: GlobalConfig.chatExperienceVersion.toUpperCase().toString(),
   env:
     GlobalConfig.accountEnv === "Production"
       ? ChatEnv.PRODUCTION
