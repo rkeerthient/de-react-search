@@ -142,7 +142,7 @@ export const VerticalConfig: VerticalProps[] = [
     cardType: ProductProminentImage,
     universalLimit: 3,
     verticalLimit: 5,
-    sortFields: ["name"],
+    sortFields: ["name"], // ["fieldName, Ascending Label, Descending Label"] examples: ["name, Name (A-Z), Name (Z-A)"] or ["name, Name (A-Z), Name (Z-A)", "price.value, Price (Low - High), Price (High - Low)"]
   },
 ];
 
