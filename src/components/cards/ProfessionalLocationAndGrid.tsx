@@ -6,6 +6,7 @@ import { format_phone } from "../../utils/reusableFunctions";
 import { VerticalConfig } from "../../config/VerticalConfig";
 import { useEffect, useRef, useState } from "react";
 import { useMapContext } from "../search/searchResults";
+import { useSearchState } from "@yext/search-headless-react";
 
 const ProfessionalLocation = ({ result }: CardProps<any>) => {
   const [pageType, setPageType] = useState("");
@@ -20,6 +21,7 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
     c_primaryCTA,
     c_secondaryCTA,
   } = result.rawData;
+  const verticalKey = useSearchState((state) => state.vertical.verticalKey);
 
   const { hoveredId, setClickedId, setHoveredId } =
     pageType === "map" ? useMapContext() : {};
@@ -27,9 +29,8 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
   const locationRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     setPageType(
-      VerticalConfig.find(
-        (item) => item.verticalKey === "financial-professional"
-      )?.pageType || ""
+      VerticalConfig.find((item) => item.verticalKey === verticalKey)
+        ?.pageType || ""
     );
   }, []);
   const handleMouseEnter = () => {

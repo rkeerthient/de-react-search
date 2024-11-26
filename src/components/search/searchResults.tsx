@@ -24,7 +24,6 @@ import { concatClassNames } from "../../utils/reusableFunctions";
 import { createCtx } from "../../utils/createContext";
 import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
 import { IoClose } from "react-icons/io5";
-import { defaultCoordinates } from "./UniversalSection";
 import SortDropdown from "../SortDropdown";
 import { buildSortOptions } from "./searchUItil";
 type MapContextType = {
@@ -260,7 +259,7 @@ const SearchResults = () => {
                                   .filter(
                                     (coord): coord is Coordinate => !!coord
                                   )
-                              : [defaultCoordinates]
+                              : [{ latitude: 125, longitude: 125 }]
                           }
                           padding={{
                             top: 100,

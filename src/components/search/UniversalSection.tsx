@@ -3,7 +3,6 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
 import { VerticalConfig } from "../../config/VerticalConfig";
 import MapPin from "../MapPin";
-export const defaultCoordinates: Coordinate = { latitude: 125, longitude: 125 };
 export const UniversalSection = ({
   results,
   header,
@@ -43,7 +42,7 @@ export const UniversalSection = ({
                   ? results
                       .map((data) => data.rawData.yextDisplayCoordinate)
                       .filter((coord): coord is Coordinate => !!coord)
-                  : [defaultCoordinates]
+                  : [{ latitude: 125, longitude: 125 }]
               }
               className="h-96"
             >

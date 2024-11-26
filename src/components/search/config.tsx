@@ -10,8 +10,6 @@ import {
   Environment as ChatEnv,
 } from "@yext/chat-headless-react";
 
-console.log(GlobalConfig.searchExperienceVersion.toUpperCase());
-
 export const searchConfig: SearchConfig = {
   apiKey: import.meta.env.YEXT_PUBLIC_API_KEY,
   experienceKey: import.meta.env.YEXT_PUBLIC_EXP_KEY,

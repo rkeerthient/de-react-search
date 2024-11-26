@@ -27,7 +27,7 @@ const ProfessionalStandard = ({ result }: CardProps<any>) => {
   } = result.rawData;
 
   return (
-    <article className="border rounded-lg flex justify-between  pr-4">
+    <article className="border rounded-lg flex justify-between  pr-4 pb-4">
       <header className="relative flex flex-col w-1/6">
         <a
           href={landingPageUrl}
