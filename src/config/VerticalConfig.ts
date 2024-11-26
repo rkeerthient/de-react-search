@@ -35,7 +35,7 @@ export const GlobalConfig: GlobalConfigProps = {
   region: "US", //US or EU
 };
 /**
- * 
+ *
  * Define properties for each section type shown in the search interface.
  * label: Display name for the section.
  * verticalKey: Optional key that uniquely identifies each type of content (e.g., 'faq', 'jobs').
@@ -44,33 +44,14 @@ export const GlobalConfig: GlobalConfigProps = {
  * sortByOptions: Custom sorting options for items.
  * cardType: Specifies how each item in the section is displayed (using different card components).
  * visualTypeHead: Boolean to enable special header visuals (optional).
- * 
- * 
- * Recommendation 
+ *
+ *
+ * Recommendation
  * gridPageType - ProductProminentVideo, LocationStandard, ProfessionalLocationAndGrid, ProductProminentImage
- * 
- * 
- * Sample sorting format
- * 
- sortByOptions: [
-  {
-    label: "Name: A-Z",
-    sortBy: {
-      field: "name",
-      direction: Direction.Ascending,
-      type: SortType.Field,
-    },
-  },
-  {
-    label: "Name: Z-A",
-    sortBy: {
-      field: "name",
-      direction: Direction.Descending,
-      type: SortType.Field,
-    },
-  },
-],
- * 
+ *
+ *
+ * Sample sorting format - // ["fieldName, Ascending Label, Descending Label"] examples: ["name, Name (A-Z), Name (Z-A)"] or ["name, Name (A-Z), Name (Z-A)", "price.value, Price (Low - High), Price (High - Low)"]
+ *
  */
 
 export interface VerticalProps {
