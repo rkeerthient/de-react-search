@@ -65,7 +65,7 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
       }`}
     >
       <header
-        className={`relative flex flex-col ${pageType === "map" && `pt-4 !h-1/4 !w-1/4`}`}
+        className={`relative flex flex-col ${pageType === "map" && `pt-4 !h-full !w-full`}`}
       >
         <a
           href={landingPageUrl}
@@ -78,16 +78,19 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
             />
           )}
         </a>
-        <h2 className=" text-lg font-bold px-2 mt-4">
-          <a href={landingPageUrl}>{name}</a>
-        </h2>
       </header>
       <section
         className={`px-2 space-y-1 ${pageType === "map" && `mt-4 w-3/4`}`}
       >
-        <section
-          className={`flex justify-start ${pageType === "map" ? `flex-row` : `flex-col gap-2 mt-2`}`}
-        >
+        <section className={`flex justify-start  flex-col gap-2 mt-2 `}>
+          <h2 className=" text-lg font-bold flex justify-between">
+            <a href={landingPageUrl}>{name}</a>
+            {distance && (
+              <span className="standardSubTitle italic mr-4 whitespace-nowrap">
+                {(distance! / 1609.344).toFixed(2)} mi
+              </span>
+            )}
+          </h2>
           {hours ? (
             <HoursStatus
               className="font-medium"
@@ -97,11 +100,6 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
             />
           ) : (
             <p>Fill in your hours</p>
-          )}
-          {distance && (
-            <span className="standardSubTitle italic mr-4 whitespace-nowrap">
-              {(distance! / 1609.344).toFixed(2)} mi
-            </span>
           )}
         </section>
 
