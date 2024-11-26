@@ -8,6 +8,7 @@ import Header from "./header";
 import { ChatHeadlessProvider } from "@yext/chat-headless-react";
 import { ChatPopUp } from "@yext/chat-ui-react";
 import { GlobalConfig } from "../config/VerticalConfig";
+import "@yext/chat-ui-react/bundle.css";
 
 type Props = {
   _site?: any;
