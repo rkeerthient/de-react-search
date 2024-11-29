@@ -87,7 +87,7 @@ export const VerticalConfig: VerticalProps[] = [
   {
     label: "Professionals",
     verticalKey: "financial-professional",
-    pageType: "grid-cols-3",
+    pageType: "map",
     cardType: ProfessionalLocationAndGrid,
     universalLimit: 3,
     verticalLimit: 5,

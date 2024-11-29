@@ -10,7 +10,7 @@ import { useSearchState } from "@yext/search-headless-react";
 
 const ProfessionalLocation = ({ result }: CardProps<any>) => {
   const [pageType, setPageType] = useState("");
-  const { name, distance, id } = result;
+  const { name, distance, id, entityType } = result;
   const {
     headshot,
     mainPhone,
@@ -21,34 +21,48 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
     c_primaryCTA,
     c_secondaryCTA,
   } = result.rawData;
+
+  const getUnivConfig = useSearchState((state) => state.universal.verticals);
+  let currVerticalKey = getUnivConfig?.find(
+    (item) => item.results[0].entityType === entityType
+  )?.verticalKey;
+
+  let _type =
+    (currVerticalKey &&
+      VerticalConfig.find((item) => item.verticalKey === currVerticalKey)
+        ?.pageType) ||
+    "";
+
   const verticalKey = useSearchState((state) => state.vertical.verticalKey);
-  const { hoveredId, setClickedId, setHoveredId } =
-    pageType === "map" ? useMapContext() : {};
+  const { hoveredId, setClickedId, setHoveredId } = [pageType, _type].includes(
+    "map"
+  )
+    ? useMapContext()
+    : {};
 
   const locationRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     setPageType(
-      VerticalConfig.find(
-        (item) => item.verticalKey === verticalKey
-      )?.pageType || ""
+      VerticalConfig.find((item) => item.verticalKey === verticalKey)
+        ?.pageType || ""
     );
   }, []);
   const handleMouseEnter = () => {
-    if (pageType === "map" && setHoveredId && setClickedId) {
+    if ([pageType, _type].includes("map") && setHoveredId && setClickedId) {
       setHoveredId(id!);
       setClickedId("");
     }
   };
 
   const handleMouseLeave = () => {
-    if (pageType === "map" && setHoveredId && setClickedId) {
+    if ([pageType, _type].includes("map") && setHoveredId && setClickedId) {
       setHoveredId("");
       setClickedId("");
     }
   };
 
   const handleClick = () => {
-    if (pageType === "map" && setClickedId) {
+    if ([pageType, _type].includes("map") && setClickedId) {
       setClickedId(id!);
     }
   };
@@ -60,12 +74,12 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`  border  ${pageType === "map" && `flex gap-2`}  ${
+      className={`border ${[pageType, _type].includes("map") && `flex gap-2`}  ${
         hoveredId === id ? "bg-gray-200" : ""
       }`}
     >
       <header
-        className={`relative flex flex-col ${pageType === "map" && `pt-4 !h-1/4 !w-1/4`}`}
+        className={`relative flex flex-col ${[pageType, _type].includes("map") && `!h-1/4 !w-1/4`}`}
       >
         <a
           href={landingPageUrl}
@@ -78,16 +92,21 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
             />
           )}
         </a>
-        <h2 className=" text-lg font-bold px-2 mt-4">
-          <a href={landingPageUrl}>{name}</a>
-        </h2>
       </header>
       <section
-        className={`px-2 space-y-1 ${pageType === "map" && `mt-4 w-3/4`}`}
+        className={`px-2 space-y-1 ${[pageType, _type].includes("map") && `mt-4 w-3/4`} ${_type === "map" && `flex justify-between`}`}
       >
         <section
-          className={`flex justify-start ${pageType === "map" ? `flex-row` : `flex-col gap-2 mt-2`}`}
+          className={`flex justify-start flex-col ${[pageType, _type].includes("map") ? `flex-row` : ` gap-2 mt-2`}`}
         >
+          <h2 className="flex justify-between text-lg font-bold">
+            <a href={landingPageUrl}>{name}</a>
+            {distance && (
+              <span className="font-normal text-base standardSubTitle italic mr-4 whitespace-nowrap">
+                {(distance! / 1609.344).toFixed(2)} mi
+              </span>
+            )}
+          </h2>
           {hours ? (
             <HoursStatus
               className="font-medium"
@@ -98,29 +117,30 @@ const ProfessionalLocation = ({ result }: CardProps<any>) => {
           ) : (
             <p>Fill in your hours</p>
           )}
-          {distance && (
-            <span className="standardSubTitle italic mr-4 whitespace-nowrap">
-              {(distance! / 1609.344).toFixed(2)} mi
-            </span>
+          {address && (
+            <address className="flex  justify-start font-medium leading-loose items-start  text-secondary not-italic">
+              <MapPinIcon className="h-4 w-4 mt-2" />
+              <span className="ml-2">
+                <Address address={address} />
+              </span>
+            </address>
+          )}
+          {mainPhone && (
+            <section className="flex justify-start font-medium leading-loose items-center  text-secondary">
+              <PhoneIcon className="h-4 w-4" />
+              <span className="ml-2">{format_phone(mainPhone)}</span>
+            </section>
           )}
         </section>
 
-        {address && (
-          <address className="flex  justify-start font-medium leading-loose items-start  text-secondary not-italic">
-            <MapPinIcon className="h-4 w-4 mt-2" />
-            <span className="ml-2">
-              <Address address={address} />
-            </span>
-          </address>
-        )}
-        {mainPhone && (
-          <section className="flex justify-start font-medium leading-loose items-center  text-secondary">
-            <PhoneIcon className="h-4 w-4" />
-            <span className="ml-2">{format_phone(mainPhone)}</span>
-          </section>
-        )}
         <footer
-          className={`flex gap-2 justify-center pt-4 pb-2 items-center uppercase ${pageType === "map" ? `flex-row` : `flex-col`}`}
+          className={`flex gap-2 justify-center pt-4 pb-2 items-center uppercase ${
+            pageType === "map" && !["grid"].includes(_type)
+              ? "flex-row"
+              : pageType.includes("grid")
+                ? "flex-col"
+                : "flex-col"
+          }`}
         >
           {c_primaryCTA && <Cta cta={c_primaryCTA} ctaType="primaryCta" />}
           {c_secondaryCTA && (
