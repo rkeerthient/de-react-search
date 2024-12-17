@@ -18,7 +18,7 @@ import {
   VerticalConfig,
 } from "../../config/VerticalConfig";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import MapPin from "../MapPin";
 import { concatClassNames } from "../../utils/reusableFunctions";
 import { createCtx } from "../../utils/createContext";
@@ -26,6 +26,7 @@ import { MapboxMaps, Map, Coordinate } from "@yext/pages-components";
 import { IoClose } from "react-icons/io5";
 import SortDropdown from "../SortDropdown";
 import { buildSortOptions } from "./searchUItil";
+import GenDAComponent from "./GenDAComponent";
 type MapContextType = {
   hoveredId: string;
   setHoveredId: (value: string) => void;
@@ -42,86 +43,43 @@ const SearchResults = () => {
   const [hoveredId, setHoveredId] = useState("");
   const [clickedId, setClickedId] = useState("");
   const _state = useSearchState((state) => state);
-  const {
-    vertical: { verticalKey, resultsCount = -1 },
-    searchStatus: { isLoading },
-    query: { mostRecentSearch },
-    filters,
-    universal,
-  } = _state;
-  const universalResultsLength =
-    universal?.verticals?.[0]?.results?.length || 0;
-  const facetsCount = filters?.facets?.length ?? 0;
+  const verticalKey = useSearchState((state) => state.vertical.verticalKey);
+  const resultsCount = useSearchState(
+    (state) => state.vertical.resultsCount ?? -1
+  );
+  const isLoading = useSearchState((state) => state.searchStatus.isLoading);
+  const mostRecentSearch = useSearchState(
+    (state) => state.query.mostRecentSearch
+  );
+  const filters = useSearchState((state) => state.filters);
+  const universal = useSearchState((state) => state.universal);
 
-  const currentVerticalConfig = VerticalConfig.find(
-    (item) => item.verticalKey === verticalKey
+  const universalResultsLength = useMemo(
+    () => universal?.verticals?.[0]?.results?.length || 0,
+    [universal]
   );
 
+  const facetsCount = useMemo(() => filters?.facets?.length ?? 0, [filters]);
+
+  const currentVerticalConfig = useMemo(
+    () => VerticalConfig.find((item) => item.verticalKey === verticalKey),
+    [verticalKey]
+  );
+
+  const currLabel = currentVerticalConfig?.label;
   const cardType = currentVerticalConfig?.cardType;
   const pageType = currentVerticalConfig?.pageType || "standard";
   const sortOptions = currentVerticalConfig?.sortFields;
 
-  const getClasses = () => {
+  const getClasses = useCallback(() => {
     const classesMap: { [key: string]: string } = {
-      "grid-cols-2": "grid  grid-cols-1 md:grid-cols-2 gap-2",
-      "grid-cols-3": "grid  grid-cols-1 md:grid-cols-3 gap-2",
-      "grid-cols-4": "grid grid-cols-1 md:grid-cols-4 gap-2 ",
+      "grid-cols-2": "grid grid-cols-1 md:grid-cols-2 gap-2",
+      "grid-cols-3": "grid grid-cols-1 md:grid-cols-3 gap-2",
+      "grid-cols-4": "grid grid-cols-1 md:grid-cols-4 gap-2",
       standard: "flex flex-col border rounded-md",
     };
     return classesMap[pageType];
-  };
-
-  const renderGenDirectAnswer = () => {
-    const isGenALoading = useSearchState(
-      (state) => state.generativeDirectAnswer.isLoading
-    );
-    return (
-      <>
-        {isGenALoading ? (
-          <section
-            className="p-6 border border-gray-200 rounded-lg shadow-sm centered-container"
-            aria-busy="true"
-            aria-label="Loading content"
-          >
-            <div className="animate-pulse flex space-x-4">
-              <div className="flex-1 space-y-6 py-1">
-                <div
-                  className="h-4 bg-slate-700 rounded w-1/4"
-                  aria-hidden="true"
-                ></div>
-                <div className="space-y-3">
-                  <div className="grid grid-cols-3 gap-4">
-                    <div
-                      className="h-2 bg-slate-700 rounded col-span-3"
-                      aria-hidden="true"
-                    ></div>
-                    <div
-                      className="h-2 bg-slate-700 rounded col-span-3"
-                      aria-hidden="true"
-                    ></div>
-                  </div>
-                  <div
-                    className="h-2 bg-slate-700 rounded"
-                    aria-hidden="true"
-                  ></div>
-                  <div
-                    className="h-2 bg-slate-700 rounded"
-                    aria-hidden="true"
-                  ></div>
-                  <div
-                    className="h-2 bg-slate-700 rounded"
-                    aria-hidden="true"
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </section>
-        ) : (
-          <GenerativeDirectAnswer />
-        )}
-      </>
-    );
-  };
+  }, [pageType]);
 
   return (
     <div className="px-4 ">
@@ -142,7 +100,7 @@ const SearchResults = () => {
                 <article className="centered-container my-12">
                   <SpellCheck />
                   {GlobalConfig.isGenerativeDirectAnswerEnabled ? (
-                    renderGenDirectAnswer()
+                    <GenDAComponent />
                   ) : (
                     <DirectAnswer
                       customCssClasses={{
@@ -179,7 +137,7 @@ const SearchResults = () => {
               {resultsCount > 0 ? (
                 <>
                   {pageType === "map" ? (
-                    <section className="w-full flex md:h-[950px]">
+                    <section className="w-full flex md:h-[950px]  mb-48">
                       <article className="w-full md:w-2/5">
                         <SpellCheck />
                         <div className="w-full h-auto overflow-scroll relative">
@@ -382,7 +340,8 @@ const SearchResults = () => {
                       <span className="mx-1 font-semibold">
                         {mostRecentSearch}
                       </span>
-                      did not match any FAQs.
+                      did not match any{" "}
+                      <span className="mx-1 font-semibold">{currLabel}</span>.
                     </p>
                   </article>
                 )

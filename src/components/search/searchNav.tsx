@@ -26,7 +26,7 @@ const SearchNav = () => {
     (item) => item !== activeItem && item.label !== "All"
   );
 
-  const handleClick = (item: VerticalProps, query?: string) => {
+  const handleClick = (item: VerticalProps, query?: string, context?: any) => {
     if (!item) return;
 
     if (activeItem && activeItem?.label !== "All") {
@@ -40,6 +40,7 @@ const SearchNav = () => {
       vertical: item.verticalKey,
       query: query || "",
       searchActions,
+      context: context || "",
     });
     setIsDropdownOpen(false);
   };
@@ -49,10 +50,11 @@ const SearchNav = () => {
       const urlSearchParams = new URLSearchParams(window.location.search);
       const query = urlSearchParams.get("query") || queryString || "";
       const vertical = urlSearchParams.get("vertical");
+      const context = urlSearchParams.get("context");
       const selectedVertical = VerticalConfig.find(
         (item) => item.verticalKey === vertical
       );
-      handleClick(selectedVertical || VerticalConfig[0], query);
+      handleClick(selectedVertical || VerticalConfig[0], query, context);
     }
   }, []);
 

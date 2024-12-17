@@ -1,7 +1,6 @@
 import {
   useSearchActions,
   UniversalLimit,
-  SortBy,
   SortType,
   Direction,
 } from "@yext/search-headless-react";
@@ -11,6 +10,7 @@ import { toTitleCaseWithRules } from "../../utils/reusableFunctions";
 type SearchUtilProps = {
   query?: string;
   vertical?: string;
+  context?: any;
   searchActions: ReturnType<typeof useSearchActions>;
 };
 
@@ -31,17 +31,22 @@ export const SearchUtils = ({
   vertical,
   query = "",
   searchActions,
+  context = {},
 }: SearchUtilProps): void => {
   if (query) searchActions.setQuery(query);
   if (vertical && vertical !== "universal") {
     searchActions.setVertical(vertical);
     const verticalLimit = getVerticalLimit(vertical);
+    Object.keys(context).length !== 0 &&
+      searchActions.setContext(getDecodexContext(context));
     if (verticalLimit !== undefined && verticalLimit >= 1) {
       searchActions.setVerticalLimit(verticalLimit);
     }
     searchActions.executeVerticalQuery();
   } else {
     searchActions.setUniversal();
+    Object.keys(context).length !== 0 &&
+      searchActions.setContext(getDecodexContext(context));
     searchActions.setUniversalLimit(getUniversalLimit());
     searchActions.executeUniversalQuery();
   }
@@ -92,4 +97,11 @@ export const setQueryParams = (query?: string, vertical?: string): void => {
   query ? queryParams.set("query", query) : queryParams.delete("query");
 
   history.pushState(null, "", `?${queryParams.toString()}`);
+};
+const getDecodexContext = (input: any) => {
+  return JSON.parse(
+    input
+      .replace(/([{,])(\s*)([a-zA-Z0-9_]+)(\s*):/g, '$1"$3":')
+      .replace(/:([a-zA-Z0-9_]+)/g, ':"$1"')
+  );
 };
