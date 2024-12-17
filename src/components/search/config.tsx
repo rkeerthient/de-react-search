@@ -11,8 +11,8 @@ import {
 } from "@yext/chat-headless-react";
 
 export const searchConfig: SearchConfig = {
-  apiKey: import.meta.env.YEXT_PUBLIC_API_KEY,
-  experienceKey: import.meta.env.YEXT_PUBLIC_EXP_KEY,
+  apiKey: import.meta.env.YEXT_PUBLIC_SEARCH_API_KEY,
+  experienceKey: import.meta.env.YEXT_PUBLIC_SEARCH_EXP_KEY,
   locale: GlobalConfig.locale,
   experienceVersion: GlobalConfig.searchExperienceVersion
     .toUpperCase()
