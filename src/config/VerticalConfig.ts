@@ -69,6 +69,8 @@ export interface VerticalProps {
   sortFields?: string[];
   cardType?: CardComponent;
   visualTypeHead?: boolean;
+  hideLabel?: boolean;
+  hideInNavBar?: boolean;
 }
 
 export const VerticalConfig: VerticalProps[] = [

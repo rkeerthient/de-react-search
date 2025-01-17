@@ -12,9 +12,12 @@ export const UniversalSection = ({
     return <div>Missing Card Component</div>;
   }
 
-  const pageType = VerticalConfig.find(
+  const configItem = VerticalConfig.find(
     (item) => item.label === header?.props.label
-  )?.pageType;
+  );
+
+  const pageType = configItem?.pageType;
+  const hideLabel = configItem?.hideLabel;
 
   const className = pageType?.includes("grid")
     ? `grid grid-cols-1 md:${pageType} md:gap-8`
@@ -24,9 +27,11 @@ export const UniversalSection = ({
     <>
       {pageType!.includes("map") ? (
         <section className="border rounded-md">
-          <h2 className="font-bold text-base md:text-lg py-4 pl-4 bg-black !text-white h-full">
-            {header?.props.label.toUpperCase()}
-          </h2>
+          {!hideLabel && (
+            <h2 className="font-bold text-base md:text-lg py-4 pl-4 bg-black !text-white h-full">
+              {header?.props.label.toUpperCase()}
+            </h2>
+          )}
           <article className="hidden md:block md:w-full">
             <Map
               apiKey={import.meta.env.YEXT_PUBLIC_MAP_API_KEY}
@@ -74,9 +79,11 @@ export const UniversalSection = ({
         </section>
       ) : (
         <section className="border rounded-md">
-          <h2 className="font-bold text-base md:text-lg py-4 pl-4 bg-black !text-white h-full">
-            {header?.props.label.toUpperCase()}
-          </h2>
+          {!hideLabel && (
+            <h2 className="font-bold text-base md:text-lg py-4 pl-4 bg-black !text-white h-full">
+              {header?.props.label.toUpperCase()}
+            </h2>
+          )}
           <div
             aria-label={`${header?.props.label} results section`}
             className={className}

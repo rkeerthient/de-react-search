@@ -23,7 +23,7 @@ const SearchNav = () => {
   const dropdownRef = useRef<HTMLLIElement>(null);
 
   const moreItems = VerticalConfig.filter(
-    (item) => item !== activeItem && item.label !== "All"
+    (item) => item !== activeItem && item.label !== "All" && !item.hideInNavBar
   );
 
   const handleClick = (item: VerticalProps, query?: string, context?: any) => {
@@ -77,14 +77,15 @@ const SearchNav = () => {
     <>
       <nav className="hidden md:block bg-transparent p-4 pb-2 pt-8 border-b border-[#e5e7eb] uppercase">
         <ul className="flex justify-start w-full items-center">
-          {VerticalConfig.map((item, index) => (
-            <li
-              key={index}
-              onClick={() => handleClick(item)}
-              className={`group hover:cursor-pointer px-5 uppercase font-semibold`}
-            >
-              <span
-                className={`uppercase text-lg
+          {VerticalConfig.filter((item) => !item.hideInNavBar).map(
+            (item, index) => (
+              <li
+                key={index}
+                onClick={() => handleClick(item)}
+                className={`group hover:cursor-pointer px-5 uppercase font-semibold`}
+              >
+                <span
+                  className={`uppercase text-lg
                   group-hover:text-gray-300
                   ${
                     activeItem === item
@@ -92,11 +93,12 @@ const SearchNav = () => {
                       : "text-gray-500"
                   }
               `}
-              >
-                {item.label}
-              </span>
-            </li>
-          ))}
+                >
+                  {item.label}
+                </span>
+              </li>
+            )
+          )}
         </ul>
       </nav>
 
