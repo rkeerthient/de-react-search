@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { GlobalConfig } from "../config/VerticalConfig";
 
 export const useTypingEffect = () => {
   const [queryPrompts, setQueryPrompts] = useState<string[]>([]);
@@ -36,7 +37,8 @@ export const useTypingEffect = () => {
   };
 
   const fetchUnivPrompts = async () => {
-    const url = `https://cdn.yextapis.com/v2/accounts/me/search/autocomplete?v=20190101&api_key=${import.meta.env.YEXT_PUBLIC_API_KEY}&sessionTrackingEnabled=false&experienceKey=${import.meta.env.YEXT_PUBLIC_EXP_KEY}&input=`;
+    const baseUrlString=GlobalConfig.accountEnv === "Production"? 'cdn':'sbx-cdn';
+    const url = `https://${baseUrlString}.yextapis.com/v2/accounts/me/search/autocomplete?v=20190101&api_key=${import.meta.env.YEXT_PUBLIC_SEARCH_API_KEY}&sessionTrackingEnabled=false&experienceKey=${import.meta.env.YEXT_PUBLIC_SEARCH_EXP_KEY}&input=`;
 
     try {
       const res = await fetch(url);
